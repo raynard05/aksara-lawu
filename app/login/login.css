@@ -8,19 +8,32 @@
   position: relative;
   width: 100vw;
   height: 100vh;
-  height: 100dvh; /* fallback modern untuk mobile */
+  height: 100dvh;
+  /* fallback modern untuk mobile */
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--font-rubik-one), "Rubik One", sans-serif;
 
-  /* CSS background — lebih tajam, tanpa blur pipeline */
+  /* CSS background — 100vw 100vh agar pas di viewport dan tidak ter-crop/zoom in */
   background-image: url('/login_assets/login.webp');
-  background-size: cover;
+  background-size: 100vw 100vh;
   background-position: center center;
   background-repeat: no-repeat;
   background-color: #000;
+}
+
+/* Vignette gradient halus seperti contoh-bg.css agar fokus dan tidak silau */
+.login-root::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.45) 100%);
+  z-index: 0;
+  pointer-events: none;
 }
 
 /* Konten utama di atas background */
