@@ -17,9 +17,9 @@
   justify-content: center;
   font-family: var(--font-rubik-one), "Rubik One", sans-serif;
 
-  /* CSS background — cover tepi penuh tanpa sisa space */
+  /* CSS background — cover seperti contoh-bg.css agar proporsi asli (16:9) terjaga & tidak penyet */
   background-image: url('/login_assets/loginfhd.webp');
-  background-size: 100% 100%;
+  background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
   background-color: #000;
