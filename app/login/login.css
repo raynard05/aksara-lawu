@@ -5,7 +5,8 @@
    ============================================= */
 
 .login-root {
-  position: relative;
+  position: absolute;
+  inset: 0;
   width: 100vw;
   height: 100vh;
   height: 100dvh;
@@ -16,9 +17,9 @@
   justify-content: center;
   font-family: var(--font-rubik-one), "Rubik One", sans-serif;
 
-  /* CSS background — 100vw 100vh agar pas di viewport dan tidak ter-crop/zoom in */
-  background-image: url('/login_assets/login.webp');
-  background-size: 100vw 100vh;
+  /* CSS background — cover tepi penuh tanpa sisa space */
+  background-image: url('/login_assets/loginfhd.webp');
+  background-size: 100% 100%;
   background-position: center center;
   background-repeat: no-repeat;
   background-color: #000;
