@@ -21,3 +21,4 @@ selalu ada file logic dan css dalam per halaman , dan nama css harus related den
 12. untuk setiap css class selector beda beda per halaman walaupun hasil clone harus dibedakan nama class nya agar tidak tertumpuk jsx nya
 13. untuk bahasa dalam web menggunakan bahasa jawa untuk anak kecil , karena game ini untuk anak anak smp sma atau anak sekolah
  
+14 untuk aturan px dan presentase dalam css hanya boleh digunakan untuk elemen background saja dan tiru contoh-bg.css saja untuk bg only , untuk komponen selain background tidak boleh dan tetap mengikuti aturan 
