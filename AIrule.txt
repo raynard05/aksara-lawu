@@ -1,0 +1,23 @@
+AI rule 
+note : baca dulu rule ini sebelum mengerjakan per prompt
+1. untuk pembuatan halaman selalu file css dan tsx logic nya dipisah
+2. buat folder component khusus menampung semua component game khusus dengan fungsi
+3. buat css seresponsif mungkin secara resolusi mobile , laptop , monitor.
+4. menggunakan satuan vh atau vw dalam responsif css nya 
+5.jangan membuat responsif potrait karena semua akan dirender secara landscape
+6.jangan menggunakan satuan px dalam responsif css dikarenakan ketika di zoom out dan Zoom in pada web komponen akan membesar atau mengecil jadi menggunakan 
+vw dan vh saja karena satuan itu katanya bisa otomatis menegetahui berapa px dirender sesuai device responsif 
+7. untuk responsif utamakan media querry tampilan mobile, laptop, dan monitor 
+8. semua asset ada di folder asset 
+9. gunakan font secara global rubik one untuk setiap text
+10. untuk responsif laptop juga khususkan ada laptop sedang dan layar agak besar, jadi saya mau komponen semua responsif 
+
+11 struktur folder per halaman harus : 
+contoh :  
+didalam folder /login 
+ada  /page.tsx  dan /login.css 
+selalu ada file logic dan css dalam per halaman , dan nama css harus related dengan nama folder
+
+12. untuk setiap css class selector beda beda per halaman walaupun hasil clone harus dibedakan nama class nya agar tidak tertumpuk jsx nya
+13. untuk bahasa dalam web menggunakan bahasa jawa untuk anak kecil , karena game ini untuk anak anak smp sma atau anak sekolah
+ 

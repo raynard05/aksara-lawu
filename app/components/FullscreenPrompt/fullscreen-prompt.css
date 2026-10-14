@@ -1,0 +1,142 @@
+/* =============================================
+   FULLSCREEN PROMPT COMPONENT — fullscreen-prompt.css
+   Prefix class: fsp-
+   Satuan: vw / vh only (rule 6)
+   Landscape only (rule 5)
+   ============================================= */
+
+/* Overlay penuh di atas semua konten */
+.fsp-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(0.3vw);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-family: var(--font-rubik-one), "Rubik One", sans-serif;
+
+  /* Fade-in saat muncul */
+  animation: fsp-fadein 0.6s ease forwards;
+}
+
+/* Fade-out saat dismiss */
+.fsp-overlay.fsp-hiding {
+  animation: fsp-fadeout 0.4s ease forwards;
+}
+
+/* Kartu tengah */
+.fsp-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2vh;
+  padding: 4vh 5vw;
+  background: rgba(255, 255, 255, 0.08);
+  border: 0.15vw solid rgba(255, 255, 255, 0.25);
+  border-radius: 2vw;
+  box-shadow:
+    0 0 4vw rgba(255, 220, 100, 0.15),
+    inset 0 0 2vw rgba(255, 255, 255, 0.05);
+  text-align: center;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Ikon karakter chibi */
+.fsp-icon {
+  width: 14vw;
+  height: auto;
+  max-width: 18vh;
+  animation: fsp-float 2.4s ease-in-out infinite;
+  filter:
+    drop-shadow(0 0.8vw 1.5vw rgba(0, 0, 0, 0.5))
+    drop-shadow(0 0 1vw rgba(255, 220, 100, 0.35));
+}
+
+/* Teks utama */
+.fsp-title {
+  font-size: 2.8vw;
+  font-weight: 400;
+  color: #ffd700;
+  letter-spacing: 0.15vw;
+  text-shadow:
+    0 0 1.5vw rgba(255, 215, 0, 0.6),
+    0 0.2vh 0.5vh rgba(0, 0, 0, 0.8);
+  margin: 0;
+}
+
+/* Teks sub */
+.fsp-sub {
+  font-size: 1.4vw;
+  color: rgba(255, 255, 255, 0.65);
+  letter-spacing: 0.08vw;
+  margin: 0;
+}
+
+/* Indikator klik animasi */
+.fsp-tap-ring {
+  width: 5vw;
+  height: 5vw;
+  border: 0.25vw solid rgba(255, 215, 0, 0.5);
+  border-radius: 50%;
+  animation: fsp-ring 1.8s ease-out infinite;
+  margin-top: 1vh;
+}
+
+/* =============================================
+   KEYFRAMES
+   ============================================= */
+@keyframes fsp-fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fsp-fadeout {
+  from { opacity: 1; }
+  to   { opacity: 0; pointer-events: none; }
+}
+
+@keyframes fsp-float {
+  0%, 100% { transform: translateY(0);     }
+  50%       { transform: translateY(-1.5vh); }
+}
+
+@keyframes fsp-ring {
+  0%   { transform: scale(0.8); opacity: 0.9; }
+  100% { transform: scale(2);   opacity: 0; }
+}
+
+/* =============================================
+   RESPONSIVE — Mobile Landscape
+   ============================================= */
+@media (max-width: 48em) and (orientation: landscape) {
+  .fsp-icon  { width: 18vw; max-width: 14vh; }
+  .fsp-title { font-size: 4vw; }
+  .fsp-sub   { font-size: 2.2vw; }
+  .fsp-tap-ring { width: 7vw; height: 7vw; }
+}
+
+/* =============================================
+   RESPONSIVE — Laptop Sedang (768 - 1280px)
+   ============================================= */
+@media (min-width: 48em) and (max-width: 80em) {
+  .fsp-icon  { width: 12vw; }
+  .fsp-title { font-size: 2.4vw; }
+  .fsp-sub   { font-size: 1.2vw; }
+}
+
+/* =============================================
+   RESPONSIVE — Laptop Besar / Monitor (>1280px)
+   ============================================= */
+@media (min-width: 80em) {
+  .fsp-icon  { width: 10vw; }
+  .fsp-title { font-size: 2vw; }
+  .fsp-sub   { font-size: 1vw; }
+  .fsp-tap-ring { width: 4vw; height: 4vw; }
+}

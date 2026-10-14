@@ -1,0 +1,79 @@
+/* =============================================
+   LOGIN PAGE — login.css
+   Rule: vw/vh only, landscape only, Rubik One,
+   unique class prefix: login-
+   ============================================= */
+
+.login-root {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh; /* fallback modern untuk mobile */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-rubik-one), "Rubik One", sans-serif;
+
+  /* CSS background — lebih tajam, tanpa blur pipeline */
+  background-image: url('/login_assets/login.webp');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: #000;
+}
+
+/* Konten utama di atas background */
+.login-content {
+  position: relative;
+  z-index: 1;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* Panel form di sisi kanan (area stone wall) */
+.login-panel {
+  width: 42vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2vh;
+  padding: 2vh 3vw;
+}
+
+/* =============================================
+   RESPONSIVE — Mobile Landscape
+   (lebar < 768px, hanya landscape)
+   ============================================= */
+@media (max-width: 48em) and (orientation: landscape) {
+  .login-panel {
+    width: 50vw;
+    padding: 1.5vh 2vw;
+    gap: 1.5vh;
+  }
+}
+
+/* =============================================
+   RESPONSIVE — Laptop Sedang (768px - 1280px)
+   ============================================= */
+@media (min-width: 48em) and (max-width: 80em) {
+  .login-panel {
+    width: 44vw;
+    padding: 2vh 2.5vw;
+  }
+}
+
+/* =============================================
+   RESPONSIVE — Laptop Besar / Monitor (> 1280px)
+   ============================================= */
+@media (min-width: 80em) {
+  .login-panel {
+    width: 40vw;
+    padding: 2vh 4vw;
+  }
+}
