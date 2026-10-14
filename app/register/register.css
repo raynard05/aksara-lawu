@@ -15,10 +15,10 @@
   justify-content: center;
   font-family: var(--font-rubik-one), "Rubik One", sans-serif;
 
-  /* Meniru contoh-bg.css: CSS background image untuk kompatibilitas & performa */
+  /* Meniru contoh-bg.css: cover mengisi penuh layar tanpa border hitam */
   background-image: url('/login_assets/registerfhd.webp');
   background-size: cover;
-  background-position: center;
+  background-position: center 1%;
   background-repeat: no-repeat;
   background-color: #000;
 }
@@ -61,9 +61,15 @@
 
 /* =============================================
    RESPONSIVE — Mobile Landscape
-   (lebar < 768px, hanya landscape)
+   (lebar < 768px / max-width: 1023px, hanya landscape)
    ============================================= */
-@media (max-width: 48em) and (orientation: landscape) {
+@media (max-width: 1023px) and (orientation: landscape) {
+  .register-root {
+    background-image: url('/login_assets/register_mobile.png');
+    background-size: cover;
+    background-position: center center;
+  }
+
   .register-panel {
     width: 52vw;
     padding: 1.5vh 2vw;
