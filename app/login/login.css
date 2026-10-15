@@ -381,7 +381,7 @@
 
   .login-panel {
     width: 46vw;
-    padding: 19vh 0.5vw 1.5vh 6.5vw;
+    padding: 28vh 0.5vw 1.5vh 6.5vw;
   }
 
   .login-form {
@@ -464,12 +464,12 @@
   }
 
   .login-btn-wrap {
-    margin-top: 5vh;
+    margin-top: 3.5vh;
   }
 
   .login-btn-asset-img {
-    width: 23vw;
-    max-height: 10.5vh;
+    width: 25vw;
+    max-height: 12.9vh;
   }
 
   .login-register-link-row {
