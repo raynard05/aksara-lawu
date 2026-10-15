@@ -1,0 +1,93 @@
+/* =============================================
+   FALLEN LEAVES COMPONENT — fallen-leaves.css
+   Rule AI:
+   1. vw/vh only (no px untuk ukuran & pergerakan)
+   2. Animasi daun jatuh perlahan dari atas ke bawah
+   3. Khusus panel kiri (tidak menutupi form/dinding batu)
+   4. Aman di semua tingkatan zoom dan resolusi
+   ============================================= */
+
+.fallen-leaves-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 54vw;
+  height: 100vh;
+  height: 100dvh;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 2;
+  user-select: none;
+}
+
+.fallen-leaf-wrapper {
+  position: absolute;
+  top: -12vh;
+  will-change: transform, opacity;
+  animation-name: leaf-fall-motion;
+  animation-timing-function: cubic-bezier(0.35, 0.1, 0.25, 1);
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+}
+
+.fallen-leaf-image {
+  display: block;
+  height: auto;
+  pointer-events: none;
+  filter: drop-shadow(0 0.4vh 0.6vh rgba(0, 0, 0, 0.35));
+  will-change: transform;
+  animation: leaf-flutter 3.5s ease-in-out infinite alternate;
+}
+
+/* Animasi jatuh dari atas ke bawah dengan ayunan angin (sway) */
+@keyframes leaf-fall-motion {
+  0% {
+    transform: translate3d(0, -12vh, 0) rotate(var(--start-deg, 0deg));
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.95;
+    transform: translate3d(calc(var(--sway-x, 3vw) * 0.4), 10vh, 0) rotate(calc(var(--start-deg, 0deg) + 20deg));
+  }
+  25% {
+    transform: translate3d(calc(var(--sway-x, 3vw) * -0.6), 28vh, 0) rotate(calc(var(--start-deg, 0deg) + 60deg));
+  }
+  50% {
+    transform: translate3d(calc(var(--sway-x, 3vw) * 0.8), 52vh, 0) rotate(calc(var(--start-deg, 0deg) + 110deg));
+  }
+  75% {
+    opacity: 0.95;
+    transform: translate3d(calc(var(--sway-x, 3vw) * -0.5), 78vh, 0) rotate(calc(var(--start-deg, 0deg) + 160deg));
+  }
+  95% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate3d(calc(var(--sway-x, 3vw) * 0.3), 108vh, 0) rotate(var(--end-deg, 180deg));
+    opacity: 0;
+  }
+}
+
+/* Fluttering / goyangan daun saat tertiup angin */
+@keyframes leaf-flutter {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg) scale(1);
+  }
+  50% {
+    transform: rotateX(25deg) rotateY(35deg) scale(0.96);
+  }
+  100% {
+    transform: rotateX(-20deg) rotateY(-30deg) scale(1.03);
+  }
+}
+
+/* Media query mobile landscape */
+@media (max-width: 900px) and (orientation: landscape) and (pointer: coarse) {
+  .fallen-leaves-container {
+    width: 52vw;
+  }
+
+  .fallen-leaf-image {
+    filter: drop-shadow(0 0.3vh 0.4vh rgba(0, 0, 0, 0.3));
+  }
+}

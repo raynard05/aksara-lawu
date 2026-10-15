@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import FallenLeaves from "../components/fallenleaves/FallenLeaves";
 import "./register.css";
 
 export default function RegisterPage() {
@@ -26,6 +27,9 @@ export default function RegisterPage() {
 
   return (
     <main className="register-root">
+      {/* Daun berjatuhan perlahan di panel kiri (area tugu & langit) */}
+      <FallenLeaves className="register-leaves-panel" />
+
       {/* Konten di atas background */}
       <div className="register-content">
         {/* Panel kanan — area dinding batu */}

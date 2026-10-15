@@ -38,6 +38,17 @@
   justify-content: flex-end;
 }
 
+/* Daun jatuh khusus di panel kiri (area tugu & langit) */
+.register-leaves-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 54vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+}
+
 /* Panel form di sisi kanan (area dinding batu) */
 .register-panel {
   width: 44vw;

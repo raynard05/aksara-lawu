@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import FallenLeaves from "../components/fallenleaves/FallenLeaves";
 import "./login.css";
 
 export default function LoginPage() {
@@ -23,6 +24,9 @@ export default function LoginPage() {
 
   return (
     <main className="login-root">
+      {/* Daun berjatuhan perlahan di panel kiri (area tugu & langit) */}
+      <FallenLeaves className="login-leaves-panel" />
+
       {/* Konten di atas background */}
       <div className="login-content">
         {/* Panel kanan — area dinding batu */}
