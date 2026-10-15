@@ -1,7 +1,11 @@
 /* =============================================
    LOGIN PAGE — login.css
-   Rule: vw/vh only, landscape only, Rubik One,
-   unique class prefix: login-
+   Rule AI:
+   1. vw/vh only (no px untuk layout & komponen, kecuali background)
+   2. landscape only
+   3. font Rubik One
+   4. unique class prefix: login-
+   5. mobile landscape, laptop sedang, laptop besar/monitor
    ============================================= */
 
 .login-root {
@@ -15,7 +19,7 @@
   justify-content: center;
   font-family: var(--font-rubik-one), "Rubik One", sans-serif;
 
-  /* Meniru contoh-bg.css: cover mengisi penuh layar tanpa border hitam */
+  /* Background murni ori asset */
   background-image: url('/login_assets/loginfhd.webp');
   background-size: 100% 100%;
   background-position: center center;
@@ -34,52 +38,546 @@
   justify-content: flex-end;
 }
 
-/* Panel form di sisi kanan (area stone wall) */
+/* Panel form di sisi kanan (area dinding batu) */
 .login-panel {
-  width: 42vw;
+  width: 44vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2vh;
-  padding: 2vh 3vw;
+  padding: 33.5vh 0.5vw 2vh 5vw;
+}
+
+/* Form container */
+.login-form {
+  width: 100%;
+  max-width: 36vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.2vh;
 }
 
 /* =============================================
-   RESPONSIVE — Mobile Landscape
-   (lebar < 768px / max-width: 1023px, hanya landscape)
+   JUDUL BESAR: LOGIN (Text Emas Game Kartun)
    ============================================= */
-@media (max-width: 1023px) and (orientation: landscape) {
+.login-title {
+  font-family: var(--font-rubik-one), "Rubik One", sans-serif;
+  font-size: 4.2vw;
+  color: #ffd858;
+  letter-spacing: 0.15vw;
+  margin: 0 0 1vh 0;
+  text-align: center;
+  user-select: none;
+  text-shadow: 
+    -0.2vw -0.2vw 0 #3a220e,
+     0.2vw -0.2vw 0 #3a220e,
+    -0.2vw  0.2vw 0 #3a220e,
+     0.2vw  0.2vw 0 #3a220e,
+    -0.2vw 0 0 #3a220e,
+     0.2vw 0 0 #3a220e,
+     0 -0.2vw 0 #3a220e,
+     0  0.2vw 0 #3a220e,
+     0 0.8vh 0.4vh rgba(0, 0, 0, 0.65);
+}
+
+/* =============================================
+   STONE SLAB ITEM (Kotak Form Desain Batu)
+   ============================================= */
+.login-slab-item {
+  width: 100%;
+  min-height: 8.5vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #d8cbb5;
+  background-image: linear-gradient(180deg, #ede2cf 0%, #d8cbb5 40%, #c4b49b 100%);
+  border: 0.35vw solid #4a3e30;
+  border-radius: 1.8vh;
+  box-shadow: 
+    inset 0 0.4vh 0.4vh rgba(255, 255, 255, 0.6),
+    inset 0 -0.5vh 0.6vh rgba(74, 62, 48, 0.45),
+    0 0.5vh 1vh rgba(0, 0, 0, 0.45);
+  padding: 1.6vh 0.8vw;
+  gap: 0.6vw;
+  position: relative;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.login-slab-item:hover {
+  transform: translateY(-0.2vh);
+  box-shadow: 
+    inset 0 0.4vh 0.4vh rgba(255, 255, 255, 0.8),
+    inset 0 -0.5vh 0.6vh rgba(74, 62, 48, 0.45),
+    0 0.8vh 1.4vh rgba(0, 0, 0, 0.5);
+}
+
+/* Retakan Batu Alami Tebal (Stone Cracks) */
+.login-crack-top {
+  position: absolute;
+  top: -0.3vh;
+  left: 28%;
+  width: 4.8vw;
+  height: 1.8vh;
+  pointer-events: none;
+  z-index: 2;
+  filter: drop-shadow(0 0.15vh 0.2vh rgba(0, 0, 0, 0.45));
+}
+
+.login-crack-bottom {
+  position: absolute;
+  bottom: -0.3vh;
+  left: 42%;
+  width: 4.2vw;
+  height: 1.6vh;
+  pointer-events: none;
+  z-index: 2;
+  filter: drop-shadow(0 0.15vh 0.2vh rgba(0, 0, 0, 0.45));
+}
+
+.login-crack-top-alt {
+  position: absolute;
+  top: -0.3vh;
+  left: 36%;
+  width: 4.5vw;
+  height: 1.7vh;
+  pointer-events: none;
+  z-index: 2;
+  filter: drop-shadow(0 0.15vh 0.2vh rgba(0, 0, 0, 0.45));
+}
+
+.login-crack-bottom-alt {
+  position: absolute;
+  bottom: -0.3vh;
+  left: 24%;
+  width: 4.6vw;
+  height: 1.7vh;
+  pointer-events: none;
+  z-index: 2;
+  filter: drop-shadow(0 0.15vh 0.2vh rgba(0, 0, 0, 0.45));
+}
+
+.login-crack-side {
+  position: absolute;
+  top: 15%;
+  right: 1.5%;
+  width: 2.2vw;
+  height: 2.5vh;
+  pointer-events: none;
+  z-index: 2;
+  filter: drop-shadow(0 0.15vh 0.2vh rgba(0, 0, 0, 0.45));
+}
+
+.login-crack-mid {
+  position: absolute;
+  bottom: -0.3vh;
+  left: 65%;
+  width: 3.5vw;
+  height: 1.5vh;
+  pointer-events: none;
+  z-index: 2;
+  filter: drop-shadow(0 0.15vh 0.2vh rgba(0, 0, 0, 0.45));
+}
+
+/* Sisi kiri: Icon + Label Teks */
+.login-slab-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5vw;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.login-icon-wrap {
+  width: 2.8vw;
+  height: 5.4vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.login-img-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0.2vh 0.3vh rgba(0, 0, 0, 0.35));
+  user-select: none;
+  pointer-events: none;
+}
+
+.login-field-title {
+  font-family: var(--font-rubik-one), "Rubik One", sans-serif;
+  font-size: 0.95vw;
+  color: #6a573e;
+  text-shadow: 0 0.15vh 0 #fff2d9, 0 0.25vh 0.3vh rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
+  letter-spacing: 0.01vw;
+  cursor: pointer;
+}
+
+/* Sisi kanan: Kotak Input Hijau Pucat */
+.login-slab-right {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  background: #d8e5cb;
+  background-image: linear-gradient(180deg, #e4eed8 0%, #d8e5cb 50%, #c4d3b6 100%);
+  border: 0.22vw solid #546a48;
+  border-radius: 1.4vh;
+  box-shadow: 
+    inset 0 0.3vh 0.5vh rgba(60, 77, 51, 0.4),
+    inset 0 -0.2vh 0.3vh rgba(255, 255, 255, 0.6);
+  padding: 0.65vh 0.6vw;
+  position: relative;
+  min-width: 0;
+}
+
+.login-input-field {
+  width: 100%;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-family: var(--font-rubik-one), "Rubik One", sans-serif;
+  font-size: 0.74vw;
+  color: #2b4528;
+  padding: 0.45vh 0;
+  letter-spacing: 0;
+}
+
+.login-input-field::placeholder {
+  color: #385b33;
+  opacity: 0.85;
+  font-family: var(--font-rubik-one), "Rubik One", sans-serif;
+  font-size: 0.68vw;
+  white-space: nowrap;
+  letter-spacing: 0;
+}
+
+/* Password Cell + Toggle Eye */
+.login-password-cell {
+  position: relative;
+  padding-right: 2.8vw;
+}
+
+.login-toggle-eye {
+  position: absolute;
+  right: 0.6vw;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.2vh 0.2vw;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.login-toggle-eye:hover {
+  transform: translateY(-50%) scale(1.1);
+  opacity: 0.85;
+}
+
+.login-eye-svg {
+  width: 1.8vw;
+  height: 3vh;
+}
+
+/* =============================================
+   TOMBOL WIWITI (Golden Wood/Stone Button)
+   ============================================= */
+.login-btn-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 6.5vh;
+}
+
+.login-submit-btn {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  display: inline-block;
+  transition: transform 0.1s ease;
+}
+
+.login-submit-btn:hover {
+  transform: scale(1.03);
+}
+
+.login-submit-btn:active {
+  transform: scale(0.97) translateY(0.2vh);
+}
+
+.login-btn-asset-img {
+  width: 23vw;
+  height: auto;
+  max-height: 12vh;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 0.8vh 1.4vh rgba(0, 0, 0, 0.6));
+  user-select: none;
+  pointer-events: none;
+}
+
+/* =============================================
+   FOOTER: Belum Punya Akun? Daftar disini
+   ============================================= */
+.login-register-link-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5vw;
+  margin-top: 9.8vh;
+  font-family: var(--font-rubik-one), "Rubik One", sans-serif;
+  user-select: none;
+}
+
+.login-footer-label {
+  color: #ffe699;
+  font-size: 1.2vw;
+  text-shadow: 
+    -0.08vw -0.08vw 0 #3a2c16,
+     0.08vw -0.08vw 0 #3a2c16,
+    -0.08vw  0.08vw 0 #3a2c16,
+     0.08vw  0.08vw 0 #3a2c16,
+     0 0.25vh 0.3vh rgba(0, 0, 0, 0.7);
+}
+
+.login-footer-action {
+  color: #ffffff;
+  font-size: 1.2vw;
+  text-shadow: 
+    -0.08vw -0.08vw 0 #3a2c16,
+     0.08vw -0.08vw 0 #3a2c16,
+    -0.08vw  0.08vw 0 #3a2c16,
+     0.08vw  0.08vw 0 #3a2c16,
+     0 0.25vh 0.3vh rgba(0, 0, 0, 0.7);
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.login-footer-action:hover {
+  color: #fde047;
+  transform: scale(1.05);
+}
+
+/* =============================================
+   RESPONSIVE — Mobile Landscape (Khusus Layar HP Sentuh)
+   ============================================= */
+@media (max-width: 900px) and (orientation: landscape) and (pointer: coarse) {
   .login-root {
     background-image: url('/login_assets/login_mobile.png');
-    background-size: cover;
+    background-size: 100% 100%;
     background-position: center center;
   }
 
   .login-panel {
-    width: 50vw;
-    padding: 1.5vh 2vw;
-    gap: 1.5vh;
+    width: 46vw;
+    padding: 19vh 0.5vw 1.5vh 6.5vw;
+  }
+
+  .login-form {
+    max-width: 34.5vw;
+    gap: 1.6vh;
+  }
+
+  .login-slab-item {
+    border-width: 0.35vw;
+    border-radius: 1.8vh;
+    padding: 1.1vh 0.75vw;
+    gap: 0.55vw;
+  }
+
+  .login-icon-wrap {
+    width: 3.1vw;
+    height: 6.2vh;
+  }
+
+  .login-field-title {
+    font-size: 1.05vw;
+  }
+
+  .login-slab-right {
+    border-width: 0.25vw;
+    padding: 0.65vh 0.65vw;
+    border-radius: 1.4vh;
+  }
+
+  .login-input-field {
+    font-size: 0.8vw;
+    padding: 0.4vh 0;
+  }
+
+  .login-input-field::placeholder {
+    font-size: 0.76vw;
+  }
+
+  .login-toggle-eye {
+    right: 0.6vw;
+  }
+
+  .login-eye-svg {
+    width: 2vw;
+    height: 3.5vh;
+  }
+
+  .login-crack-top {
+    width: 4.2vw;
+    height: 1.6vh;
+    left: 26%;
+  }
+
+  .login-crack-bottom {
+    width: 3.8vw;
+    height: 1.4vh;
+    left: 40%;
+  }
+
+  .login-crack-top-alt {
+    width: 4vw;
+    height: 1.5vh;
+    left: 34%;
+  }
+
+  .login-crack-bottom-alt {
+    width: 4vw;
+    height: 1.5vh;
+    left: 22%;
+  }
+
+  .login-crack-side {
+    width: 2vw;
+    height: 2.2vh;
+  }
+
+  .login-crack-mid {
+    width: 3.2vw;
+    height: 1.4vh;
+  }
+
+  .login-btn-wrap {
+    margin-top: 5vh;
+  }
+
+  .login-btn-asset-img {
+    width: 23vw;
+    max-height: 10.5vh;
+  }
+
+  .login-register-link-row {
+    margin-top: 7.5vh;
+  }
+
+  .login-footer-label,
+  .login-footer-action {
+    font-size: 1.25vw;
   }
 }
 
 /* =============================================
-   RESPONSIVE — Laptop Sedang (768px - 1280px)
+   RESPONSIVE — Laptop Sedang (1024px - 1366px pada 100% zoom)
    ============================================= */
-@media (min-width: 48em) and (max-width: 80em) {
+@media (min-width: 901px) and (max-width: 1366px) {
   .login-panel {
     width: 44vw;
-    padding: 2vh 2.5vw;
+    padding: 33.5vh 0.5vw 2vh 5vw;
+  }
+
+  .login-form {
+    max-width: 36vw;
+    gap: 2.2vh;
+  }
+
+  .login-slab-item {
+    min-height: 8.5vh;
+    padding: 1.6vh 0.8vw;
+  }
+
+  .login-field-title {
+    font-size: 0.95vw;
+  }
+
+  .login-input-field {
+    font-size: 0.74vw;
+  }
+
+  .login-input-field::placeholder {
+    font-size: 0.68vw;
+  }
+
+  .login-btn-wrap {
+    margin-top: 6.5vh;
+  }
+
+  .login-btn-asset-img {
+    width: 23vw;
+    max-height: 12vh;
+  }
+
+  .login-register-link-row {
+    margin-top: 9.8vh;
+  }
+
+  .login-footer-label,
+  .login-footer-action {
+    font-size: 1.2vw;
   }
 }
 
 /* =============================================
-   RESPONSIVE — Laptop Besar / Monitor (> 1280px)
+   RESPONSIVE — Monitor / Layar Besar (> 1366px)
    ============================================= */
-@media (min-width: 80em) {
+@media (min-width: 1367px) {
   .login-panel {
-    width: 40vw;
-    padding: 2vh 4vw;
+    width: 44vw;
+    padding: 33.5vh 0.5vw 2vh 5vw;
+  }
+
+  .login-form {
+    max-width: 36vw;
+    gap: 2.2vh;
+  }
+
+  .login-slab-item {
+    min-height: 8.5vh;
+    padding: 1.6vh 0.8vw;
+  }
+
+  .login-field-title {
+    font-size: 0.95vw;
+  }
+
+  .login-input-field {
+    font-size: 0.74vw;
+  }
+
+  .login-input-field::placeholder {
+    font-size: 0.68vw;
+  }
+
+  .login-btn-wrap {
+    margin-top: 6.5vh;
+  }
+
+  .login-btn-asset-img {
+    width: 23vw;
+    max-height: 12vh;
+  }
+
+  .login-register-link-row {
+    margin-top: 9.8vh;
+  }
+
+  .login-footer-label,
+  .login-footer-action {
+    font-size: 1.15vw;
   }
 }

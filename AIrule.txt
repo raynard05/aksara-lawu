@@ -23,3 +23,8 @@ selalu ada file logic dan css dalam per halaman , dan nama css harus related den
  
 14 untuk aturan px dan presentase dalam css hanya boleh digunakan untuk elemen background saja dan tiru contoh-bg.css saja untuk bg only , untuk komponen selain background tidak boleh dan tetap mengikuti aturan 
 15. jika membuat suatu komponen tombol,form,dll harus pertimbangkan warnanya match dan pertimbangkan semua responsif size dan eyecatching di semua resposif , dan beri spacing antara komponen satu sama alain jangan berdempet 
+16. PENGUNCIAN ZOOM & KONSISTENSI DEVICE (ZOOM-LOCK):
+    - Tampilan (look) pada laptop kecil, laptop sedang, laptop besar, dan monitor HARUS SAMA PERSIS dan ukurannya terkunci secara proporsional.
+    - Saat browser di-zoom in (110%, 125%, 150%, hingga 175%) atau di-zoom out, komponen (form, tombol, background, teks) TIDAK BOLEH berpindah tempat, bergeser dari posisinya di background, atau membesar/meloncat secara aneh.
+    - Media query mobile landscape WAJIB dilindungi dengan guard pointer layar sentuh (misal: `(pointer: coarse)`) agar saat layar desktop di-zoom in tinggi (di mana pixel width mengecil), sistem TIDAK SALAH mendeteksi laptop/monitor sebagai HP dan TIDAK mengganti background atau layout secara mendadak.
+    - Nilai breakpoint untuk laptop sedang dan monitor/layar besar harus diseragamkan nilai proporsi `vw`/`vh`-nya agar tetap stabil dan terkunci konstan di semua level zoom.

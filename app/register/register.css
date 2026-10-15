@@ -354,19 +354,18 @@
 }
 
 /* =============================================
-   RESPONSIVE — Mobile Landscape
-   (max-width: 1023px, orientasi landscape saja)
+   RESPONSIVE — Mobile Landscape (Khusus Layar HP Sentuh)
    ============================================= */
-@media (max-width: 1023px) and (orientation: landscape) {
+@media (max-width: 900px) and (orientation: landscape) and (pointer: coarse) {
   .register-root {
     background-image: url('/login_assets/register_mobile.png');
-    background-size: cover;
+    background-size: 100% 100%;
     background-position: center center;
   }
 
   .register-panel {
     width: 46vw;
-    padding: 3vh 0.5vw 1.5vh 3.5vw;
+    padding: 3vh 0.5vw 1.5vh 8vw;
   }
 
   .register-form {
@@ -468,17 +467,17 @@
 }
 
 /* =============================================
-   RESPONSIVE — Laptop Sedang (768px - 1280px)
+   RESPONSIVE — Laptop Sedang (1024px - 1366px pada 100% zoom)
    ============================================= */
-@media (min-width: 48em) and (max-width: 80em) {
+@media (min-width: 901px) and (max-width: 1366px) {
   .register-panel {
-    width: 45vw;
-    padding: 7.5vh 0.5vw 2vh 4.5vw;
+    width: 44vw;
+    padding: 8vh 0.5vw 2vh 4.5vw;
   }
 
   .register-form {
-    max-width: 37vw;
-    gap: 1.4vh;
+    max-width: 36vw;
+    gap: 1.5vh;
   }
 
   .register-field-title {
@@ -486,11 +485,11 @@
   }
 
   .register-input-field {
-    font-size: 0.75vw;
+    font-size: 0.74vw;
   }
 
   .register-input-field::placeholder {
-    font-size: 0.7vw;
+    font-size: 0.68vw;
   }
 
   .register-btn-wrap {
@@ -513,25 +512,25 @@
 }
 
 /* =============================================
-   RESPONSIVE — Laptop Besar / Monitor (> 1280px)
+   RESPONSIVE — Monitor / Layar Besar (> 1366px)
    ============================================= */
-@media (min-width: 80em) {
+@media (min-width: 1367px) {
   .register-panel {
-    width: 43vw;
+    width: 44vw;
     padding: 8vh 0.5vw 2vh 4.5vw;
   }
 
   .register-form {
-    max-width: 35vw;
+    max-width: 36vw;
     gap: 1.5vh;
   }
 
   .register-field-title {
-    font-size: 0.9vw;
+    font-size: 0.95vw;
   }
 
   .register-input-field {
-    font-size: 0.72vw;
+    font-size: 0.74vw;
   }
 
   .register-input-field::placeholder {
@@ -543,12 +542,12 @@
   }
 
   .register-btn-asset-img {
-    width: 22vw;
+    width: 23vw;
     max-height: 12vh;
   }
 
   .register-login-link-row {
-    margin-top: 2.4vh;
+    margin-top: 2.2vh;
   }
 
   .register-footer-label,
