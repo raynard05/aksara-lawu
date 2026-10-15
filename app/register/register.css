@@ -1,7 +1,11 @@
 /* =============================================
    REGISTER PAGE — register.css
-   Rule: vw/vh only, landscape only, Rubik One,
-   unique class prefix: register-
+   Rule AI:
+   1. vw/vh only (no px untuk layout & komponen, kecuali background)
+   2. landscape only
+   3. font Rubik One
+   4. unique class prefix: register-
+   5. mobile landscape, laptop sedang, laptop besar/monitor
    ============================================= */
 
 .register-root {
@@ -15,10 +19,10 @@
   justify-content: center;
   font-family: var(--font-rubik-one), "Rubik One", sans-serif;
 
-  /* Meniru contoh-bg.css: cover mengisi penuh layar tanpa border hitam */
+  /* Background murni ori asset */
   background-image: url('/login_assets/registerfhd.webp');
-  background-size: cover;
-  background-position: center 1%;
+  background-size: 100% 100%;
+  background-position: center center;
   background-repeat: no-repeat;
   background-color: transparent;
 }
@@ -34,21 +38,324 @@
   justify-content: flex-end;
 }
 
-/* Panel form di sisi kanan (area stone wall) */
+/* Panel form di sisi kanan (area dinding batu) */
 .register-panel {
-  width: 42vw;
+  width: 44vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2vh;
-  padding: 2vh 3vw;
+  padding: 8vh 0.5vw 2vh 4.5vw;
+}
+
+/* Form container */
+.register-form {
+  width: 100%;
+  max-width: 36vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5vh;
+}
+
+/* =============================================
+   STONE SLAB ITEM (Kotak Form Desain Batu)
+   ============================================= */
+.register-slab-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #d8cbb5;
+  background-image: linear-gradient(180deg, #ede2cf 0%, #d8cbb5 40%, #c4b49b 100%);
+  border: 0.35vw solid #4a3e30;
+  border-radius: 1.8vh;
+  box-shadow: 
+    inset 0 0.4vh 0.4vh rgba(255, 255, 255, 0.6),
+    inset 0 -0.5vh 0.6vh rgba(74, 62, 48, 0.45),
+    0 0.5vh 1vh rgba(0, 0, 0, 0.45);
+  padding: 1vh 0.8vw;
+  gap: 0.6vw;
+  position: relative;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.register-slab-item:hover {
+  transform: translateY(-0.2vh);
+  box-shadow: 
+    inset 0 0.4vh 0.4vh rgba(255, 255, 255, 0.8),
+    inset 0 -0.5vh 0.6vh rgba(74, 62, 48, 0.45),
+    0 0.8vh 1.4vh rgba(0, 0, 0, 0.5);
+}
+
+/* Retakan Batu Alami Tebal (Stone Cracks) */
+.register-crack-top {
+  position: absolute;
+  top: -0.3vh;
+  left: 28%;
+  width: 4.8vw;
+  height: 1.8vh;
+  pointer-events: none;
+  z-index: 2;
+  filter: drop-shadow(0 0.15vh 0.2vh rgba(0, 0, 0, 0.45));
+}
+
+.register-crack-bottom {
+  position: absolute;
+  bottom: -0.3vh;
+  left: 42%;
+  width: 4.2vw;
+  height: 1.6vh;
+  pointer-events: none;
+  z-index: 2;
+  filter: drop-shadow(0 0.15vh 0.2vh rgba(0, 0, 0, 0.45));
+}
+
+.register-crack-top-alt {
+  position: absolute;
+  top: -0.3vh;
+  left: 36%;
+  width: 4.5vw;
+  height: 1.7vh;
+  pointer-events: none;
+  z-index: 2;
+  filter: drop-shadow(0 0.15vh 0.2vh rgba(0, 0, 0, 0.45));
+}
+
+.register-crack-bottom-alt {
+  position: absolute;
+  bottom: -0.3vh;
+  left: 24%;
+  width: 4.6vw;
+  height: 1.7vh;
+  pointer-events: none;
+  z-index: 2;
+  filter: drop-shadow(0 0.15vh 0.2vh rgba(0, 0, 0, 0.45));
+}
+
+/* Retakan samping tambahan */
+.register-crack-side {
+  position: absolute;
+  top: 15%;
+  right: 1.5%;
+  width: 2.2vw;
+  height: 2.5vh;
+  pointer-events: none;
+  z-index: 2;
+  filter: drop-shadow(0 0.15vh 0.2vh rgba(0, 0, 0, 0.45));
+}
+
+.register-crack-mid {
+  position: absolute;
+  bottom: -0.3vh;
+  left: 65%;
+  width: 3.5vw;
+  height: 1.5vh;
+  pointer-events: none;
+  z-index: 2;
+  filter: drop-shadow(0 0.15vh 0.2vh rgba(0, 0, 0, 0.45));
+}
+
+/* Sisi kiri: Icon + Label Teks */
+.register-slab-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5vw;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.register-icon-wrap {
+  width: 2.8vw;
+  height: 5.4vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.register-svg-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0.2vh 0.3vh rgba(0, 0, 0, 0.35));
+}
+
+.register-img-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0.2vh 0.3vh rgba(0, 0, 0, 0.35));
+  user-select: none;
+  pointer-events: none;
+}
+
+.register-field-title {
+  font-family: var(--font-rubik-one), "Rubik One", sans-serif;
+  font-size: 0.95vw;
+  color: #6a573e;
+  text-shadow: 0 0.15vh 0 #fff2d9, 0 0.25vh 0.3vh rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
+  letter-spacing: 0.01vw;
+  cursor: pointer;
+}
+
+/* Sisi kanan: Kotak Input Hijau Pucat */
+.register-slab-right {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  background: #d8e5cb;
+  background-image: linear-gradient(180deg, #e4eed8 0%, #d8e5cb 50%, #c4d3b6 100%);
+  border: 0.22vw solid #546a48;
+  border-radius: 1.4vh;
+  box-shadow: 
+    inset 0 0.3vh 0.5vh rgba(60, 77, 51, 0.4),
+    inset 0 -0.2vh 0.3vh rgba(255, 255, 255, 0.6);
+  padding: 0.65vh 0.6vw;
+  position: relative;
+  min-width: 0;
+}
+
+.register-input-field {
+  width: 100%;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-family: var(--font-rubik-one), "Rubik One", sans-serif;
+  font-size: 0.74vw;
+  color: #2b4528;
+  padding: 0.45vh 0;
+  letter-spacing: 0;
+}
+
+.register-input-field::placeholder {
+  color: #385b33;
+  opacity: 0.85;
+  font-family: var(--font-rubik-one), "Rubik One", sans-serif;
+  font-size: 0.68vw;
+  white-space: nowrap;
+  letter-spacing: 0;
+}
+
+/* Password Cell + Toggle Eye */
+.register-password-cell {
+  position: relative;
+  padding-right: 2.8vw;
+}
+
+.register-toggle-eye {
+  position: absolute;
+  right: 0.6vw;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.2vh 0.2vw;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.register-toggle-eye:hover {
+  transform: translateY(-50%) scale(1.1);
+  opacity: 0.85;
+}
+
+.register-eye-svg {
+  width: 1.8vw;
+  height: 3vh;
+}
+
+/* =============================================
+   TOMBOL WIWITI (Golden Wood/Stone Button)
+   ============================================= */
+.register-btn-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 4vh;
+}
+
+.register-submit-btn {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  display: inline-block;
+  transition: transform 0.1s ease;
+}
+
+.register-submit-btn:hover {
+  transform: scale(1.03);
+}
+
+.register-submit-btn:active {
+  transform: scale(0.97) translateY(0.2vh);
+}
+
+.register-btn-asset-img {
+  width: 23vw;
+  height: auto;
+  max-height: 12vh;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 0.8vh 1.4vh rgba(0, 0, 0, 0.6));
+  user-select: none;
+  pointer-events: none;
+}
+
+/* =============================================
+   FOOTER: Sudah Punya Akun? Masuk disini
+   ============================================= */
+.register-login-link-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5vw;
+  margin-top: 2.2vh;
+  font-family: var(--font-rubik-one), "Rubik One", sans-serif;
+  user-select: none;
+}
+
+.register-footer-label {
+  color: #ffe699;
+  font-size: 1.2vw;
+  text-shadow: 
+    -0.08vw -0.08vw 0 #3a2c16,
+     0.08vw -0.08vw 0 #3a2c16,
+    -0.08vw  0.08vw 0 #3a2c16,
+     0.08vw  0.08vw 0 #3a2c16,
+     0 0.25vh 0.3vh rgba(0, 0, 0, 0.7);
+}
+
+.register-footer-action {
+  color: #ffffff;
+  font-size: 1.2vw;
+  text-shadow: 
+    -0.08vw -0.08vw 0 #3a2c16,
+     0.08vw -0.08vw 0 #3a2c16,
+    -0.08vw  0.08vw 0 #3a2c16,
+     0.08vw  0.08vw 0 #3a2c16,
+     0 0.25vh 0.3vh rgba(0, 0, 0, 0.7);
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.register-footer-action:hover {
+  color: #fde047;
+  transform: scale(1.05);
 }
 
 /* =============================================
    RESPONSIVE — Mobile Landscape
-   (lebar < 768px / max-width: 1023px, hanya landscape)
+   (max-width: 1023px, orientasi landscape saja)
    ============================================= */
 @media (max-width: 1023px) and (orientation: landscape) {
   .register-root {
@@ -58,9 +365,105 @@
   }
 
   .register-panel {
-    width: 52vw;
-    padding: 1.5vh 2vw;
-    gap: 1.2vh;
+    width: 46vw;
+    padding: 3vh 0.5vw 1.5vh 3.5vw;
+  }
+
+  .register-form {
+    max-width: 34.5vw;
+    gap: 1.3vh;
+  }
+
+  .register-slab-item {
+    border-width: 0.35vw;
+    border-radius: 1.8vh;
+    padding: 1.1vh 0.75vw;
+    gap: 0.55vw;
+  }
+
+  .register-icon-wrap {
+    width: 3.1vw;
+    height: 6.2vh;
+  }
+
+  .register-field-title {
+    font-size: 1.05vw;
+  }
+
+  .register-slab-right {
+    border-width: 0.25vw;
+    padding: 0.65vh 0.65vw;
+    border-radius: 1.4vh;
+  }
+
+  .register-input-field {
+    font-size: 0.8vw;
+    padding: 0.4vh 0;
+  }
+
+  .register-input-field::placeholder {
+    font-size: 0.76vw;
+  }
+
+  .register-toggle-eye {
+    right: 0.6vw;
+  }
+
+  .register-eye-svg {
+    width: 2vw;
+    height: 3.5vh;
+  }
+
+  .register-crack-top {
+    width: 4.2vw;
+    height: 1.6vh;
+    left: 26%;
+  }
+
+  .register-crack-bottom {
+    width: 3.8vw;
+    height: 1.4vh;
+    left: 40%;
+  }
+
+  .register-crack-top-alt {
+    width: 4vw;
+    height: 1.5vh;
+    left: 34%;
+  }
+
+  .register-crack-bottom-alt {
+    width: 4vw;
+    height: 1.5vh;
+    left: 22%;
+  }
+
+  .register-crack-side {
+    width: 2vw;
+    height: 2.2vh;
+  }
+
+  .register-crack-mid {
+    width: 3.2vw;
+    height: 1.4vh;
+  }
+
+  .register-btn-wrap {
+    margin-top: 2.8vh;
+  }
+
+  .register-btn-asset-img {
+    width: 23vw;
+    max-height: 10.5vh;
+  }
+
+  .register-login-link-row {
+    margin-top: 1.6vh;
+  }
+
+  .register-footer-label,
+  .register-footer-action {
+    font-size: 1.25vw;
   }
 }
 
@@ -69,8 +472,43 @@
    ============================================= */
 @media (min-width: 48em) and (max-width: 80em) {
   .register-panel {
-    width: 44vw;
-    padding: 2vh 2.5vw;
+    width: 45vw;
+    padding: 7.5vh 0.5vw 2vh 4.5vw;
+  }
+
+  .register-form {
+    max-width: 37vw;
+    gap: 1.4vh;
+  }
+
+  .register-field-title {
+    font-size: 0.95vw;
+  }
+
+  .register-input-field {
+    font-size: 0.75vw;
+  }
+
+  .register-input-field::placeholder {
+    font-size: 0.7vw;
+  }
+
+  .register-btn-wrap {
+    margin-top: 3.5vh;
+  }
+
+  .register-btn-asset-img {
+    width: 23vw;
+    max-height: 11.5vh;
+  }
+
+  .register-login-link-row {
+    margin-top: 2.2vh;
+  }
+
+  .register-footer-label,
+  .register-footer-action {
+    font-size: 1.2vw;
   }
 }
 
@@ -79,7 +517,42 @@
    ============================================= */
 @media (min-width: 80em) {
   .register-panel {
-    width: 40vw;
-    padding: 2vh 4vw;
+    width: 43vw;
+    padding: 8vh 0.5vw 2vh 4.5vw;
+  }
+
+  .register-form {
+    max-width: 35vw;
+    gap: 1.5vh;
+  }
+
+  .register-field-title {
+    font-size: 0.9vw;
+  }
+
+  .register-input-field {
+    font-size: 0.72vw;
+  }
+
+  .register-input-field::placeholder {
+    font-size: 0.68vw;
+  }
+
+  .register-btn-wrap {
+    margin-top: 3.8vh;
+  }
+
+  .register-btn-asset-img {
+    width: 22vw;
+    max-height: 12vh;
+  }
+
+  .register-login-link-row {
+    margin-top: 2.4vh;
+  }
+
+  .register-footer-label,
+  .register-footer-action {
+    font-size: 1.15vw;
   }
 }

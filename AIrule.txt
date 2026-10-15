@@ -22,3 +22,4 @@ selalu ada file logic dan css dalam per halaman , dan nama css harus related den
 13. untuk bahasa dalam web menggunakan bahasa jawa untuk anak kecil , karena game ini untuk anak anak smp sma atau anak sekolah
  
 14 untuk aturan px dan presentase dalam css hanya boleh digunakan untuk elemen background saja dan tiru contoh-bg.css saja untuk bg only , untuk komponen selain background tidak boleh dan tetap mengikuti aturan 
+15. jika membuat suatu komponen tombol,form,dll harus pertimbangkan warnanya match dan pertimbangkan semua responsif size dan eyecatching di semua resposif , dan beri spacing antara komponen satu sama alain jangan berdempet 

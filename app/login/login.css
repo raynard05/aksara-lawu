@@ -17,8 +17,8 @@
 
   /* Meniru contoh-bg.css: cover mengisi penuh layar tanpa border hitam */
   background-image: url('/login_assets/loginfhd.webp');
-  background-size: cover;
-  background-position: center 20%;
+  background-size: 100% 100%;
+  background-position: center center;
   background-repeat: no-repeat;
   background-color: transparent;
 }
