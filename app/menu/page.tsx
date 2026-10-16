@@ -61,6 +61,26 @@ const MENU_OPTIONS: MenuOption[] = [
 ];
 
 export default function MenuPage() {
+  const [showCover, setShowCover] = React.useState(true);
+  const [isLifting, setIsLifting] = React.useState(false);
+
+  React.useEffect(() => {
+    // 3.5 detik pertama cover tetap tampil penuh
+    const liftTimer = setTimeout(() => {
+      setIsLifting(true); // Mulai animasi diangkat perlahan ke atas
+    }, 3500);
+
+    // Setelah animasi angkat selesai (1.2 detik), unmount cover dari DOM
+    const removeTimer = setTimeout(() => {
+      setShowCover(false);
+    }, 4700);
+
+    return () => {
+      clearTimeout(liftTimer);
+      clearTimeout(removeTimer);
+    };
+  }, []);
+
   const leftOptions = MENU_OPTIONS.filter((_, idx) => idx % 2 === 0 && idx < 6);
   const rightOptions = MENU_OPTIONS.filter((_, idx) => idx % 2 === 1 && idx < 6);
   const fullWidthOption = MENU_OPTIONS.find((item) => item.isFullWidth);
@@ -176,11 +196,19 @@ export default function MenuPage() {
         </div>
       </div>
 
-      {/* Tombol Profile di pojok kiri atas (render only in menu & game menus) */}
+      {/* Tombol Profile di pojok kiri bawah */}
       <ProfileButton />
 
-      {/* Tombol Logout di pojok kanan bawah (render only in menu & game menus) */}
+      {/* Tombol Logout di pojok kanan bawah */}
       <LogoutButton />
+
+      {/* Game Cover Overlay (muncul 3.5 detik pertama lalu diangkat ke atas perlahan) */}
+      {showCover && (
+        <aside
+          className={`menu-cover-overlay ${isLifting ? "menu-cover-lifting" : ""}`}
+          aria-hidden="true"
+        />
+      )}
     </main>
   );
 }

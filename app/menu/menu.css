@@ -358,3 +358,33 @@
     width: 1.8vw;
   }
 }
+
+/* =============================================
+   GAME COVER OVERLAY (3.5 Detik Pertama)
+   Render di atas halaman /menu lalu diangkat perlahan ke atas
+   ============================================= */
+.menu-cover-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 9998;
+  background-image: url('/cover/gamecover.webp');
+  background-size: 100% 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  pointer-events: none;
+  user-select: none;
+  transform: translateY(0);
+  transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1), opacity 1.2s ease;
+  box-shadow: 0 3vh 6vh rgba(0, 0, 0, 0.85);
+}
+
+/* State saat cover diangkat perlahan ke atas (lift up) */
+.menu-cover-overlay.menu-cover-lifting {
+  transform: translateY(-105vh);
+  opacity: 0.96;
+}
+

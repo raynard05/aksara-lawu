@@ -29,5 +29,6 @@ selalu ada file logic dan css dalam per halaman , dan nama css harus related den
     - Media query mobile landscape WAJIB dilindungi dengan guard pointer layar sentuh (misal: `(pointer: coarse)`) agar saat layar desktop di-zoom in tinggi (di mana pixel width mengecil), sistem TIDAK SALAH mendeteksi laptop/monitor sebagai HP dan TIDAK mengganti background atau layout secara mendadak.
     - Nilai breakpoint untuk laptop sedang dan monitor/layar besar harus diseragamkan nilai proporsi `vw`/`vh`-nya agar tetap stabil dan terkunci konstan di semua level zoom.
 
-17.  untuk mengatur responsif layout bg halaman lain semua/global responsif nya dan aturan css nya mengikuti login 
-18 . asset yang ada di main responsif css nya sama dengan soundtoggle 
+17 .  untuk mengatur responsif layout bg halaman lain semua/global responsif nya dan aturan css nya mengikuti login 
+18 . asset yang ada di folder D:\aksara_lawu\assets\main dan dibuat komponen , responsif css nya sama dengan soundtoggle 
+19 .

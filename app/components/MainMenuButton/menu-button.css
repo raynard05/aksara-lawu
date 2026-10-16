@@ -1,0 +1,107 @@
+/* =============================================
+   MENU BUTTON COMPONENT — menu-button.css
+   Mengikuti AIrule.txt:
+   - File CSS & TSX dipisah
+   - Class selector unik ber-prefix: menu-btn-main- (rule 12)
+   - Asset menu.png (342x171 = 2:1 lonjong landscape)
+   - Dikecilkan 15% di semua responsif
+   - Satuan vh & vw (tanpa px untuk komponen) (rule 4 & 6)
+   - Layout & orientasi landscape-first (rule 5)
+   - Posisi: POJOK KIRI ATAS (bertukar posisi dengan profile button)
+   - Zoom-lock & mobile touch guard (pointer: coarse) (rule 16)
+   ============================================= */
+
+.menu-btn-main-wrapper {
+  position: fixed;
+  top: 3.2vh;
+  left: 2.2vw;
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  user-select: none;
+}
+
+/* Tombol icon menu papan lonjong (dikecilkan 15%) */
+.menu-btn-main-action {
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 11.9vw;
+  height: 10.2vh;
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.15s ease;
+  filter: drop-shadow(0 0.5vh 0.8vh rgba(0, 0, 0, 0.55));
+}
+
+.menu-btn-main-action:hover {
+  transform: scale(1.08) translateY(-0.3vh);
+  filter: drop-shadow(0 0.8vh 1.4vh rgba(0, 0, 0, 0.65)) brightness(1.08);
+}
+
+.menu-btn-main-action:active {
+  transform: scale(0.95) translateY(0.15vh);
+  filter: drop-shadow(0 0.3vh 0.4vh rgba(0, 0, 0, 0.45)) brightness(0.95);
+}
+
+/* Gambar icon menu dari folder main */
+.menu-btn-main-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+/* =============================================
+   RESPONSIVE — Laptop Sedang (1024px - 1366px pada 100% zoom)
+   (Dikecilkan 15%)
+   ============================================= */
+@media (min-width: 901px) and (max-width: 1366px) {
+  .menu-btn-main-wrapper {
+    top: 3.2vh;
+    left: 2.2vw;
+  }
+
+  .menu-btn-main-action {
+    width: 13.2vw;
+    height: 12.3vh;
+  }
+}
+
+/* =============================================
+   RESPONSIVE — Monitor / Layar Besar (> 1366px)
+   (Dikecilkan 15%)
+   ============================================= */
+@media (min-width: 1367px) {
+  .menu-btn-main-wrapper {
+    top: 3.2vh;
+    left: 2vw;
+  }
+
+  .menu-btn-main-action {
+    width: 11.5vw;
+    height: 9.8vh;
+  }
+}
+
+/* =============================================
+   RESPONSIVE — Mobile Landscape (Khusus Layar Sentuh HP)
+   (Dikecilkan 15%)
+   ============================================= */
+@media (max-width: 900px) and (orientation: landscape) and (pointer: coarse),
+(max-height: 500px) and (orientation: landscape) {
+  .menu-btn-main-wrapper {
+    top: 2.8vh;
+    left: 2.5vw;
+  }
+
+  .menu-btn-main-action {
+    width: 14vw;
+    height: 12.8vh;
+  }
+}
