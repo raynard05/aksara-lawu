@@ -321,6 +321,43 @@
   pointer-events: none;
 }
 
+/* Pesan Status / Notifikasi Register */
+.register-status-msg {
+  width: 100%;
+  padding: 0.8vh 1vw;
+  border-radius: 1vh;
+  font-family: var(--font-rubik-one), "Rubik One", sans-serif;
+  font-size: 0.8vw;
+  text-align: center;
+  user-select: none;
+  animation: register-fade-in 0.2s ease;
+}
+
+.register-status-msg.error {
+  background: rgba(139, 0, 0, 0.85);
+  color: #ffdede;
+  border: 0.15vw solid #ff6b6b;
+  text-shadow: 0 0.1vh 0.2vh rgba(0, 0, 0, 0.8);
+}
+
+.register-status-msg.success {
+  background: rgba(34, 110, 45, 0.9);
+  color: #e5ffeb;
+  border: 0.15vw solid #68d391;
+  text-shadow: 0 0.1vh 0.2vh rgba(0, 0, 0, 0.8);
+}
+
+@keyframes register-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-0.5vh);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* =============================================
    FOOTER: Sudah Punya Akun? Masuk disini
    ============================================= */

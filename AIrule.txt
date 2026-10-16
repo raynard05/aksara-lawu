@@ -12,7 +12,7 @@ vw dan vh saja karena satuan itu katanya bisa otomatis menegetahui berapa px dir
 9. gunakan font secara global rubik one untuk setiap text
 10. untuk responsif laptop juga khususkan ada laptop sedang dan layar agak besar, jadi saya mau komponen semua responsif 
 
-11 struktur folder per halaman harus : 
+11. struktur folder per halaman harus : 
 contoh :  
 didalam folder /login 
 ada  /page.tsx  dan /login.css 
@@ -28,3 +28,6 @@ selalu ada file logic dan css dalam per halaman , dan nama css harus related den
     - Saat browser di-zoom in (110%, 125%, 150%, hingga 175%) atau di-zoom out, komponen (form, tombol, background, teks) TIDAK BOLEH berpindah tempat, bergeser dari posisinya di background, atau membesar/meloncat secara aneh.
     - Media query mobile landscape WAJIB dilindungi dengan guard pointer layar sentuh (misal: `(pointer: coarse)`) agar saat layar desktop di-zoom in tinggi (di mana pixel width mengecil), sistem TIDAK SALAH mendeteksi laptop/monitor sebagai HP dan TIDAK mengganti background atau layout secara mendadak.
     - Nilai breakpoint untuk laptop sedang dan monitor/layar besar harus diseragamkan nilai proporsi `vw`/`vh`-nya agar tetap stabil dan terkunci konstan di semua level zoom.
+
+17.  untuk mengatur responsif layout bg halaman lain semua/global responsif nya dan aturan css nya mengikuti login 
+18 . asset yang ada di main responsif css nya sama dengan soundtoggle 

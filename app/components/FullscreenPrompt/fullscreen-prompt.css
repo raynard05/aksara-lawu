@@ -9,7 +9,7 @@
 .fsp-overlay {
   position: fixed;
   inset: 0;
-  z-index: 9999;
+  z-index: 999999;
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.72);

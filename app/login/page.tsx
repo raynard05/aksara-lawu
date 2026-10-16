@@ -2,11 +2,17 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import FallenLeaves from "../components/fallenleaves/FallenLeaves";
+import { supabase } from "@/lib/supabaseClient";
 import "./login.css";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [statusMessage, setStatusMessage] = useState<{ type: "error" | "success"; text: string } | null>(null);
+
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -17,9 +23,70 @@ export default function LoginPage() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Login data:", formData);
+    setStatusMessage(null);
+
+    if (!formData.username.trim() || !formData.password) {
+      setStatusMessage({ type: "error", text: "Username lan Sandi kudu diisi ya!" });
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      // Cari user berdasarkan username
+      const { data: user, error: fetchError } = await supabase
+        .from("users")
+        .select("id, nama_lengkap, username, kelas, nomor_absen, kata_sandi")
+        .eq("username", formData.username.trim().toLowerCase())
+        .maybeSingle();
+
+      if (fetchError) {
+        console.error("Error query user:", fetchError);
+        setStatusMessage({ type: "error", text: "Gagal nyambung menyang server!" });
+        setLoading(false);
+        return;
+      }
+
+      if (!user) {
+        setStatusMessage({ type: "error", text: "Username ora ditemokake. Priksa maneh ya!" });
+        setLoading(false);
+        return;
+      }
+
+      // Cek kecocokan password
+      if (user.kata_sandi !== formData.password) {
+        setStatusMessage({ type: "error", text: "Sandi sing kok lebokake salah!" });
+        setLoading(false);
+        return;
+      }
+
+      // Simpan session pengguna di localStorage untuk state game
+      if (typeof window !== "undefined") {
+        localStorage.setItem(
+          "aksara_lawu_user",
+          JSON.stringify({
+            id: user.id,
+            nama_lengkap: user.nama_lengkap,
+            username: user.username,
+            kelas: user.kelas,
+            nomor_absen: user.nomor_absen,
+          })
+        );
+      }
+
+      setStatusMessage({ type: "success", text: `Sugeng Rawuh, ${user.nama_lengkap}! Mlebu game...` });
+      setTimeout(() => {
+        // Arahkan ke menu utama permainan
+        router.push("/menu");
+      }, 1200);
+    } catch (err: unknown) {
+      console.error("Login error:", err);
+      setStatusMessage({ type: "error", text: "Ana kaluputan ing sistem. Cobi malih!" });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -32,6 +99,12 @@ export default function LoginPage() {
         {/* Panel kanan — area dinding batu */}
         <section className="login-panel" aria-label="Formulir Masuk">
           <form className="login-form" onSubmit={handleSubmit} noValidate>
+            {/* Notifikasi Status Pesan */}
+            {statusMessage && (
+              <div className={`login-status-msg ${statusMessage.type}`}>
+                {statusMessage.text}
+              </div>
+            )}
 
             {/* Field 1: USERNAME */}
             <div className="login-slab-item">
@@ -145,9 +218,9 @@ export default function LoginPage() {
 
             {/* Tombol Wiwiti */}
             <div className="login-btn-wrap">
-              <button type="submit" className="login-submit-btn" aria-label="Wiwiti">
+              <button type="submit" className="login-submit-btn" aria-label="Wiwiti" disabled={loading} style={{ opacity: loading ? 0.7 : 1 }}>
                 <img
-                  src="/login_assets/wiwitibutton.webp"
+                  src="/login_assets/wiwitbutton.webp"
                   alt="Wiwiti"
                   className="login-btn-asset-img"
                 />

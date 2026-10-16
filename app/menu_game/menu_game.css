@@ -1,0 +1,74 @@
+/* =============================================
+   GAME MENUS PAGE — menu_game.css
+   Mengikuti AIrule.txt:
+   - File CSS & TSX dipisah
+   - Class selector unik ber-prefix: menu-game- (rule 12)
+   - Background sama persis dengan menu (Menu.webp) (aturan 14 & 17)
+   - Layout & orientasi landscape-first (rule 5)
+   - Satuan vh & vw (tanpa px untuk komponen) (rule 4 & 6)
+   - Zoom-lock & mobile touch guard (pointer: coarse) (rule 16)
+   ============================================= */
+
+.menu-game-root {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-rubik-one), "Rubik One", sans-serif;
+
+  /* Background murni asset Menu.webp sama seperti halaman menu */
+  background-image: url('/menu_assets/Menu.webp');
+  background-size: 100% 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+}
+
+/* Container utama untuk penempatan isi halaman menu game */
+.menu-game-container {
+  position: relative;
+  z-index: 1;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+}
+
+/* =============================================
+   RESPONSIVE — Mobile Landscape (Layar Sentuh HP)
+   Dilindungi guard pointer: coarse agar zoom desktop tidak men-trigger ini
+   ============================================= */
+@media (max-width: 900px) and (orientation: landscape) and (pointer: coarse),
+       (max-height: 500px) and (orientation: landscape) {
+  .menu-game-root {
+    background-image: url('/menu_assets/Menu.webp');
+    background-size: 100% 100%;
+    background-position: center center;
+  }
+}
+
+/* =============================================
+   RESPONSIVE — Laptop Sedang (1024px - 1366px pada 100% zoom)
+   ============================================= */
+@media (min-width: 901px) and (max-width: 1366px) {
+  .menu-game-root {
+    background-size: 100% 100%;
+    background-position: center center;
+  }
+}
+
+/* =============================================
+   RESPONSIVE — Monitor / Layar Besar (> 1366px)
+   ============================================= */
+@media (min-width: 1367px) {
+  .menu-game-root {
+    background-size: 100% 100%;
+    background-position: center center;
+  }
+}

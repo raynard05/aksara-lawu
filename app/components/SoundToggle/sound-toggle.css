@@ -1,0 +1,102 @@
+/* =============================================
+   SOUND TOGGLE COMPONENT — sound-toggle.css
+   Mengikuti AIrule.txt:
+   - File CSS & TSX dipisah
+   - Menggunakan satuan vw & vh (tanpa px untuk komponen)
+   - Layout & orientasi landscape-first
+   - Zoom-lock & mobile touch guard (pointer: coarse)
+   - Class selector unik ber-prefix: sound-toggle-
+   ============================================= */
+
+.sound-toggle-wrapper {
+  position: fixed;
+  top: 3.2vh;
+  right: 2.2vw;
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  user-select: none;
+}
+
+/* Tombol lingkaran batu / kayu untuk toggle sound (diperbesar 20%) */
+.sound-toggle-btn {
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5.8vw;
+  height: 10.2vh;
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.15s ease;
+  filter: drop-shadow(0 0.5vh 0.8vh rgba(0, 0, 0, 0.55));
+}
+
+.sound-toggle-btn:hover {
+  transform: scale(1.1) rotate(-3deg);
+  filter: drop-shadow(0 0.8vh 1.4vh rgba(0, 0, 0, 0.65)) brightness(1.08);
+}
+
+.sound-toggle-btn:active {
+  transform: scale(0.92) rotate(2deg);
+  filter: drop-shadow(0 0.3vh 0.4vh rgba(0, 0, 0, 0.45)) brightness(0.95);
+}
+
+/* Gambar icon sound on/off */
+.sound-toggle-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+/* =============================================
+   RESPONSIVE — Laptop Sedang (1024px - 1366px pada 100% zoom)
+   ============================================= */
+@media (min-width: 901px) and (max-width: 1366px) {
+  .sound-toggle-wrapper {
+    top: 3.2vh;
+    right: 2.2vw;
+  }
+
+  .sound-toggle-btn {
+    width: 7vw;
+    height: 14.2vh;
+  }
+}
+
+/* =============================================
+   RESPONSIVE — Monitor / Layar Besar (> 1366px)
+   ============================================= */
+@media (min-width: 1367px) {
+  .sound-toggle-wrapper {
+    top: 3.2vh;
+    right: 2vw;
+  }
+
+  .sound-toggle-btn {
+    width: 5.5vw;
+    height: 9.8vh;
+  }
+}
+
+/* =============================================
+   RESPONSIVE — Mobile Landscape (Khusus Layar Sentuh HP)
+   Dilindungi pointer: coarse agar zoom in desktop tidak tertukar
+   ============================================= */
+@media (max-width: 900px) and (orientation: landscape) and (pointer: coarse),
+(max-height: 500px) and (orientation: landscape) {
+  .sound-toggle-wrapper {
+    top: 2.8vh;
+    right: 2.5vw;
+  }
+
+  .sound-toggle-btn {
+    width: 8vw;
+    height: 15vh;
+  }
+}

@@ -1,0 +1,360 @@
+/* =============================================
+   MENU PAGE — menu.css
+   Mengikuti AIrule.txt:
+   1. File CSS & TSX dipisah
+   2. Unique class selector: .menu-*
+   3. Menggunakan satuan vw & vh (tanpa px untuk komponen)
+   4. Landscape only
+   5. Font global Rubik One
+   6. Mengikuti zoom-lock & device consistency (rule 16)
+   7. Background % / 100% (aturan 14 & 17)
+   ============================================= */
+
+.menu-root {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-rubik-one), "Rubik One", sans-serif;
+
+  /* Background murni asset Menu.webp */
+  background-image: url('/menu_assets/Menu.webp');
+  background-size: 100% 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+}
+
+/* Container utama di atas background */
+.menu-container {
+  position: relative;
+  z-index: 1;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* =============================================
+   PAPAN SLAB SIGNBOARD DI TENGAH
+   Proporsi disesuaikan dengan aspect ratio papan asli (1632x963 ~ 1.69:1)
+   Agar tidak terlalu melebar ke samping dan pas di tengah bidang kain
+   ============================================= */
+.menu-signboard-wrapper {
+  position: relative;
+  width: 71vw;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+/* Gambar frame papan kayu & batu */
+.menu-signboard-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  z-index: 1;
+  filter: drop-shadow(0 1.2vh 2.5vh rgba(0, 0, 0, 0.65));
+}
+
+/* Area konten tombol di atas kain / bidang dalam papan */
+.menu-board-content {
+  position: relative;
+  z-index: 2;
+  width: 53.5vw;
+  height: 52vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 5vh;
+  gap: 1.8vh;
+}
+
+/* Row 2 kolom untuk tombol kiri dan kanan (didorong ke atas tambahan 5% / total -4.5vh) */
+.menu-grid-row {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  gap: 1.6vw;
+  margin-top: -4.5vh;
+}
+
+/* Tiap kolom berisi 3 tombol batu berderet ke bawah */
+.menu-column {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  gap: 1.6vh;
+}
+
+/* Row bawah untuk Profil Pengembang (lebar penuh) */
+.menu-full-row {
+  width: 100%;
+}
+
+/* =============================================
+   TOMBOL SLAB BATU (Menu Stone Button)
+   Meniru persis look di gambar referensi:
+   - Warna dasar batu krem/coklat muda bertekstur
+   - Border batu tebal bernuansa coklat tua
+   - Sudut melengkung & chamfer lekuk batu
+   - Inner highlight & drop shadow 3D
+   ============================================= */
+.menu-stone-btn {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  background: #cfbe9f;
+  background-image: linear-gradient(180deg, #ede1c8 0%, #d8c8a8 45%, #bfa886 100%);
+  border: 0.28vw solid #423223;
+  border-radius: 1.6vh;
+  box-shadow: 
+    inset 0 0.4vh 0.4vh rgba(255, 255, 255, 0.75),
+    inset 0 -0.5vh 0.6vh rgba(66, 50, 35, 0.4),
+    0 0.5vh 0.8vh rgba(0, 0, 0, 0.4);
+  padding: 0.8vh 1.2vw;
+  gap: 1vw;
+  height: 9.4vh;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.12s ease, filter 0.12s ease, box-shadow 0.12s ease;
+}
+
+.menu-stone-btn:hover {
+  transform: translateY(-0.2vh) scale(1.012);
+  filter: brightness(1.05);
+  box-shadow: 
+    inset 0 0.4vh 0.4vh rgba(255, 255, 255, 0.9),
+    inset 0 -0.5vh 0.6vh rgba(66, 50, 35, 0.4),
+    0 0.8vh 1.4vh rgba(0, 0, 0, 0.5);
+}
+
+.menu-stone-btn:active {
+  transform: translateY(0.15vh) scale(0.99);
+  filter: brightness(0.96);
+  box-shadow: 
+    inset 0 0.4vh 0.5vh rgba(66, 50, 35, 0.55),
+    0 0.2vh 0.4vh rgba(0, 0, 0, 0.4);
+}
+
+/* Modifikasi khusus tombol full width profil di bawah */
+.menu-stone-btn-full {
+  width: 100%;
+  justify-content: center;
+  height: 8.8vh;
+  gap: 1.2vw;
+}
+
+/* =============================================
+   RETAKAN BATU TEBAL SISI KIRI & KANAN
+   ============================================= */
+.menu-btn-crack-left {
+  position: absolute;
+  top: 50%;
+  left: -0.22vw;
+  transform: translateY(-50%);
+  width: 1.5vw;
+  height: 4.5vh;
+  pointer-events: none;
+  z-index: 3;
+  filter: drop-shadow(0.1vw 0.15vh 0.2vh rgba(0, 0, 0, 0.45));
+}
+
+.menu-btn-crack-right {
+  position: absolute;
+  top: 50%;
+  right: -0.22vw;
+  transform: translateY(-50%);
+  width: 1.5vw;
+  height: 4.5vh;
+  pointer-events: none;
+  z-index: 3;
+  filter: drop-shadow(-0.1vw 0.15vh 0.2vh rgba(0, 0, 0, 0.45));
+}
+
+/* Wadah icon tombol */
+.menu-btn-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 3.5vw;
+  height: 6.8vh;
+}
+
+.menu-btn-icon {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0.25vh 0.4vh rgba(0, 0, 0, 0.35));
+}
+
+/* Teks tombol font Rubik One tebal warna coklat tua ukiran batu */
+.menu-btn-label {
+  font-family: var(--font-rubik-one), "Rubik One", sans-serif;
+  font-size: 1.12vw;
+  line-height: 1.2;
+  color: #3d2c1d;
+  letter-spacing: 0.05vw;
+  text-shadow: 
+    0 0.15vh 0 rgba(255, 255, 255, 0.6),
+    0 -0.1vh 0 rgba(0, 0, 0, 0.15);
+  user-select: none;
+}
+
+/* =============================================
+   RESPONSIVE — Laptop Sedang (1024px - 1366px pada 100% zoom)
+   Diseragamkan proporsinya agar zoom-lock stabil
+   ============================================= */
+@media (min-width: 901px) and (max-width: 1366px) {
+  .menu-signboard-wrapper {
+    width: 71vw;
+    height: 80vh;
+  }
+
+  .menu-board-content {
+    width: 53.5vw;
+    height: 52vh;
+    margin-top: 5vh;
+    gap: 1.8vh;
+  }
+
+  .menu-grid-row {
+    gap: 1.6vw;
+  }
+
+  .menu-column {
+    gap: 1.6vh;
+  }
+
+  .menu-stone-btn {
+    border-width: 0.28vw;
+    height: 9.4vh;
+    padding: 0.8vh 1.2vw;
+    gap: 1vw;
+  }
+
+  .menu-stone-btn-full {
+    height: 9vh;
+  }
+
+  .menu-btn-icon-wrap {
+    width: 3.5vw;
+    height: 7vh;
+  }
+
+  .menu-btn-label {
+    font-size: 1.1vw;
+  }
+}
+
+/* =============================================
+   RESPONSIVE — Komputer / Monitor Besar (> 1366px)
+   ============================================= */
+@media (min-width: 1367px) {
+  .menu-signboard-wrapper {
+    width: 70vw;
+    height: 80vh;
+  }
+
+  .menu-board-content {
+    width: 53vw;
+    height: 52vh;
+    margin-top: 5vh;
+    gap: 1.8vh;
+  }
+
+  .menu-grid-row {
+    gap: 1.6vw;
+  }
+
+  .menu-column {
+    gap: 1.6vh;
+  }
+
+  .menu-stone-btn {
+    border-width: 0.28vw;
+    height: 9.4vh;
+    padding: 0.8vh 1.2vw;
+    gap: 1vw;
+  }
+
+  .menu-stone-btn-full {
+    height: 8.8vh;
+  }
+
+  .menu-btn-icon-wrap {
+    width: 3.4vw;
+    height: 6.8vh;
+  }
+
+  .menu-btn-label {
+    font-size: 1.08vw;
+  }
+}
+
+/* =============================================
+   RESPONSIVE — Mobile Landscape (Khusus HP Sentuh)
+   Dilindungi pointer: coarse agar zoom in desktop tidak tertukar
+   ============================================= */
+@media (max-width: 900px) and (orientation: landscape) and (pointer: coarse),
+       (max-height: 500px) and (orientation: landscape) {
+  .menu-signboard-wrapper {
+    width: 82vw;
+    height: 88vh;
+  }
+
+  .menu-board-content {
+    width: 63vw;
+    height: 60vh;
+    margin-top: 5.5vh;
+    gap: 1.2vh;
+  }
+
+  .menu-grid-row {
+    gap: 1.4vw;
+    margin-top: -3.5vh;
+  }
+
+  .menu-column {
+    gap: 1.2vh;
+  }
+
+  .menu-stone-btn {
+    border-width: 0.35vw;
+    border-radius: 1.6vh;
+    padding: 0.4vh 1vw;
+    gap: 0.8vw;
+    height: 11.2vh;
+  }
+
+  .menu-stone-btn-full {
+    height: 11vh;
+  }
+
+  .menu-btn-icon-wrap {
+    width: 4.2vw;
+    height: 8.2vh;
+  }
+
+  .menu-btn-label {
+    font-size: 1.15vw;
+  }
+
+  .menu-btn-crack-left,
+  .menu-btn-crack-right {
+    height: 5.5vh;
+    width: 1.8vw;
+  }
+}

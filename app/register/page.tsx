@@ -2,11 +2,17 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import FallenLeaves from "../components/fallenleaves/FallenLeaves";
+import { supabase } from "@/lib/supabaseClient";
 import "./register.css";
 
 export default function RegisterPage() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [statusMessage, setStatusMessage] = useState<{ type: "error" | "success"; text: string } | null>(null);
+
   const [formData, setFormData] = useState({
     jenengJangkep: "",
     username: "",
@@ -20,9 +26,76 @@ export default function RegisterPage() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Register data:", formData);
+    setStatusMessage(null);
+
+    // Validasi input
+    if (
+      !formData.jenengJangkep.trim() ||
+      !formData.username.trim() ||
+      !formData.klas.trim() ||
+      !formData.nomerAbsen.trim() ||
+      !formData.password
+    ) {
+      setStatusMessage({ type: "error", text: "Kabeh formulir kudu diisi ya!" });
+      return;
+    }
+
+    const nomorAbsenNum = parseInt(formData.nomerAbsen.trim(), 10);
+    if (isNaN(nomorAbsenNum)) {
+      setStatusMessage({ type: "error", text: "Nomer absen kudu awujud angka!" });
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      // Cek apakah username sudah dipakai
+      const { data: existingUser, error: checkError } = await supabase
+        .from("users")
+        .select("id")
+        .eq("username", formData.username.trim().toLowerCase())
+        .maybeSingle();
+
+      if (checkError) {
+        console.error("Error cek user:", checkError);
+      }
+
+      if (existingUser) {
+        setStatusMessage({ type: "error", text: "Username wis ana sing nganggo. Pilih liyane ya!" });
+        setLoading(false);
+        return;
+      }
+
+      // Insert ke tabel users
+      const { error: insertError } = await supabase.from("users").insert([
+        {
+          nama_lengkap: formData.jenengJangkep.trim(),
+          username: formData.username.trim().toLowerCase(),
+          kelas: formData.klas.trim().toUpperCase(),
+          nomor_absen: nomorAbsenNum,
+          kata_sandi: formData.password,
+        },
+      ]);
+
+      if (insertError) {
+        console.error("Error insert user:", insertError);
+        setStatusMessage({ type: "error", text: `Gagal ndaftar: ${insertError.message}` });
+        setLoading(false);
+        return;
+      }
+
+      setStatusMessage({ type: "success", text: "Sugeng! Akunmu wis kasil digawe. Ngalih menyang Login..." });
+      setTimeout(() => {
+        router.push("/login");
+      }, 1500);
+    } catch (err: unknown) {
+      console.error("Unexpected error:", err);
+      setStatusMessage({ type: "error", text: "Ana kesalahan sistem. Cobi maneh mengko!" });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -35,6 +108,12 @@ export default function RegisterPage() {
         {/* Panel kanan — area dinding batu */}
         <section className="register-panel" aria-label="Formulir Pendaftaran">
           <form className="register-form" onSubmit={handleSubmit} noValidate>
+            {/* Notifikasi Status Pesan */}
+            {statusMessage && (
+              <div className={`register-status-msg ${statusMessage.type}`}>
+                {statusMessage.text}
+              </div>
+            )}
             
             {/* Field 1: JENENG JANGKEP */}
             <div className="register-slab-item">
@@ -163,7 +242,7 @@ export default function RegisterPage() {
                   name="klas"
                   value={formData.klas}
                   onChange={handleChange}
-                  placeholder="(Tuladha: 7A, 7B)"
+                  placeholder="(Tuladha: 8A, 8B)"
                   className="register-input-field"
                   required
                 />
@@ -280,9 +359,9 @@ export default function RegisterPage() {
 
             {/* Tombol Wiwiti */}
             <div className="register-btn-wrap">
-              <button type="submit" className="register-submit-btn" aria-label="Wiwiti">
+              <button type="submit" className="register-submit-btn" aria-label="Wiwiti" disabled={loading} style={{ opacity: loading ? 0.7 : 1 }}>
                 <img
-                  src="/login_assets/wiwitibutton.webp"
+                  src="/login_assets/wiwitbutton.webp"
                   alt="Wiwiti"
                   className="register-btn-asset-img"
                 />
