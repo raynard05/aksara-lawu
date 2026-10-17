@@ -5,11 +5,15 @@ import Link from "next/link";
 import ProfileButton from "../components/ProfileButton/ProfileButton";
 import LogoutButton from "../components/LogoutButton/LogoutButton";
 import MainMenuButton from "../components/MainMenuButton/MainMenuButton";
+import FallenLeaves from "../components/fallenleaves/FallenLeaves";
 import "./menu_game.css";
 
 export default function MenuGamePage() {
   return (
     <main className="menu-game-root">
+      {/* Efek daun berjatuhan di tengah atas */}
+      <FallenLeaves variant="center" className="menu-game-leaves-layer" />
+
       {/* Container utama halaman menu game */}
       <div className="menu-game-container">
         {/* Papan Informasi Game Menus (gamemenus.webp) di Tengah */}
@@ -24,7 +28,7 @@ export default function MenuGamePage() {
           {/* Area konten di atas papan */}
           <div className="menu-game-board-content">
             {/* Kartu Wiwit (Escape Room Game) */}
-            <Link href="/game" className="menu-game-card">
+            <Link href="/cemorosewu" className="menu-game-card">
               {/* Panah di pojok kanan atas kartu */}
               <div className="menu-game-arrow-wrap" aria-hidden="true">
                 <svg

@@ -10,14 +10,24 @@
 .fallen-leaves-container {
   position: absolute;
   top: 0;
-  left: 0;
-  width: 54vw;
   height: 100vh;
   height: 100dvh;
   pointer-events: none;
   overflow: hidden;
   z-index: 2;
   user-select: none;
+}
+
+/* Varian khusus panel kiri (login & register) */
+.fallen-leaves-container.fallen-leaves-left {
+  left: 0;
+  width: 54vw;
+}
+
+/* Varian khusus tengah atas (menu & game menus) */
+.fallen-leaves-container.fallen-leaves-center {
+  left: 0;
+  width: 100vw;
 }
 
 .fallen-leaf-wrapper {

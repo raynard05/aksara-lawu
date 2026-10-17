@@ -25,8 +25,8 @@ const LEAF_ASSETS = [
   "/daun/Daun 18.png",
 ];
 
-// Daun berjatuhan khusus di panel kiri (area langit dan tugu Lawu: 0vw s/d 52vw)
-const LEAVES: LeafConfig[] = [
+// Daun berjatuhan khusus di panel kiri (area langit dan tugu Lawu: 0vw s/d 52vw) untuk login/register
+const LEFT_PANEL_LEAVES: LeafConfig[] = [
   {
     id: 1,
     src: LEAF_ASSETS[0],
@@ -149,17 +149,148 @@ const LEAVES: LeafConfig[] = [
   },
 ];
 
+// Daun berjatuhan khusus di tengah atas (area papan menu & game menus: 20vw s/d 80vw)
+const CENTER_LEAVES: LeafConfig[] = [
+  {
+    id: 101,
+    src: LEAF_ASSETS[0],
+    leftVw: 24,
+    widthVw: 2.7,
+    durationSec: 8.8,
+    delaySec: 0,
+    swayDistanceVw: 3.2,
+    startRotateDeg: -25,
+    endRotateDeg: 170,
+    opacity: 0.9,
+  },
+  {
+    id: 102,
+    src: LEAF_ASSETS[1],
+    leftVw: 33,
+    widthVw: 2.3,
+    durationSec: 10.5,
+    delaySec: 2.2,
+    swayDistanceVw: 3.8,
+    startRotateDeg: 20,
+    endRotateDeg: -180,
+    opacity: 0.86,
+  },
+  {
+    id: 103,
+    src: LEAF_ASSETS[2],
+    leftVw: 42,
+    widthVw: 3.2,
+    durationSec: 9.2,
+    delaySec: 4.5,
+    swayDistanceVw: 3.5,
+    startRotateDeg: -30,
+    endRotateDeg: 200,
+    opacity: 0.95,
+  },
+  {
+    id: 104,
+    src: LEAF_ASSETS[3],
+    leftVw: 51,
+    widthVw: 2.5,
+    durationSec: 11.2,
+    delaySec: 1.5,
+    swayDistanceVw: 4.2,
+    startRotateDeg: 35,
+    endRotateDeg: -165,
+    opacity: 0.88,
+  },
+  {
+    id: 105,
+    src: LEAF_ASSETS[4],
+    leftVw: 60,
+    widthVw: 2.9,
+    durationSec: 9.6,
+    delaySec: 5.8,
+    swayDistanceVw: 3.4,
+    startRotateDeg: -15,
+    endRotateDeg: 185,
+    opacity: 0.9,
+  },
+  {
+    id: 106,
+    src: LEAF_ASSETS[5],
+    leftVw: 69,
+    widthVw: 2.4,
+    durationSec: 10.8,
+    delaySec: 3.2,
+    swayDistanceVw: 3.6,
+    startRotateDeg: 25,
+    endRotateDeg: -210,
+    opacity: 0.92,
+  },
+  {
+    id: 107,
+    src: LEAF_ASSETS[6],
+    leftVw: 76,
+    widthVw: 2.8,
+    durationSec: 11.8,
+    delaySec: 6.8,
+    swayDistanceVw: 3.9,
+    startRotateDeg: -40,
+    endRotateDeg: 165,
+    opacity: 0.86,
+  },
+  {
+    id: 108,
+    src: LEAF_ASSETS[7],
+    leftVw: 28,
+    widthVw: 2.6,
+    durationSec: 9.8,
+    delaySec: 7.5,
+    swayDistanceVw: 3.5,
+    startRotateDeg: 30,
+    endRotateDeg: -190,
+    opacity: 0.88,
+  },
+  {
+    id: 109,
+    src: LEAF_ASSETS[2],
+    leftVw: 47,
+    widthVw: 3.0,
+    durationSec: 10.2,
+    delaySec: 8.8,
+    swayDistanceVw: 4.0,
+    startRotateDeg: -20,
+    endRotateDeg: 160,
+    opacity: 0.9,
+  },
+  {
+    id: 110,
+    src: LEAF_ASSETS[0],
+    leftVw: 64,
+    widthVw: 2.5,
+    durationSec: 11.5,
+    delaySec: 9.5,
+    swayDistanceVw: 3.3,
+    startRotateDeg: 45,
+    endRotateDeg: -175,
+    opacity: 0.87,
+  },
+];
+
 interface FallenLeavesProps {
   className?: string;
+  variant?: "left" | "center";
 }
 
-export default function FallenLeaves({ className = "" }: FallenLeavesProps) {
+export default function FallenLeaves({
+  className = "",
+  variant = "left",
+}: FallenLeavesProps) {
+  const leaves = variant === "center" ? CENTER_LEAVES : LEFT_PANEL_LEAVES;
+  const variantClass = variant === "center" ? "fallen-leaves-center" : "fallen-leaves-left";
+
   return (
     <div
-      className={`fallen-leaves-container ${className}`.trim()}
+      className={`fallen-leaves-container ${variantClass} ${className}`.trim()}
       aria-hidden="true"
     >
-      {LEAVES.map((leaf) => (
+      {leaves.map((leaf) => (
         <div
           key={leaf.id}
           className="fallen-leaf-wrapper"

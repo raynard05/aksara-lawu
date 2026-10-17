@@ -1,13 +1,17 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import "./sound-toggle.css";
 
 interface SoundToggleProps {
   initialMuted?: boolean;
 }
 
+const STANDALONE_ROUTES = ["/", "/login", "/register", "/menu", "/menu_game"];
+
 export default function SoundToggle({ initialMuted = false }: SoundToggleProps) {
+  const pathname = usePathname();
   const [isMuted, setIsMuted] = useState<boolean>(initialMuted);
 
   // Membaca preferensi suara dari localStorage saat pertama kali dimuat
@@ -20,7 +24,25 @@ export default function SoundToggle({ initialMuted = false }: SoundToggleProps) 
     } catch {
       // Abaikan jika localStorage tidak dapat diakses
     }
+
+    const handleSoundEvent = (event: Event) => {
+      const customEvent = event as CustomEvent<{ isMuted: boolean }>;
+      if (customEvent.detail && typeof customEvent.detail.isMuted === "boolean") {
+        setIsMuted(customEvent.detail.isMuted);
+      }
+    };
+
+    window.addEventListener("aksara-lawu-sound-change", handleSoundEvent);
+    return () => {
+      window.removeEventListener("aksara-lawu-sound-change", handleSoundEvent);
+    };
   }, []);
+
+  // Hanya tampilkan standalone SoundToggle di login, register, menu, menu_game.
+  // Di halaman lain (seperti Cemoro Sewu), kontrol sound sudah terintegrasi rapi di dalam TopBar.
+  if (!STANDALONE_ROUTES.includes(pathname)) {
+    return null;
+  }
 
   // Fungsi toggle suara on/off
   const toggleSound = () => {

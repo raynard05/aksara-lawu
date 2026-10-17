@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import LogoutButton from "../components/LogoutButton/LogoutButton";
 import ProfileButton from "../components/ProfileButton/ProfileButton";
+import FallenLeaves from "../components/fallenleaves/FallenLeaves";
 import "./menu.css";
 
 interface MenuOption {
@@ -107,6 +108,9 @@ export default function MenuPage() {
 
   return (
     <main className="menu-root">
+      {/* Efek daun berjatuhan di tengah atas */}
+      <FallenLeaves variant="center" className="menu-leaves-layer" />
+
       {/* Container utama halaman menu */}
       <div className="menu-container">
         {/* Papan Slab Kayu & Batu di Tengah */}

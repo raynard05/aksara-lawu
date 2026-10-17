@@ -1,0 +1,27 @@
+/* =============================================
+   CEMOROSEWU PAGE — cemorosewu.css
+   Mengikuti AIrule.txt:
+   - File CSS & TSX dipisah (rule 1 & 11)
+   - Class selector unik ber-prefix: cemorosewu- (rule 12)
+   - Background murni asset cemorosewu.webp (aturan 14 & 17)
+   - Layout & orientasi landscape-first (rule 5)
+   - Zoom-lock & konsistensi device (rule 16)
+   ============================================= */
+
+.cemorosewu-root {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Background murni ori asset cemorosewu.webp (aturan 14 & 17) */
+  background-image: url('/cemorosewu/cemorosewu.webp');
+  background-size: 100% 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+}

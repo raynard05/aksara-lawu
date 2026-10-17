@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Rubik_Mono_One } from "next/font/google";
 import "./globals.css";
 import FullscreenPrompt from "./components/FullscreenPrompt/FullscreenPrompt";
 import SoundToggle from "./components/SoundToggle/SoundToggle";
+import TopBar from "./components/TopBar/TopBar";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -40,6 +41,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col">
         <FullscreenPrompt />
         <SoundToggle />
+        <TopBar />
         {children}
       </body>
     </html>
