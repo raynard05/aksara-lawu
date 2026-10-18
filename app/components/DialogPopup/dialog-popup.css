@@ -87,13 +87,74 @@
   z-index: 2;
 }
 
+/* Sisi Kanan Header: memuat delay indicator di sebelah kiri dan step-counter di sebelah kanannya */
+.dialog-popup-header-right {
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+}
+
+/* Delay indicator di samping kiri indikator 1/5 */
+.dialog-delay-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.6vw;
+  background: rgba(35, 16, 6, 0.65);
+  border: 0.12vw solid #7c441b;
+  border-radius: 14px;
+  padding: 0.3vh 0.8vw;
+  animation: dialogFadeIn 0.3s ease forwards;
+}
+
+.dialog-delay-bar-container {
+  width: 8vw;
+  height: 0.75vh;
+  background: rgba(20, 8, 3, 0.85);
+  border-radius: 6px;
+  overflow: hidden;
+  border: 0.08vw solid #8e4c1e;
+}
+
+.dialog-delay-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #f39c12, #2ecc71);
+  border-radius: 6px;
+  transition: width 0.1s linear;
+}
+
+.dialog-delay-text {
+  font-family: 'Rubik One', 'Arial Black', sans-serif;
+  font-size: 0.85vw;
+  color: #ffde73;
+  text-shadow: 0.1vw 0.1vw 0 #1b0a02;
+}
+
+/* Footer dialog: Tombol aksi diposisikan tepat di TENGAH */
+.dialog-popup-footer {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1.5vh;
+  padding-top: 1.2vh;
+  border-top: 0.2vw solid rgba(133, 75, 37, 0.4);
+}
+
+.dialog-action-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.4vw;
+}
+
 /* Area konten tengah: membagi sisi Karakter dan sisi Teks di dalam frame agar tidak saling menutupi */
 .dialog-popup-content-layout {
   position: relative;
   z-index: 2;
   flex: 1;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   gap: 2vw;
   min-height: 24vh;
 }
@@ -102,30 +163,50 @@
   flex-direction: row-reverse;
 }
 
-/* Kolom Karakter di dalam frame: nempel pas bawah frame */
+/* Kolom Spacer Karakter: memberi jarak agar teks tidak tertabrak karakter */
 .dialog-popup-char-col {
   flex-shrink: 0;
-  width: 16vw;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  align-self: flex-end;
-  margin-bottom: -2.5vh; /* Pas nempel bibir bawah frame dialog */
+  width: 17vw;
 }
 
-/* Karakter diperbesar 15% (25vh -> 29vh, 13.5vw -> 15.5vw) */
+/* Anchor karakter menempel langsung di dasar frame dialog */
+.dialog-popup-char-anchor {
+  position: absolute;
+  bottom: 0;
+  z-index: 3;
+  pointer-events: none;
+  display: flex;
+  align-items: flex-end;
+}
+
+.dialog-popup-char-anchor.anchor-left {
+  left: 3vw;
+}
+
+.dialog-popup-char-anchor.anchor-right {
+  right: 3vw;
+}
+
+/* Gambar karakter dasar */
 .dialog-popup-char-in-frame {
-  width: 15.5vw;
-  max-width: 15.5vw;
-  height: 29vh;
-  max-height: 30vh;
+  width: 18vw;
+  max-width: 18vw;
+  height: 33vh;
+  max-height: 34vh;
   object-fit: contain;
   object-position: bottom center;
-  pointer-events: none;
+  display: block;
   filter: drop-shadow(0 0.8vh 1.4vh rgba(0, 0, 0, 0.65));
   animation: charBreathe 3s ease-in-out infinite alternate;
   transition: transform 0.3s ease;
-  display: block;
+}
+
+/* Khusus bagian dialog perintah pemilihan avatar: Karakter diperbesar 30% dan pas menempel di frame bawah */
+.dialog-popup-char-anchor.has-system-command .dialog-popup-char-in-frame {
+  width: 23.4vw;
+  max-width: 23.4vw;
+  height: 43vh;
+  max-height: 44.5vh;
 }
 
 @keyframes charBreathe {
@@ -148,7 +229,7 @@
 }
 
 .dialog-popup-speaker-badge {
-  font-family: 'Rubik One', 'Arial Black', sans-serif;
+  font-family: var(--font-rubik-one), 'Rubik One', 'Arial Black', sans-serif;
   font-size: 1.5vw;
   color: #ffde73;
   text-shadow:
@@ -184,7 +265,7 @@
 }
 
 .dialog-popup-step-counter {
-  font-family: 'Rubik One', 'Arial Black', sans-serif;
+  font-family: var(--font-rubik-one), 'Rubik One', 'Arial Black', sans-serif;
   font-size: 1.1vw;
   color: #e6b885;
   background: rgba(43, 20, 8, 0.75);
@@ -197,7 +278,7 @@
 
 
 .dialog-popup-paragraph {
-  font-family: 'Rubik One', 'Arial Black', sans-serif;
+  font-family: var(--font-rubik-one), 'Rubik One', 'Arial Black', sans-serif;
   font-size: 1.4vw;
   line-height: 1.6;
   color: #fff9e6;
@@ -243,7 +324,7 @@
 }
 
 .dialog-avatar-prompt-text {
-  font-family: 'Rubik One', 'Arial Black', sans-serif;
+  font-family: var(--font-rubik-one), 'Rubik One', 'Arial Black', sans-serif;
   font-size: 1.15vw;
   color: #ffe699;
   text-shadow: 0.12vw 0.12vw 0 #3b1900;
@@ -299,7 +380,7 @@
 }
 
 .dialog-avatar-label {
-  font-family: 'Rubik One', 'Arial Black', sans-serif;
+  font-family: var(--font-rubik-one), 'Rubik One', 'Arial Black', sans-serif;
   font-size: 0.95vw;
   color: #fffae8;
   text-shadow: 0.1vw 0.1vw 0 #1f0b00;
@@ -321,55 +402,10 @@
   box-shadow: 0 0 0.6vw #2ecc71;
 }
 
-/* Footer dialog: Status delay / tombol lanjut & skip */
-.dialog-popup-footer {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 1.5vh;
-  padding-top: 1.2vh;
-  border-top: 0.2vw solid rgba(133, 75, 37, 0.4);
-}
 
-.dialog-delay-indicator {
-  display: flex;
-  align-items: center;
-  gap: 0.6vw;
-}
-
-.dialog-delay-bar-container {
-  width: 14vw;
-  height: 0.9vh;
-  background: rgba(28, 12, 4, 0.8);
-  border-radius: 8px;
-  overflow: hidden;
-  border: 0.1vw solid #7c441b;
-}
-
-.dialog-delay-bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #f39c12, #2ecc71);
-  border-radius: 8px;
-  transition: width 0.1s linear;
-}
-
-.dialog-delay-text {
-  font-family: 'Rubik One', 'Arial Black', sans-serif;
-  font-size: 0.85vw;
-  color: #d1a877;
-  text-shadow: 0.1vw 0.1vw 0 #1b0a02;
-}
-
-.dialog-action-buttons {
-  display: flex;
-  align-items: center;
-  gap: 1.2vw;
-}
 
 .dialog-btn-action {
-  font-family: 'Rubik One', 'Arial Black', sans-serif;
+  font-family: var(--font-rubik-one), 'Rubik One', 'Arial Black', sans-serif;
   font-size: 1.05vw;
   padding: 0.9vh 1.6vw;
   border-radius: 18px;
@@ -437,13 +473,14 @@
 }
 
 /* ============================================================
-   RESPONSIVE — Laptop Sedang (901px - 1366px) (Rule 10 & 16)
+   RESPONSIVE — Laptop Sedang / Kecil (901px - 1366px) (Rule 10 & 16)
    ============================================================ */
 @media (min-width: 901px) and (max-width: 1366px) {
   .dialog-popup-container {
     width: 82vw;
     max-width: 82vw;
     min-height: 48vh;
+    margin-top: 5vh; /* Diturunkan 5% agar lebih ke bawah */
   }
 
   .dialog-popup-frame {
@@ -453,15 +490,30 @@
   }
 
   .dialog-popup-char-col {
-    width: 17vw;
-    margin-bottom: -2.5vh;
+    width: 18.5vw;
+  }
+
+  .dialog-popup-char-anchor.anchor-left {
+    left: 2.5vw;
+  }
+
+  .dialog-popup-char-anchor.anchor-right {
+    right: 2.5vw;
   }
 
   .dialog-popup-char-in-frame {
-    width: 16.5vw;
-    max-width: 16.5vw;
-    height: 30vh;
-    max-height: 32vh;
+    width: 19vw;
+    max-width: 19vw;
+    height: 34vh;
+    max-height: 35vh;
+  }
+
+  /* Khusus dialog perintah avatar di laptop sedang / kecil: perbesar 30% */
+  .dialog-popup-char-anchor.has-system-command .dialog-popup-char-in-frame {
+    width: 24.5vw;
+    max-width: 24.5vw;
+    height: 44vh;
+    max-height: 45vh;
   }
 
   .dialog-popup-speaker-badge {
@@ -491,6 +543,7 @@
     width: 76vw;
     max-width: 76vw;
     min-height: 45vh;
+    margin-top: 5vh; /* Diturunkan 5% agar lebih ke bawah */
   }
 
   .dialog-popup-frame {
@@ -500,15 +553,30 @@
   }
 
   .dialog-popup-char-col {
-    width: 15vw;
-    margin-bottom: -2.4vh;
+    width: 17.5vw;
+  }
+
+  .dialog-popup-char-anchor.anchor-left {
+    left: 2.5vw;
+  }
+
+  .dialog-popup-char-anchor.anchor-right {
+    right: 2.5vw;
   }
 
   .dialog-popup-char-in-frame {
-    width: 14.8vw;
-    max-width: 14.8vw;
-    height: 28vh;
-    max-height: 29vh;
+    width: 17.5vw;
+    max-width: 17.5vw;
+    height: 32vh;
+    max-height: 33vh;
+  }
+
+  /* Khusus dialog perintah avatar di monitor / layar besar: perbesar 30% */
+  .dialog-popup-char-anchor.has-system-command .dialog-popup-char-in-frame {
+    width: 22.8vw;
+    max-width: 22.8vw;
+    height: 41.5vh;
+    max-height: 42.5vh;
   }
 
   .dialog-popup-speaker-badge {
@@ -584,14 +652,21 @@
 
   .dialog-popup-char-col {
     width: 14vw;
-    margin-bottom: -1.4vh; /* Pas nempel bibir bawah frame dialog mobile */
+  }
+
+  .dialog-popup-char-anchor.anchor-left {
+    left: 2vw;
+  }
+
+  .dialog-popup-char-anchor.anchor-right {
+    right: 2vw;
   }
 
   .dialog-popup-char-in-frame {
-    width: 13.4vw;
-    max-width: 13.4vw;
-    height: 25.5vh;
-    max-height: 28vh;
+    width: 14vw;
+    max-width: 14vw;
+    height: 26vh;
+    max-height: 27vh;
   }
 
   .dialog-popup-body {
@@ -645,27 +720,37 @@
     font-size: 0.7vw;
   }
 
+  .dialog-popup-header-right {
+    gap: 0.8vw;
+  }
+
   .dialog-popup-footer {
     margin-top: 1vh;
     padding-top: 0.8vh;
     border-top-width: 0.15vw;
+    justify-content: center;
   }
 
   .dialog-delay-indicator {
-    gap: 0.5vw;
+    gap: 0.4vw;
+    padding: 0.25vh 0.6vw;
+    border-radius: 10px;
+    border-width: 0.1vw;
   }
 
   .dialog-delay-bar-container {
-    width: 10vw;
-    height: 0.7vh;
+    width: 6.5vw;
+    height: 0.6vh;
+    border-radius: 4px;
   }
 
   .dialog-delay-text {
-    font-size: 0.8vw;
+    font-size: 0.75vw;
   }
 
   .dialog-action-buttons {
     gap: 0.8vw;
+    justify-content: center;
   }
 
   .dialog-btn-action {

@@ -130,7 +130,7 @@ export default function DialogPopup({
           handleNext(false);
         }, duration);
       }
-    }, 110); // kecepatan per kata
+    }, 450); // Kecepatan 0.45 detik (450ms) per kata sesuai update dialog.txt
 
     return () => {
       clearAllTimers();
@@ -191,22 +191,34 @@ export default function DialogPopup({
               <span className="dialog-popup-speaker-dot" />
               <span>{currentItem.speakerName || "Panuntun"}</span>
             </div>
-            <span className="dialog-popup-step-counter">
-              {currentIndex + 1} / {activeDialogs.length}
-            </span>
+
+            {/* Sisi Kanan Header: Progress Loading Bar & Step Counter */}
+            <div className="dialog-popup-header-right">
+              {isWaitingDelay && (
+                <div className="dialog-delay-indicator">
+                  <div className="dialog-delay-bar-container">
+                    <div
+                      className="dialog-delay-bar-fill"
+                      style={{
+                        width: `${Math.max(0, (1 - delayRemaining / 3.2) * 100)}%`,
+                      }}
+                    />
+                  </div>
+                  <span className="dialog-delay-text">
+                    {delayRemaining}s
+                  </span>
+                </div>
+              )}
+              <span className="dialog-popup-step-counter">
+                {currentIndex + 1} / {activeDialogs.length}
+              </span>
+            </div>
           </header>
 
-          {/* Konten Utama: Karakter di dalam frame dan Teks berdampingan tanpa menutupi */}
+          {/* Konten Utama: Teks berdampingan dengan area padding karakter */}
           <div className={`dialog-popup-content-layout ${charSide === "right" ? "char-right" : ""}`}>
-            {/* Karakter masuk di dalam frame di samping kiri atau kanan */}
-            <div className="dialog-popup-char-col">
-              <img
-                src={charSrc}
-                alt="Karakter Panuntun"
-                className="dialog-popup-char-in-frame"
-                draggable={false}
-              />
-            </div>
+            {/* Spacer kolom karakter agar teks tidak tertutup karakter */}
+            <div className="dialog-popup-char-col" aria-hidden="true" />
 
             {/* Isi Text Paragraf dengan Animasi Kata per Kata */}
             <div className="dialog-popup-body">
@@ -260,26 +272,22 @@ export default function DialogPopup({
             </div>
           </div>
 
-          {/* Footer: Delay Progress Indicator & Navigasi */}
-          <footer className="dialog-popup-footer">
-            <div className="dialog-delay-indicator">
-              {isWaitingDelay && (
-                <>
-                  <div className="dialog-delay-bar-container">
-                    <div
-                      className="dialog-delay-bar-fill"
-                      style={{
-                        width: `${Math.max(0, (1 - delayRemaining / 3.2) * 100)}%`,
-                      }}
-                    />
-                  </div>
-                  <span className="dialog-delay-text">
-                    Lanjut otomatis ing {delayRemaining}s...
-                  </span>
-                </>
-              )}
-            </div>
+          {/* Gambar Karakter menempel pas di bibir bawah frame dialog */}
+          <div
+            className={`dialog-popup-char-anchor ${charSide === "right" ? "anchor-right" : "anchor-left"} ${
+              currentItem.systemCommand ? "has-system-command" : ""
+            }`}
+          >
+            <img
+              src={charSrc}
+              alt="Karakter Panuntun"
+              className="dialog-popup-char-in-frame"
+              draggable={false}
+            />
+          </div>
 
+          {/* Footer: Tombol Aksi di Tengah */}
+          <footer className="dialog-popup-footer">
             <div className="dialog-action-buttons">
               {isTyping && (
                 <button

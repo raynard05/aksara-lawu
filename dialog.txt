@@ -1,5 +1,6 @@
 rule 
--untuk font tamb
+-berikan delay per kata nya yaitu 0,45 detik
+-untuk font menggunakan font rubik one 
 -berikan delay untuk menunjukkan pop up ini diawal selama 2.5 detik , karena saya mau diawal detik detik pertama user bisa menikmati background setiap  halaman
 -ini adalah txt untuk semua dialog pop up dalam game 
 - ada pergantian character setiap text nya ada tanda (character)
