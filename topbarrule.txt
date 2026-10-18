@@ -1,0 +1,6 @@
+render globally , jangan render di
+-login
+-regis
+-gamemenus 
+-menus
+-maps

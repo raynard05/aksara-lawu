@@ -1,0 +1,27 @@
+/* =============================================
+   MAPS PAGE — maps.css
+   Mengikuti AIrule.txt:
+   - File CSS & TSX dipisah (rule 1 & 11)
+   - Class selector unik ber-prefix: maps- (rule 12)
+   - Background murni asset maps1.webp (aturan 14 & 17)
+   - Layout & orientasi landscape-first (rule 5)
+   - Zoom-lock & konsistensi device (rule 16)
+   ============================================= */
+
+.maps-root {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Background murni ori asset maps1.webp (aturan 14 & 17) */
+  background-image: url('/maps/maps1.webp');
+  background-size: 100% 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+}

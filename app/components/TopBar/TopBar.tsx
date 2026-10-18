@@ -4,14 +4,19 @@ import React, { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import "./topbar.css";
 
-// Rute yang dikecualikan dari rendering TopBar:
-// login, regis, menus, game menus
+// Rute yang dikecualikan dari rendering TopBar sesuai topbarrule.txt:
+// - login
+// - regis
+// - gamemenus (/menu_game)
+// - menus (/menu)
+// - maps (/maps)
 const EXCLUDED_ROUTES = [
   "/",
   "/login",
   "/register",
   "/menu",
   "/menu_game",
+  "/maps",
 ];
 
 export default function TopBar() {
