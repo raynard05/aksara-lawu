@@ -7,10 +7,12 @@ import "./cemorosewu.css";
 
 export default function CemoroSewuPage() {
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(true);
+  const [dialogMountKey, setDialogMountKey] = useState<number>(1);
 
-  // Pastikan dialog selalu terbuka setiap kali halaman dimuat / dikunjungi kembali
+  // Pastikan dialog selalu terbuka dan ter-reset bersih setiap kali halaman dimuat / dikunjungi kembali
   React.useEffect(() => {
     setIsDialogOpen(true);
+    setDialogMountKey((prev) => prev + 1);
   }, []);
 
   const handleDialogComplete = (selectedAvatar?: string) => {
@@ -24,12 +26,14 @@ export default function CemoroSewuPage() {
       <FogWind />
 
       {/* Komponen dialog pop up di tengah halaman membaca data dari dialog.json */}
-      <DialogPopup
-        key="cemorosewu-dialog"
-        isOpen={isDialogOpen}
-        pageKey="cemorosewu"
-        onComplete={handleDialogComplete}
-      />
+      {isDialogOpen && (
+        <DialogPopup
+          key={`dialog-${dialogMountKey}`}
+          isOpen={true}
+          pageKey="cemorosewu"
+          onComplete={handleDialogComplete}
+        />
+      )}
     </main>
   );
 }
