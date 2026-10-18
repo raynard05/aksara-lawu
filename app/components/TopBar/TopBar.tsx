@@ -71,20 +71,20 @@ export default function TopBar() {
 
   // Aksi toggle sound
   const handleToggleSound = () => {
-    setIsMuted((prev) => {
-      const nextState = !prev;
-      try {
-        localStorage.setItem("aksara_lawu_sound_muted", String(nextState));
+    const nextState = !isMuted;
+    setIsMuted(nextState);
+    try {
+      localStorage.setItem("aksara_lawu_sound_muted", String(nextState));
+      setTimeout(() => {
         window.dispatchEvent(
           new CustomEvent("aksara-lawu-sound-change", {
             detail: { isMuted: nextState },
           })
         );
-      } catch {
-        // Fallback jika localStorage error
-      }
-      return nextState;
-    });
+      }, 0);
+    } catch {
+      // Fallback jika localStorage error
+    }
   };
 
   // Aksi tombol next / lanjut

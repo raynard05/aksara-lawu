@@ -53,7 +53,7 @@
   pointer-events: auto;
 }
 
-/* Frame box pop up dialog: border coklat tebal & radius 35 (dialog.txt) */
+/* Frame box pop up dialog: warna coklat kayu premium & radius 35 konstan */
 .dialog-popup-frame {
   position: relative;
   width: 100%;
@@ -61,12 +61,10 @@
   border-radius: 35px;
   border: 0.65vw solid #422006;
   outline: 0.2vw solid #7c3f15;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background: linear-gradient(180deg, #3d1f0d 0%, #2b160a 60%, #1e0e06 100%);
   box-shadow:
-    inset 0 0 3vw rgba(35, 14, 4, 0.75),
-    inset 0 0.5vh 1vh rgba(255, 230, 180, 0.25),
+    inset 0 0 3vw rgba(15, 6, 2, 0.75),
+    inset 0 0.5vh 1vh rgba(255, 230, 180, 0.15),
     0 2vh 4.5vh rgba(0, 0, 0, 0.75);
   display: flex;
   flex-direction: column;
@@ -74,20 +72,7 @@
   padding: 2.8vh 3vw 2.5vh 3vw;
   box-sizing: border-box;
   z-index: 810;
-  background-color: #2b170c;
   overflow: hidden;
-}
-
-/* Texture overlay untuk aksen nuansa kayu / batu antik */
-.dialog-popup-texture-overlay {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  opacity: 0.38;
-  pointer-events: none;
-  border-radius: 32px;
-  mix-blend-mode: overlay;
 }
 
 /* Header dialog: nama pembicara & nomor urut paragraf */
@@ -108,34 +93,39 @@
   z-index: 2;
   flex: 1;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   gap: 2vw;
-  min-height: 22vh;
+  min-height: 24vh;
 }
 
 .dialog-popup-content-layout.char-right {
   flex-direction: row-reverse;
 }
 
-/* Kolom Karakter di dalam frame */
+/* Kolom Karakter di dalam frame: nempel pas bawah frame */
 .dialog-popup-char-col {
   flex-shrink: 0;
-  width: 14vw;
+  width: 16vw;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
+  align-self: flex-end;
+  margin-bottom: -2.5vh; /* Pas nempel bibir bawah frame dialog */
 }
 
+/* Karakter diperbesar 15% (25vh -> 29vh, 13.5vw -> 15.5vw) */
 .dialog-popup-char-in-frame {
-  width: 13.5vw;
-  max-width: 13.5vw;
-  height: 25vh;
-  max-height: 26vh;
+  width: 15.5vw;
+  max-width: 15.5vw;
+  height: 29vh;
+  max-height: 30vh;
   object-fit: contain;
+  object-position: bottom center;
   pointer-events: none;
   filter: drop-shadow(0 0.8vh 1.4vh rgba(0, 0, 0, 0.65));
   animation: charBreathe 3s ease-in-out infinite alternate;
   transition: transform 0.3s ease;
+  display: block;
 }
 
 @keyframes charBreathe {
@@ -143,7 +133,7 @@
     transform: translateY(0) scale(1);
   }
   100% {
-    transform: translateY(-0.6vh) scale(1.02);
+    transform: translateY(-0.4vh) scale(1.02);
   }
 }
 
@@ -153,6 +143,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-self: center;
   padding: 0.5vh 0.5vw;
 }
 
@@ -243,11 +234,11 @@
 
 /* [Perintah Sistem: Pemilihan Avatar] */
 .dialog-system-command-box {
-  margin-top: 2vh;
+  margin-top: 3.2vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.4vh;
+  gap: 3.5vh;
   animation: dialogFadeIn 0.4s ease forwards;
 }
 
@@ -257,13 +248,15 @@
   color: #ffe699;
   text-shadow: 0.12vw 0.12vw 0 #3b1900;
   text-align: center;
+  margin: 0;
+  padding-bottom: 0.8vh;
 }
 
 .dialog-avatar-grid {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1.8vw;
+  gap: 2vw;
   width: 100%;
 }
 
@@ -409,6 +402,19 @@
   border-color: #b06834;
 }
 
+/* Icon FastForward dari Lucide React */
+.dialog-btn-skip-icon {
+  width: 1.2vw;
+  height: 1.2vw;
+  flex-shrink: 0;
+  stroke-width: 2.5;
+  transition: transform 0.2s ease;
+}
+
+.dialog-btn-skip:hover .dialog-btn-skip-icon {
+  transform: translateX(0.15vw);
+}
+
 .dialog-btn-next {
   background: linear-gradient(180deg, #27ae60 0%, #1e8449 100%);
   color: #ffffff;
@@ -447,14 +453,15 @@
   }
 
   .dialog-popup-char-col {
-    width: 15vw;
+    width: 17vw;
+    margin-bottom: -2.5vh;
   }
 
   .dialog-popup-char-in-frame {
-    width: 14.5vw;
-    max-width: 14.5vw;
-    height: 26vh;
-    max-height: 28vh;
+    width: 16.5vw;
+    max-width: 16.5vw;
+    height: 30vh;
+    max-height: 32vh;
   }
 
   .dialog-popup-speaker-badge {
@@ -493,14 +500,15 @@
   }
 
   .dialog-popup-char-col {
-    width: 13vw;
+    width: 15vw;
+    margin-bottom: -2.4vh;
   }
 
   .dialog-popup-char-in-frame {
-    width: 12.8vw;
-    max-width: 12.8vw;
-    height: 24vh;
-    max-height: 25vh;
+    width: 14.8vw;
+    max-width: 14.8vw;
+    height: 28vh;
+    max-height: 29vh;
   }
 
   .dialog-popup-speaker-badge {
@@ -523,70 +531,153 @@
 }
 
 /* ============================================================
-   RESPONSIVE — Mobile Landscape Layar Sentuh HP (Rule 16)
+   RESPONSIVE — Mobile Landscape Layar Sentuh HP (Rule 16 & AIrule.txt)
+   - Layout diperkecil secara proporsional agar tidak menabrak TopBar di atas
+   - Menggunakan satuan vh & vw (tanpa px)
+   - Ukuran font, padding, border, kartu avatar, dan karakter diseimbangkan
    ============================================================ */
 @media (max-width: 900px) and (orientation: landscape) and (pointer: coarse),
        (max-height: 500px) and (orientation: landscape) {
   .dialog-popup-container {
-    width: 92vw;
-    max-width: 92vw;
-    min-height: 64vh;
+    width: 88vw;
+    max-width: 88vw;
+    min-height: auto;
+    margin-top: 5vh; /* Beri jarak aman dari papan TopBar di atas */
   }
 
   .dialog-popup-frame {
-    min-height: 60vh;
-    border-radius: 24px;
-    border-width: 0.9vw;
-    padding: 2.2vh 2.5vw 1.8vh 2.5vw;
+    min-height: auto;
+    border-radius: 20px;
+    border-width: 0.5vw;
+    outline-width: 0.15vw;
+    padding: 1.6vh 2.2vw 1.4vh 2.2vw;
   }
 
-  .dialog-popup-content-layout {
-    gap: 1.5vw;
-  }
-
-  .dialog-popup-char-col {
-    width: 16vw;
-  }
-
-  .dialog-popup-char-in-frame {
-    width: 15.5vw;
-    max-width: 15.5vw;
-    height: 30vh;
-    max-height: 32vh;
+  .dialog-popup-header {
+    padding-bottom: 0.8vh;
+    margin-bottom: 0.8vh;
+    border-bottom-width: 0.18vw;
   }
 
   .dialog-popup-speaker-badge {
-    font-size: 2vw;
+    font-size: 1.4vw;
+    letter-spacing: 0.04vw;
+    gap: 0.5vw;
+  }
+
+  .dialog-popup-speaker-dot {
+    width: 0.7vw;
+    height: 0.7vw;
   }
 
   .dialog-popup-step-counter {
-    font-size: 1.5vw;
+    font-size: 1.1vw;
+    padding: 0.3vh 0.9vw;
+    border-radius: 12px;
+    border-width: 0.12vw;
+  }
+
+  .dialog-popup-content-layout {
+    gap: 1.2vw;
+    min-height: auto;
+  }
+
+  .dialog-popup-char-col {
+    width: 14vw;
+    margin-bottom: -1.4vh; /* Pas nempel bibir bawah frame dialog mobile */
+  }
+
+  .dialog-popup-char-in-frame {
+    width: 13.4vw;
+    max-width: 13.4vw;
+    height: 25.5vh;
+    max-height: 28vh;
+  }
+
+  .dialog-popup-body {
+    padding: 0.2vh 0.4vw;
   }
 
   .dialog-popup-paragraph {
-    font-size: 1.7vw;
-    line-height: 1.45;
+    font-size: 1.25vw;
+    line-height: 1.42;
+    word-spacing: 0.08vw;
+  }
+
+  .dialog-system-command-box {
+    margin-top: 2.2vh;
+    gap: 2.8vh;
+  }
+
+  .dialog-avatar-prompt-text {
+    font-size: 1.05vw;
+    margin: 0;
+    padding-bottom: 0.8vh;
   }
 
   .dialog-avatar-grid {
-    gap: 1.2vw;
+    gap: 1.5vw;
   }
 
   .dialog-avatar-card {
-    padding: 0.8vh 0.8vw;
+    border-radius: 15px;
+    border-width: 0.19vw;
+    padding: 0.7vh 0.9vw;
+    gap: 0.5vh;
   }
 
   .dialog-avatar-img {
-    width: 8.5vw;
-    height: 8.5vw;
+    width: 5.1vw;
+    height: 5.1vw;
+    max-width: 8.5vh;
+    max-height: 8.5vh;
   }
 
   .dialog-avatar-label {
-    font-size: 1.3vw;
+    font-size: 0.9vw;
+  }
+
+  .dialog-avatar-check {
+    top: -0.4vh;
+    right: -0.3vw;
+    width: 1.15vw;
+    height: 1.15vw;
+    font-size: 0.7vw;
+  }
+
+  .dialog-popup-footer {
+    margin-top: 1vh;
+    padding-top: 0.8vh;
+    border-top-width: 0.15vw;
+  }
+
+  .dialog-delay-indicator {
+    gap: 0.5vw;
+  }
+
+  .dialog-delay-bar-container {
+    width: 10vw;
+    height: 0.7vh;
+  }
+
+  .dialog-delay-text {
+    font-size: 0.8vw;
+  }
+
+  .dialog-action-buttons {
+    gap: 0.8vw;
   }
 
   .dialog-btn-action {
-    font-size: 1.6vw;
-    padding: 0.9vh 2vw;
+    font-size: 0.95vw;
+    padding: 0.65vh 1.4vw;
+    border-radius: 14px;
+    gap: 0.4vw;
+  }
+
+  .dialog-btn-skip-icon {
+    width: 1vw;
+    height: 1vw;
+    stroke-width: 2.5;
   }
 }

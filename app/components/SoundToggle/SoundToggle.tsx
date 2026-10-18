@@ -46,25 +46,30 @@ export default function SoundToggle({ initialMuted = false }: SoundToggleProps) 
 
   // Fungsi toggle suara on/off
   const toggleSound = () => {
-    setIsMuted((prev) => {
-      const nextState = !prev;
-      try {
-        localStorage.setItem("aksara_lawu_sound_muted", String(nextState));
-        // Kirim custom event agar modul audio background dapat mendengarkan perubahan secara global
+    const nextState = !isMuted;
+    setIsMuted(nextState);
+    try {
+      localStorage.setItem("aksara_lawu_sound_muted", String(nextState));
+      // Dispatch custom event di event loop berikutnya agar tidak bentrok dengan siklus render React
+      setTimeout(() => {
         window.dispatchEvent(
           new CustomEvent("aksara-lawu-sound-change", {
             detail: { isMuted: nextState },
           })
         );
-      } catch {
-        // Fallback jika localStorage error
-      }
-      return nextState;
-    });
+      }, 0);
+    } catch {
+      // Fallback jika localStorage error
+    }
   };
 
+  const isAuthPage = pathname === "/" || pathname === "/login" || pathname === "/register";
+
   return (
-    <aside className="sound-toggle-wrapper" aria-label="Pengaturan Suara">
+    <aside
+      className={`sound-toggle-wrapper ${isAuthPage ? "sound-toggle-wrapper-top-left" : ""}`}
+      aria-label="Pengaturan Suara"
+    >
       <button
         type="button"
         id="btn-sound-toggle"

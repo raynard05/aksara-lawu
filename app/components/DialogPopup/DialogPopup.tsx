@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import { FastForward } from "lucide-react";
 import dialogData from "@/dialog.json";
 import "./dialog-popup.css";
 
@@ -179,26 +180,11 @@ export default function DialogPopup({
   const charSrc = `/character/${charImageName}`;
   const charSide = currentItem.characterSide || "left";
 
-  // Resolusi texture image path
-  const textureImageName = currentItem.bgTexture ? `${currentItem.bgTexture}.webp` : "texture1.webp";
-  const textureSrc = `/texture/${textureImageName}`;
-
   return (
     <div className="dialog-popup-overlay" role="dialog" aria-modal="true" aria-label="Dialog Pop Up Game">
       <div className="dialog-popup-container">
-        {/* Frame Box Pop Up Dialog: Border Coklat Tebal & Radius 35 */}
-        <section
-          className="dialog-popup-frame"
-          style={{
-            backgroundImage: `linear-gradient(rgba(45, 23, 10, 0.88), rgba(28, 14, 6, 0.94)), url(${textureSrc})`,
-          }}
-        >
-          {/* Texture Overlay */}
-          <div
-            className="dialog-popup-texture-overlay"
-            style={{ backgroundImage: `url(${textureSrc})` }}
-          />
-
+        {/* Frame Box Pop Up Dialog: Warna Solid Coklat Kayu & Border Tebal Konstan */}
+        <section className="dialog-popup-frame">
           {/* Header Pop Up */}
           <header className="dialog-popup-header">
             <div className="dialog-popup-speaker-badge">
@@ -303,7 +289,8 @@ export default function DialogPopup({
                   className="dialog-btn-action dialog-btn-skip"
                   title="Tampilake kabeh teks langsung"
                 >
-                  Cepetake ⏩
+                  <span>Cepetake</span>
+                  <FastForward className="dialog-btn-skip-icon" />
                 </button>
               )}
 

@@ -1,10 +1,11 @@
 rule 
+-untuk font tamb
 -berikan delay untuk menunjukkan pop up ini diawal selama 2.5 detik , karena saya mau diawal detik detik pertama user bisa menikmati background setiap  halaman
 -ini adalah txt untuk semua dialog pop up dalam game 
 - ada pergantian character setiap text nya ada tanda (character)
 - semua character bisa diakses di /assets/character
 -character didalam pop up disamping kiri dan disamping kanan 
-- bg pop up dialog bisa berganti dengan tanda ( bgtexture: texture1, texture2,dst....) 
+-tidak jadi pakai texture 
 -semua texture bisa didapatkan di /assets/texture
 - text dialog nya harus beranimasi kata per kata    , dan urut sesuai nomer  
 -bg frame harus sesuai dengan border coklat tebal , dan beri radius 35
@@ -14,7 +15,7 @@ rule
 
 halaman cemoro sewu:
 --------------------------------------------------------------------------------
- ( bgtexture: texture1) 
+
 (character : guider_pose1)
 1. Sugeng rawuh, para pendaki!
 
