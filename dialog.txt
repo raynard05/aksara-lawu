@@ -1,7 +1,7 @@
 rule 
--berikan delay per kata nya yaitu 0,45 detik
--untuk font menggunakan font rubik one 
--berikan delay untuk menunjukkan pop up ini diawal selama 2.5 detik , karena saya mau diawal detik detik pertama user bisa menikmati background setiap  halaman
+-berikan delay per kata nya yaitu 0,10 detik
+-untuk font menggunakan font jakarta sans
+-berikan delay untuk menunjukkan pop up ini diawal selama 3 detik , karena saya mau diawal detik detik pertama user bisa menikmati background setiap  halaman
 -ini adalah txt untuk semua dialog pop up dalam game 
 - ada pergantian character setiap text nya ada tanda (character)
 - semua character bisa diakses di /assets/character
@@ -11,13 +11,14 @@ rule
 - text dialog nya harus beranimasi kata per kata    , dan urut sesuai nomer  
 -bg frame harus sesuai dengan border coklat tebal , dan beri radius 35
 - beberapa dialog ada beberapa sistem perintah dengan tanda : [perintah sistem]
-- berikan delay setelah setiap paragraf berakhir itu 3.2 detik baru ke paragraf selanjutnya 
+- berikan delay setelah setiap paragraf berakhir itu 7 detik baru ke paragraf selanjutnya 
 -render komponen dialog ini di tengah halaman , dan jangan beri css gelapan yang memfokuskan pop up cukup render saja komponen nya
+-tambahkan tombol previous dan next dalam komponen dialog letaknya ditengah atas dan beri gap 
 
 halaman cemoro sewu:
 --------------------------------------------------------------------------------
 
-(character : guider_pose1)
+(character : guider_pose1) :
 1. Sugeng rawuh, para pendaki!
 
 2. Cemoro Sewu dadi titik wiwitan petualangan menyang Puncak Gunung Lawu. Ing lelampahan iki, ana maneka warna tantangan sing kudu dirampungake kanthi nggatekake kawigaten, ketlatenan, lan katrampilan maca Aksara Jawa.
@@ -26,7 +27,7 @@ halaman cemoro sewu:
 
 4. Wis siyap miwiti petualangan lan ngrampungake saben tantangan?
 
-(character  : guider_pose2)
+(character  : guider_pose2) : 
 5. Sadurunge miwiti lelampahan, pilih avatar sing bakal dadi wakil sajrone petualangan ing Aksara Lawu.
  [perintah sistem : tampilan semua avatar sebagus mungkin avatar1.webp,avatar2.webp,avatar3.webp,avatar4.webp, pemilihan avatar ]
 

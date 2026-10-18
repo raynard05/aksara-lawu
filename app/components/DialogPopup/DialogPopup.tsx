@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { FastForward } from "lucide-react";
+import { FastForward, ChevronLeft, ChevronRight } from "lucide-react";
 import dialogData from "@/dialog.json";
 import "./dialog-popup.css";
 
@@ -43,7 +43,7 @@ export default function DialogPopup({
   const [visibleWordsCount, setVisibleWordsCount] = useState<number>(0);
   const [isTyping, setIsTyping] = useState<boolean>(true);
   const [selectedAvatar, setSelectedAvatar] = useState<string>("avatar1.webp");
-  const [delayRemaining, setDelayRemaining] = useState<number>(3.2);
+  const [delayRemaining, setDelayRemaining] = useState<number>(7.0);
   const [isWaitingDelay, setIsWaitingDelay] = useState<boolean>(false);
   const [isInitialDelayPassed, setIsInitialDelayPassed] = useState<boolean>(false);
 
@@ -66,7 +66,7 @@ export default function DialogPopup({
   };
 
   // Rule dialog.txt:
-  // "berikan delay untuk menunjukkan pop up ini diawal selama 2.5 detik , karena saya mau diawal detik detik pertama user bisa menikmati background setiap halaman"
+  // "berikan delay untuk menunjukkan pop up ini diawal selama 3 detik , karena saya mau diawal detik detik pertama user bisa menikmati background setiap halaman"
   useEffect(() => {
     if (!isOpen) return;
 
@@ -76,18 +76,18 @@ export default function DialogPopup({
     setVisibleWordsCount(0);
     setIsTyping(true);
     setIsWaitingDelay(false);
-    setDelayRemaining(3.2);
+    setDelayRemaining(7.0);
 
     initialDelayTimeoutRef.current = setTimeout(() => {
       setIsInitialDelayPassed(true);
-    }, 2500);
+    }, 3000);
 
     return () => {
       if (initialDelayTimeoutRef.current) clearTimeout(initialDelayTimeoutRef.current);
     };
   }, [pageKey, isOpen]);
 
-  // Efek animasi kata per kata (word-by-word) setelah initial delay 2.5 detik selesai
+  // Efek animasi kata per kata (word-by-word, delay 0.10s) setelah initial delay 3 detik selesai
   useEffect(() => {
     if (!isOpen || !isInitialDelayPassed) return;
 
@@ -95,7 +95,7 @@ export default function DialogPopup({
     setVisibleWordsCount(0);
     setIsTyping(true);
     setIsWaitingDelay(false);
-    setDelayRemaining(3.2);
+    setDelayRemaining(7.0);
 
     let wordIdx = 0;
     wordTimerRef.current = setInterval(() => {
@@ -112,11 +112,11 @@ export default function DialogPopup({
           return;
         }
 
-        // Delay 3.2 detik sesuai dialog.txt rule:
-        // "berikan delay setelah setiap paragraf berakhir itu 3.2 detik baru ke paragraf selanjutnya"
+        // Delay 7 detik sesuai dialog.txt rule:
+        // "berikan delay setelah setiap paragraf berakhir itu 7 detik baru ke paragraf selanjutnya"
         setIsWaitingDelay(true);
         const startTime = Date.now();
-        const duration = 3200;
+        const duration = 7000;
 
         delayIntervalRef.current = setInterval(() => {
           const elapsed = Date.now() - startTime;
@@ -130,14 +130,21 @@ export default function DialogPopup({
           handleNext(false);
         }, duration);
       }
-    }, 450); // Kecepatan 0.45 detik (450ms) per kata sesuai update dialog.txt
+    }, 100); // Kecepatan 0.10 detik (100ms) per kata sesuai update dialog.txt
 
     return () => {
       clearAllTimers();
     };
   }, [currentIndex, isOpen, isInitialDelayPassed, activeDialogs.length]);
 
-  // Handler ke paragraf selanjutnya
+  // Handler ke paragraf sebelumnya (Previous)
+  const handlePrev = () => {
+    if (currentIndex <= 0) return;
+    clearAllTimers();
+    setCurrentIndex((prev) => prev - 1);
+  };
+
+  // Handler ke paragraf selanjutnya (Next)
   const handleNext = (manual = true) => {
     clearAllTimers();
 
@@ -192,6 +199,35 @@ export default function DialogPopup({
               <span>{currentItem.speakerName || "Panuntun"}</span>
             </div>
 
+            {/* Tombol Navigasi Previous & Next di Tengah Atas (dialog.txt rule: tombol previous dan next letaknya ditengah atas dan beri gap) */}
+            <div className="dialog-popup-header-nav" aria-label="Navigasi Paragraf Dialog">
+              <button
+                type="button"
+                id="btn-dialog-header-prev"
+                onClick={handlePrev}
+                disabled={currentIndex === 0}
+                className="dialog-nav-btn dialog-nav-btn-prev"
+                title="Paragraf Sadurunge (Previous)"
+                aria-label="Sadurunge"
+              >
+                <ChevronLeft className="dialog-nav-btn-icon" />
+                <span>Sadurunge</span>
+              </button>
+
+              <button
+                type="button"
+                id="btn-dialog-header-next"
+                onClick={() => handleNext(true)}
+                disabled={currentIndex >= activeDialogs.length - 1}
+                className="dialog-nav-btn dialog-nav-btn-next"
+                title="Paragraf Sabanjure (Next)"
+                aria-label="Sabanjure"
+              >
+                <span>Sabanjure</span>
+                <ChevronRight className="dialog-nav-btn-icon" />
+              </button>
+            </div>
+
             {/* Sisi Kanan Header: Progress Loading Bar & Step Counter */}
             <div className="dialog-popup-header-right">
               {isWaitingDelay && (
@@ -200,7 +236,7 @@ export default function DialogPopup({
                     <div
                       className="dialog-delay-bar-fill"
                       style={{
-                        width: `${Math.max(0, (1 - delayRemaining / 3.2) * 100)}%`,
+                        width: `${Math.max(0, (1 - delayRemaining / 7.0) * 100)}%`,
                       }}
                     />
                   </div>
