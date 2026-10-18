@@ -35,6 +35,7 @@
     opacity: 0;
     transform: scale(0.97);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -47,7 +48,8 @@
   width: 78vw;
   max-width: 78vw;
   min-height: 46vh;
-  margin-top: 10vh; /* Diturunkan 10% sesuai permintaan pengguna */
+  margin-top: 10vh;
+  /* Diturunkan 10% sesuai permintaan pengguna */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -88,11 +90,12 @@
   z-index: 2;
 }
 
-/* Navigasi Previous & Next di Tengah Atas (dialog.txt: tombol previous dan next letaknya ditengah atas dan beri gap) */
+/* Navigasi Previous & Next di Tengah Atas: digeser ke atas 4% agar tidak menempel batas line */
 .dialog-popup-header-nav {
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: 10%;
+  /* Dinaikkan 4% dari batas garis bawah header */
   transform: translate(-50%, -50%);
   display: flex;
   align-items: center;
@@ -111,7 +114,7 @@
   padding: 0.55vh 1.1vw;
   display: flex;
   align-items: center;
-  gap: 0.4vw;
+  gap: 0.7vw;
   cursor: pointer;
   outline: none;
   box-shadow: 0 0.4vh 0.8vh rgba(0, 0, 0, 0.45);
@@ -161,13 +164,15 @@
   background: rgba(35, 16, 6, 0.65);
   border: 0.12vw solid #7c441b;
   border-radius: 14px;
-  padding: 0.45vh 0.8vw; /* Ditambah 5% lebih tinggi */
+  padding: 0.45vh 0.8vw;
+  /* Ditambah 5% lebih tinggi */
   animation: dialogFadeIn 0.3s ease forwards;
 }
 
 .dialog-delay-bar-container {
   width: 8vw;
-  height: 0.8vh; /* Height bar bertambah 5% (0.75vh -> 0.8vh) */
+  height: 0.8vh;
+  /* Height bar bertambah 5% (0.75vh -> 0.8vh) */
   background: rgba(20, 8, 3, 0.85);
   border-radius: 6px;
   overflow: hidden;
@@ -272,6 +277,7 @@
   0% {
     transform: translateY(0) scale(1);
   }
+
   100% {
     transform: translateY(-0.4vh) scale(1.02);
   }
@@ -317,6 +323,7 @@
     transform: scale(0.85);
     opacity: 0.7;
   }
+
   to {
     transform: scale(1.2);
     opacity: 1;
@@ -367,6 +374,7 @@
     opacity: 0;
     transform: translateY(0.5vh) scale(0.92);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -541,7 +549,8 @@
     width: 82vw;
     max-width: 82vw;
     min-height: 48vh;
-    margin-top: 10vh; /* Diturunkan 10% agar lebih ke bawah */
+    margin-top: 10vh;
+    /* Diturunkan 10% agar lebih ke bawah */
   }
 
   .dialog-popup-frame {
@@ -604,7 +613,8 @@
     width: 76vw;
     max-width: 76vw;
     min-height: 45vh;
-    margin-top: 10vh; /* Diturunkan 10% agar lebih ke bawah */
+    margin-top: 10vh;
+    /* Diturunkan 10% agar lebih ke bawah */
   }
 
   .dialog-popup-frame {
@@ -667,29 +677,35 @@
    - Karakter tidak menabrak / menutupi header & nama Panuntun
    ============================================================ */
 @media (max-width: 900px) and (orientation: landscape) and (pointer: coarse),
-       (max-height: 500px) and (orientation: landscape) {
+(max-height: 500px) and (orientation: landscape) {
   .dialog-popup-container {
     width: 92vw;
     max-width: 92vw;
     min-height: auto;
-    margin-top: 20vh; /* Diturunkan 10% lagi (total 20vh) agar tidak menempel / kena TopBar */
+    margin-top: 20vh;
+    /* Diturunkan 10% lagi (total 20vh) agar tidak menempel / kena TopBar */
   }
 
   .dialog-popup-frame {
     min-height: auto;
-    border-radius: 4vh; /* Radius 35 proporsional pada mobile landscape */
+    border-radius: 4vh;
+    /* Radius 35 proporsional pada mobile landscape */
     border-width: 0.7vw;
     outline-width: 0.25vw;
-    padding: 2vh 2.4vw 2vh 2.4vw; /* Beri padding vertikal lebih lega */
+    padding: 2vh 2.4vw 2vh 2.4vw;
+    /* Beri padding vertikal lebih lega */
   }
 
   .dialog-popup-header {
     padding-bottom: 1.2vh;
-    margin-bottom: 1.5vh; /* Beri space lega antara header dengan teks di bawahnya */
+    margin-bottom: 1.5vh;
+    /* Beri space lega antara header dengan teks di bawahnya */
     border-bottom-width: 0.22vw;
   }
 
   .dialog-popup-header-nav {
+    top: 46%;
+    /* Dinaikkan 4% dari batas garis header di mobile */
     gap: 1.2vw;
   }
 
@@ -727,7 +743,8 @@
   .dialog-popup-content-layout {
     gap: 1.6vw;
     min-height: 24vh;
-    padding: 0.8vh 0; /* Beri ruang bernapas atas dan bawah teks */
+    padding: 0.8vh 0;
+    /* Beri ruang bernapas atas dan bawah teks */
   }
 
   /* Kolom spacer karakter: diperlebar proporsional dengan pembesaran karakter 30% */
@@ -761,12 +778,14 @@
   }
 
   .dialog-popup-body {
-    padding: 1vh 0.6vw 1.2vh 0.6vw; /* Space vertikal lebih lega pada area teks */
+    padding: 1vh 0.6vw 1.2vh 0.6vw;
+    /* Space vertikal lebih lega pada area teks */
   }
 
   .dialog-popup-paragraph {
     font-size: 1.7vw;
-    line-height: 1.6; /* Line-height lebih lega agar tidak sempit */
+    line-height: 1.6;
+    /* Line-height lebih lega agar tidak sempit */
     word-spacing: 0.12vw;
     margin-bottom: 0.5vh;
   }
@@ -774,13 +793,15 @@
   /* Box perintah sistem: judul perintah avatar dengan baris avatar diberi gap yang jelas dan nyaman */
   .dialog-system-command-box {
     margin-top: 1.8vh;
-    gap: 2.4vh; /* Gap lega antara judul teks instruksi dan barisan kartu avatar */
+    gap: 2.4vh;
+    /* Gap lega antara judul teks instruksi dan barisan kartu avatar */
   }
 
   .dialog-avatar-prompt-text {
     font-size: 1.45vw;
     margin: 0;
-    padding-bottom: 1.2vh; /* Gap nyata antara judul perintah dan baris kartu avatar */
+    padding-bottom: 1.2vh;
+    /* Gap nyata antara judul perintah dan baris kartu avatar */
   }
 
   .dialog-avatar-grid {
@@ -818,7 +839,8 @@
   }
 
   .dialog-popup-footer {
-    margin-top: 1.8vh; /* Space lega dari konten teks/avatar ke footer tombol */
+    margin-top: 1.8vh;
+    /* Space lega dari konten teks/avatar ke footer tombol */
     padding-top: 1.4vh;
     border-top-width: 0.2vw;
     justify-content: center;
@@ -827,14 +849,16 @@
   /* Delay indicator loading: height bertambah 5% pada responsive mobile */
   .dialog-delay-indicator {
     gap: 0.6vw;
-    padding: 0.45vh 0.9vw; /* Height indicator ditambah 5% */
+    padding: 0.45vh 0.9vw;
+    /* Height indicator ditambah 5% */
     border-radius: 1.8vh;
     border-width: 0.15vw;
   }
 
   .dialog-delay-bar-container {
     width: 9vw;
-    height: 1vh; /* Height loading bar bertambah 5% (0.9vh -> 1vh) */
+    height: 1vh;
+    /* Height loading bar bertambah 5% (0.9vh -> 1vh) */
     border-radius: 1vh;
   }
 
@@ -850,7 +874,8 @@
   /* Height button cepetake, sabanjure, dan miwiti petualangan bertambah 5% */
   .dialog-btn-action {
     font-size: 1.5vw;
-    padding: 1.4vh 2.4vw; /* Height bertambah 5% lebih tinggi dan nyaman ditekan */
+    padding: 1.4vh 2.4vw;
+    /* Height bertambah 5% lebih tinggi dan nyaman ditekan */
     min-height: 5.5vh;
     border-radius: 2.4vh;
     gap: 0.6vw;

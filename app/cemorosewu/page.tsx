@@ -8,6 +8,11 @@ import "./cemorosewu.css";
 export default function CemoroSewuPage() {
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(true);
 
+  // Pastikan dialog selalu terbuka setiap kali halaman dimuat / dikunjungi kembali
+  React.useEffect(() => {
+    setIsDialogOpen(true);
+  }, []);
+
   const handleDialogComplete = (selectedAvatar?: string) => {
     setIsDialogOpen(false);
     console.log("Avatar kapilih:", selectedAvatar);
@@ -20,6 +25,7 @@ export default function CemoroSewuPage() {
 
       {/* Komponen dialog pop up di tengah halaman membaca data dari dialog.json */}
       <DialogPopup
+        key="cemorosewu-dialog"
         isOpen={isDialogOpen}
         pageKey="cemorosewu"
         onComplete={handleDialogComplete}
