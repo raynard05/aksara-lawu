@@ -110,8 +110,9 @@
   color: #fff4d6;
   background: linear-gradient(180deg, #6b3b19 0%, #4a250c 100%);
   border: 0.16vw solid #9e5b29;
-  border-radius: 16px;
-  padding: 0.55vh 1.1vw;
+  border-radius: 18px;
+  padding: 0.8vh 1.25vw; /* Height bertambah sedikit lebih tebal dan kokoh */
+  min-height: 3.4vh;
   display: flex;
   align-items: center;
   gap: 0.7vw;
@@ -711,10 +712,11 @@
 
   .dialog-nav-btn {
     font-size: 1.35vw;
-    padding: 0.55vh 1.4vw;
-    border-radius: 1.8vh;
+    padding: 0.8vh 1.4vw; /* Height bertambah sedikit lebih nyaman */
+    min-height: 4vh;
+    border-radius: 2vh;
     border-width: 0.2vw;
-    gap: 0.4vw;
+    gap: 0.5vw;
   }
 
   .dialog-nav-btn-icon {
