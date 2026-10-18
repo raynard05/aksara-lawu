@@ -1,0 +1,53 @@
+{
+  "cemorosewu": [
+    {
+      "id": 1,
+      "character": "guider_pose1",
+      "characterSide": "left",
+      "bgTexture": "texture1",
+      "speakerName": "Panuntun",
+      "text": "Sugeng rawuh, para pendaki!"
+    },
+    {
+      "id": 2,
+      "character": "guider_pose1",
+      "characterSide": "left",
+      "bgTexture": "texture1",
+      "speakerName": "Panuntun",
+      "text": "Cemoro Sewu dadi titik wiwitan petualangan menyang Puncak Gunung Lawu. Ing lelampahan iki, ana maneka warna tantangan sing kudu dirampungake kanthi nggatekake kawigaten, ketlatenan, lan katrampilan maca Aksara Jawa."
+    },
+    {
+      "id": 3,
+      "character": "guider_pose1",
+      "characterSide": "left",
+      "bgTexture": "texture1",
+      "speakerName": "Panuntun",
+      "text": "Sadawane perjalanan, para pendaki bakal nemokake informasi, pitunjuk, lan kode sing kudu dipecahake kanggo mbukak dalan menyang papan sabanjure. Saben tantangan dirancang kanggo nglatih katrampilan maca Aksara Jawa kanthi trep lan bener."
+    },
+    {
+      "id": 4,
+      "character": "guider_pose1",
+      "characterSide": "left",
+      "bgTexture": "texture1",
+      "speakerName": "Panuntun",
+      "text": "Wis siyap miwiti petualangan lan ngrampungake saben tantangan?"
+    },
+    {
+      "id": 5,
+      "character": "guider_pose2",
+      "characterSide": "right",
+      "bgTexture": "texture1",
+      "speakerName": "Panuntun",
+      "text": "Sadurunge miwiti lelampahan, pilih avatar sing bakal dadi wakil sajrone petualangan ing Aksara Lawu.",
+      "systemCommand": {
+        "type": "avatar_select",
+        "avatars": [
+          "avatar1.webp",
+          "avatar2.webp",
+          "avatar3.webp",
+          "avatar4.webp"
+        ]
+      }
+    }
+  ]
+}

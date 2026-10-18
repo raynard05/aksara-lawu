@@ -32,3 +32,4 @@ selalu ada file logic dan css dalam per halaman , dan nama css harus related den
 17 .  untuk mengatur responsif layout bg halaman lain semua/global responsif nya dan aturan css nya mengikuti login 
 18 . asset yang ada di folder D:\aksara_lawu\assets\main dan dibuat komponen , responsif css nya sama dengan soundtoggle 
 19 . aturan render top bar seperti di rule topbarrule.txt ada di file topbarrule.txt
+20 . dialog ada di /dialog.txt
