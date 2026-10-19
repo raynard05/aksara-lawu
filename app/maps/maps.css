@@ -3,7 +3,7 @@
    Mengikuti AIrule.txt:
    - File CSS & TSX dipisah (rule 1 & 11)
    - Class selector unik ber-prefix: maps- (rule 12)
-   - Background murni asset maps1.webp (aturan 14 & 17)
+   - Background murni asset maps1.webp (aturan 14 & 12)
    - Layout & orientasi landscape-first (rule 5)
    - Zoom-lock & konsistensi device (rule 16)
    ============================================= */
@@ -18,10 +18,177 @@
   align-items: center;
   justify-content: center;
 
-  /* Background murni ori asset maps1.webp (aturan 14 & 17) */
+  /* Background murni ori asset maps1.webp (aturan 14 & 12) */
   background-image: url('/maps/maps1.webp');
   background-size: 100% 100%;
   background-position: center center;
   background-repeat: no-repeat;
   background-color: transparent;
+  user-select: none;
+}
+
+/* =============================================
+   LEGENDA PANEL (legenda.webp)
+   Diposisikan di sisi kiri, sejajar dengan maps.webp
+   ============================================= */
+.maps-legend-wrapper {
+  position: absolute;
+  left: 5vw;
+  bottom: 13vh;
+  width: 23vw;
+  height: 65vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  filter: drop-shadow(0 1.2vh 2.4vh rgba(0, 0, 0, 0.65));
+}
+
+.maps-legend-img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+}
+
+/* =============================================
+   MAP BOARD (maps.webp)
+   Diposisikan di sisi kanan
+   ============================================= */
+.maps-board-wrapper {
+  position: absolute;
+  right: 4.5vw;
+  bottom: 13vh;
+  width: 65vw;
+  height: 65vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  filter: drop-shadow(0 1.2vh 2.4vh rgba(0, 0, 0, 0.65));
+}
+
+.maps-board-img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+}
+
+/* =============================================
+   LOGO AKSARA LAWU DI POJOK KANAN BAWAH
+   ============================================= */
+.maps-logo-wrapper {
+  position: absolute;
+  right: 0.50vw;
+  bottom: -1vh;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  filter: drop-shadow(0 0.8vh 1.6vh rgba(0, 0, 0, 0.7));
+}
+
+.maps-logo-img {
+  width: 25vw;
+  max-width: 25vw;
+  height: 25vh;
+  object-fit: contain;
+  pointer-events: none;
+  transition: transform 0.25s ease;
+}
+
+/* =============================================
+   RESPONSIVE — Laptop Sedang (1024px - 1366px)
+   ============================================= */
+@media (min-width: 901px) and (max-width: 1366px) {
+  .maps-legend-wrapper {
+    left: 5vw;
+    bottom: 13vh;
+    width: 23vw;
+    height: 65vh;
+  }
+
+  .maps-board-wrapper {
+    right: 4.5vw;
+    bottom: 13vh;
+    width: 65vw;
+    height: 65vh;
+  }
+
+  .maps-logo-wrapper {
+    right: 0.50vw;
+    bottom: -1vh;
+  }
+
+  .maps-logo-img {
+    width: 25vw;
+    max-width: 25vw;
+    height: 25vh;
+  }
+}
+
+/* =============================================
+   RESPONSIVE — Layar Besar / Monitor (> 1366px)
+   ============================================= */
+@media (min-width: 1367px) {
+  .maps-legend-wrapper {
+    left: 5vw;
+    bottom: 13vh;
+    width: 23vw;
+    height: 65vh;
+  }
+
+  .maps-board-wrapper {
+    right: 4.5vw;
+    bottom: 13vh;
+    width: 65vw;
+    height: 65vh;
+  }
+
+  .maps-logo-wrapper {
+    right: 0.50vw;
+    bottom: -1vh;
+  }
+
+  .maps-logo-img {
+    width: 25vw;
+    max-width: 25vw;
+    height: 25vh;
+  }
+}
+
+/* =============================================
+   RESPONSIVE — Khusus Mobile Landscape Layar Sentuh HP Asli (pointer: coarse)
+   Dilindungi dengan guard pointer: coarse agar saat desktop/laptop di-zoom 150% - 500%,
+   tampilan tetap stabil terkunci (zoom-lock) dan elemen TIDAK hilang/terlempar.
+   ============================================= */
+@media (max-width: 900px) and (orientation: landscape) and (pointer: coarse),
+(max-height: 500px) and (orientation: landscape) and (pointer: coarse) {
+  .maps-legend-wrapper {
+    left: 5vw;
+    bottom: 13vh;
+    width: 23vw;
+    height: 65vh;
+  }
+
+  .maps-board-wrapper {
+    right: 4.5vw;
+    bottom: 13vh;
+    width: 65vw;
+    height: 65vh;
+  }
+
+  .maps-logo-wrapper {
+    right: 0.50vw;
+    bottom:1vh;
+  }
+
+  .maps-logo-img {
+    width: 22vw;
+    max-width: 22vw;
+    height: 22vh;
+    
+  }
 }

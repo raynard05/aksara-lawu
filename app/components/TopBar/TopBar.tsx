@@ -25,6 +25,8 @@ export default function TopBar() {
 
   // State sinkronisasi status suara mute/unmute
   const [isMuted, setIsMuted] = useState<boolean>(false);
+  // State untuk modal dialog konfirmasi keluar game
+  const [showHomeConfirm, setShowHomeConfirm] = useState<boolean>(false);
 
   useEffect(() => {
     try {
@@ -54,19 +56,31 @@ export default function TopBar() {
     return null;
   }
 
-  // Aksi tombol previous / back
-  const handlePrevious = () => {
-    // Jika ada history atau tombol kembali, kembali ke halaman sebelumnya
-    if (window.history.length > 1) {
-      router.back();
-    } else {
-      router.push("/menu_game");
-    }
+  // Aksi tombol peta / maps -> buka halaman peta
+  const handleMaps = () => {
+    router.push("/maps");
   };
 
-  // Aksi tombol home -> kembali ke menu utama
-  const handleHome = () => {
+  // Aksi saat tombol home ditekan -> munculkan popup konfirmasi
+  const handleHomeClick = () => {
+    setShowHomeConfirm(true);
+  };
+
+  // Konfirmasi Ya -> reset sesi / arahkan kembali ke menu utama
+  const handleConfirmHome = () => {
+    setShowHomeConfirm(false);
+    // Bersihkan sesi game sementara jika diperlukan
+    try {
+      sessionStorage.removeItem("aksara_lawu_current_session");
+    } catch {
+      // Abaikan jika sessionStorage tidak dapat diakses
+    }
     router.push("/menu");
+  };
+
+  // Batal -> tutup popup konfirmasi
+  const handleCancelHome = () => {
+    setShowHomeConfirm(false);
   };
 
   // Aksi toggle sound
@@ -87,95 +101,148 @@ export default function TopBar() {
     }
   };
 
-  // Aksi tombol next / lanjut
-  const handleNext = () => {
-    // Sesuai alur petualangan dari pos cemoro sewu ke game/pos berikutnya
-    router.push("/game");
+  // Aksi tombol tas / inventaris
+  const handleBag = () => {
+    // Aksi membuka inventaris/tas game
+    console.log("Mbukak Tas Inventaris...");
   };
 
   return (
-    <aside className="topbar-wrapper" aria-label="Top Bar Navigasi">
-      <nav className="topbar-plank">
-        {/* Sisi Kiri: Previous dan Home */}
-        <div className="topbar-side-left">
-          <button
-            type="button"
-            id="btn-topbar-prev"
-            onClick={handlePrevious}
-            className="topbar-btn"
-            aria-label="Bali menyang kaca sadurunge (Previous)"
-            title="Sadurunge"
-          >
-            <img
-              src="/main_assets/previous.png"
-              alt="Sadurunge"
-              className="topbar-btn-icon"
-              draggable={false}
-            />
-          </button>
+    <>
+      <aside className="topbar-wrapper" aria-label="Top Bar Navigasi">
+        <nav className="topbar-plank">
+          {/* Sisi Kiri: Maps dan Home */}
+          {/* Sisi Kiri: Home dan Maps (Home di paling luar/kiri, Maps di sampingnya) */}
+          <div className="topbar-side-left">
+            <button
+              type="button"
+              id="btn-topbar-home"
+              onClick={handleHomeClick}
+              className="topbar-btn"
+              aria-label="Bali menyang Menu Utama (Home)"
+              title="Menu Utama"
+            >
+              <img
+                src="/main_assets/home.png"
+                alt="Home"
+                className="topbar-btn-icon"
+                draggable={false}
+              />
+            </button>
 
-          <button
-            type="button"
-            id="btn-topbar-home"
-            onClick={handleHome}
-            className="topbar-btn"
-            aria-label="Bali menyang Menu Utama (Home)"
-            title="Menu Utama"
-          >
+            <button
+              type="button"
+              id="btn-topbar-maps"
+              onClick={handleMaps}
+              className="topbar-btn"
+              aria-label="Peta Wilayah (Maps)"
+              title="Peta (Maps)"
+            >
+              <img
+                src="/main_assets/maps.png"
+                alt="Peta"
+                className="topbar-btn-icon"
+                draggable={false}
+              />
+            </button>
+          </div>
+
+          {/* Sisi Tengah: Logo Title Aksara Lawu */}
+          <div className="topbar-center-title">
             <img
-              src="/main_assets/home.png"
-              alt="Home"
-              className="topbar-btn-icon"
+              src="/main_assets/aksaralawu.png"
+              alt="Aksara Lawu"
+              className="topbar-title-img"
               draggable={false}
             />
-          </button>
+          </div>
+
+          {/* Sisi Kanan: Bag dan Sound On/Off (Bag di dekat logo/tengah, Sound di paling luar/kanan atau sebaliknya simetris) */}
+          <div className="topbar-side-right">
+            <button
+              type="button"
+              id="btn-topbar-bag"
+              onClick={handleBag}
+              className="topbar-btn topbar-btn-bag"
+              aria-label="Tas Inventaris (Bag)"
+              title="Tas (Bag)"
+            >
+              <img
+                src="/main_assets/bag.png"
+                alt="Tas"
+                className="topbar-btn-icon"
+                draggable={false}
+              />
+            </button>
+
+            <button
+              type="button"
+              id="btn-topbar-sound"
+              onClick={handleToggleSound}
+              className="topbar-btn"
+              aria-label={isMuted ? "Uripake Swara (Sound On)" : "Patèni Swara (Sound Off)"}
+              title={isMuted ? "Uripake Swara" : "Patèni Swara"}
+            >
+              <img
+                src={isMuted ? "/main_assets/sound_off.png" : "/main_assets/sound_on.png"}
+                alt={isMuted ? "Swara Mati" : "Swara Urip"}
+                className="topbar-btn-icon"
+                draggable={false}
+              />
+            </button>
+          </div>
+        </nav>
+      </aside>
+
+      {/* Pop Up Modal Konfirmasi Tombol Home (Render di luar aside agar z-index mutlak di lapisan paling atas melampaui DialogPopup) */}
+      {showHomeConfirm && (
+        <div
+          className="topbar-modal-overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="topbar-confirm-title"
+        >
+          <div className="topbar-modal-box">
+            {/* Header / Ikon Informasi */}
+            <div className="topbar-modal-icon-wrapper">
+              <img
+                src="/dialog/information.png"
+                alt="Informasi"
+                className="topbar-modal-icon"
+                draggable={false}
+              />
+            </div>
+
+            {/* Judul & Pesan Konfirmasi Bahasa Jawa */}
+            <h2 id="topbar-confirm-title" className="topbar-modal-title">
+              Pèngetan!
+            </h2>
+            <p className="topbar-modal-text">
+              Apa kowé yakin arep metu saka game? Sesi dolananmu bakal di-reset yen kowé metu saka game iki.
+            </p>
+
+            {/* Tombol Aksi: Batal & Ya Metu */}
+            <div className="topbar-modal-actions">
+              <button
+                type="button"
+                id="btn-modal-cancel"
+                onClick={handleCancelHome}
+                className="topbar-modal-btn topbar-modal-btn-cancel"
+              >
+                Ora, Terusna
+              </button>
+              <button
+                type="button"
+                id="btn-modal-confirm"
+                onClick={handleConfirmHome}
+                className="topbar-modal-btn topbar-modal-btn-confirm"
+              >
+                Iya, Metu
+              </button>
+            </div>
+          </div>
         </div>
-
-        {/* Sisi Tengah: Logo Title Aksara Lawu */}
-        <div className="topbar-center-title">
-          <img
-            src="/main_assets/aksaralawu.png"
-            alt="Aksara Lawu"
-            className="topbar-title-img"
-            draggable={false}
-          />
-        </div>
-
-        {/* Sisi Kanan: Sound On/Off dan Next */}
-        <div className="topbar-side-right">
-          <button
-            type="button"
-            id="btn-topbar-sound"
-            onClick={handleToggleSound}
-            className="topbar-btn"
-            aria-label={isMuted ? "Uripake Swara (Sound On)" : "Patèni Swara (Sound Off)"}
-            title={isMuted ? "Uripake Swara" : "Patèni Swara"}
-          >
-            <img
-              src={isMuted ? "/main_assets/sound_off.png" : "/main_assets/sound_on.png"}
-              alt={isMuted ? "Swara Mati" : "Swara Urip"}
-              className="topbar-btn-icon"
-              draggable={false}
-            />
-          </button>
-
-          <button
-            type="button"
-            id="btn-topbar-next"
-            onClick={handleNext}
-            className="topbar-btn topbar-btn-next"
-            aria-label="Lanjut menyang kaca sabanjure (Next)"
-            title="Sabanjure"
-          >
-            <img
-              src="/main_assets/next.png"
-              alt="Sabanjure"
-              className="topbar-btn-icon"
-              draggable={false}
-            />
-          </button>
-        </div>
-      </nav>
-    </aside>
+      )}
+    </>
   );
 }
