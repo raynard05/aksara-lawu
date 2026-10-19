@@ -32,13 +32,13 @@
    ============================================= */
 .maps-top-header {
   position: absolute;
-  top: 3.2vh;
-  left: 50%;
+  top: 6vh;
+  left: 58%;
   transform: translateX(-50%);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 2.2vw;
+  gap: 2.5vw;
   z-index: 20;
   pointer-events: auto;
   user-select: none;
@@ -53,8 +53,8 @@
 }
 
 .maps-level-banner-img {
-  width: 33vw;
-  height: 9.5vh;
+  width: 40vw;
+  height: 14vh;
   object-fit: contain;
   pointer-events: none;
 }
@@ -241,9 +241,12 @@
 }
 
 @keyframes mapsAvatarFloat {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translate(-50%, 50%) translateY(0);
   }
+
   50% {
     transform: translate(-50%, 50%) translateY(-0.6vh);
   }

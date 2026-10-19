@@ -1,2 +1,4 @@
 prompt : 
 
+jadi di halaman /maps kan ada beberapa komponen sepeti yg dibutuhkan maps.webp, all level dan tombol njlajahi ,
+
