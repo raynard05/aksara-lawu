@@ -1,0 +1,279 @@
+/* =============================================
+   HOME BUTTON COMPONENT — home-button.css
+   Mengikuti AIrule.txt:
+   - File CSS & TSX dipisah (rule 1 & 11)
+   - Class selector unik ber-prefix: home-btn- & home-modal- (rule 12)
+   - Asset tombol dari assets/main responsifnya sama persis dengan soundtoggle (rule 18)
+   - Menggunakan satuan vh & vw (tanpa px untuk komponen) (rule 4 & 6)
+   - Layout & orientasi landscape-first (rule 5)
+   - Zoom-lock & mobile touch guard (pointer: coarse) (rule 16)
+   - Font global Rubik One (rule 9)
+   - Warna dan kontras eyecatching serasi dengan nuansa game kayu Lawu (rule 15)
+   ============================================= */
+
+.home-btn-wrapper {
+  position: fixed;
+  top: 3.2vh;
+  left: 2.2vw;
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  user-select: none;
+}
+
+/* Tombol Lingkaran Batu / Kayu (Ukuran persis sama dengan tombol TopBar yang diperbesar 30%) */
+.home-btn-action {
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 6.37vw;
+  height: 11.3vh;
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.15s ease;
+  filter: drop-shadow(0 0.5vh 0.8vh rgba(0, 0, 0, 0.55));
+}
+
+.home-btn-action:hover {
+  transform: scale(1.1) rotate(-3deg);
+  filter: drop-shadow(0 0.8vh 1.4vh rgba(0, 0, 0, 0.65)) brightness(1.08);
+}
+
+.home-btn-action:active {
+  transform: scale(0.92) rotate(2deg);
+  filter: drop-shadow(0 0.3vh 0.4vh rgba(0, 0, 0, 0.45)) brightness(0.95);
+}
+
+.home-btn-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+/* =============================================
+   MODAL KONFIRMASI HOME BUTTON (home-modal-*)
+   ============================================= */
+.home-modal-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 5, 2, 0.68);
+  backdrop-filter: blur(0.5vh);
+  pointer-events: auto;
+  user-select: none;
+  animation: homeModalFadeIn 0.25s ease-out forwards;
+}
+
+@keyframes homeModalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.home-modal-box {
+  position: relative;
+  width: 44vw;
+  max-width: 44vw;
+  background: #3e2211;
+  background-image: linear-gradient(180deg, #5a3219 0%, #3e2211 50%, #291509 100%);
+  border: 0.35vw solid #e28c38;
+  border-radius: 3.5vh;
+  box-shadow:
+    inset 0 0.3vh 0.6vh rgba(255, 255, 255, 0.2),
+    inset 0 -0.5vh 0.8vh rgba(0, 0, 0, 0.5),
+    0 1.5vh 3.5vh rgba(0, 0, 0, 0.85);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 3.5vh 2.5vw 3vh 2.5vw;
+  box-sizing: border-box;
+  animation: homeModalPop 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes homeModalPop {
+  from {
+    opacity: 0;
+    transform: scale(0.88);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.home-modal-icon-wrapper {
+  margin-bottom: 1.2vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-modal-icon {
+  width: 4vw;
+  height: 7vh;
+  object-fit: contain;
+  filter: drop-shadow(0 0.4vh 0.8vh rgba(0, 0, 0, 0.5));
+}
+
+.home-modal-title {
+  font-family: inherit;
+  font-size: 3vh;
+  color: #ffde59;
+  text-shadow:
+    0 0.25vh 0 #592e0b,
+    0 0.4vh 0.6vh rgba(0, 0, 0, 0.7);
+  margin: 0 0 1.2vh 0;
+  letter-spacing: 0.08vw;
+}
+
+.home-modal-text {
+  font-family: inherit;
+  font-size: 2vh;
+  line-height: 1.5;
+  color: #fff9e6;
+  text-shadow: 0 0.2vh 0.4vh rgba(0, 0, 0, 0.6);
+  margin: 0 0 3vh 0;
+  max-width: 90%;
+  word-break: keep-all;
+}
+
+.home-modal-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2vw;
+  width: 100%;
+}
+
+.home-modal-btn {
+  font-family: inherit;
+  font-size: 2.1vh;
+  padding: 1.4vh 2.2vw;
+  border-radius: 2.5vh;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 0.6vh 1.2vh rgba(0, 0, 0, 0.5);
+}
+
+.home-modal-btn:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+.home-modal-btn:active {
+  transform: scale(0.95);
+  filter: brightness(0.95);
+}
+
+/* Tombol Batal / Ora (Warna Netral Abu-Abu Kayu) */
+.home-modal-btn-cancel {
+  background: linear-gradient(180deg, #78848f 0%, #4f5a64 60%, #373f47 100%);
+  color: #ffffff;
+  border-bottom: 0.4vh solid #252b31;
+  text-shadow: 0 0.2vh 0.3vh rgba(0, 0, 0, 0.5);
+}
+
+/* Tombol Konfirmasi / Iya Metu (Warna Oranye Merah Bata) */
+.home-modal-btn-confirm {
+  background: linear-gradient(180deg, #f77f00 0%, #d62828 60%, #9e1818 100%);
+  color: #fff8e7;
+  border-bottom: 0.4vh solid #660e0e;
+  text-shadow: 0 0.2vh 0.4vh rgba(0, 0, 0, 0.6);
+}
+
+/* =============================================
+   RESPONSIVE — Laptop Sedang (1024px - 1366px)
+   Sama persis dengan tombol TopBar
+   ============================================= */
+@media (min-width: 901px) and (max-width: 1366px) {
+  .home-btn-action {
+    width: 7.8vw;
+    height: 15.6vh;
+  }
+
+  .home-modal-box {
+    width: 48vw;
+    max-width: 48vw;
+    padding: 3.2vh 2.4vw 2.8vh 2.4vw;
+  }
+
+  .home-modal-title {
+    font-size: 3.2vh;
+  }
+
+  .home-modal-text {
+    font-size: 2.2vh;
+  }
+
+  .home-modal-btn {
+    font-size: 2.2vh;
+    padding: 1.5vh 2.4vw;
+  }
+}
+
+/* =============================================
+   RESPONSIVE — Layar Besar / Monitor (> 1366px)
+   Sama persis dengan tombol TopBar
+   ============================================= */
+@media (min-width: 1367px) {
+  .home-btn-action {
+    width: 6.1vw;
+    height: 10.8vh;
+  }
+}
+
+/* =============================================
+   RESPONSIVE — Mobile Landscape Layar Sentuh HP
+   Sama persis dengan soundtoggle (rule 18)
+   ============================================= */
+@media (max-width: 900px) and (orientation: landscape) and (pointer: coarse),
+       (max-height: 500px) and (orientation: landscape) and (pointer: coarse) {
+  .home-btn-action {
+    width: 6.8vw;
+    height: 12.8vh;
+  }
+
+  .home-modal-box {
+    width: 58vw;
+    max-width: 58vw;
+    padding: 3vh 3vw 2.5vh 3vw;
+    border-radius: 4vh;
+  }
+
+  .home-modal-icon {
+    width: 5.5vw;
+    height: 8.5vh;
+  }
+
+  .home-modal-title {
+    font-size: 3.6vh;
+  }
+
+  .home-modal-text {
+    font-size: 2.5vh;
+    margin-bottom: 2.5vh;
+  }
+
+  .home-modal-btn {
+    font-size: 2.5vh;
+    padding: 1.6vh 3vw;
+  }
+}

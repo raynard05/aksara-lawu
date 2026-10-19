@@ -161,6 +161,7 @@ export default function DialogPopup({
       // Selesai semua dialog (hanya terjadi jika diklik manual pada paragraf akhir)
       if (selectedAvatar) {
         try {
+          sessionStorage.setItem("aksara_lawu_selected_avatar", selectedAvatar);
           localStorage.setItem("aksara_lawu_selected_avatar", selectedAvatar);
         } catch {
           // ignore
@@ -288,7 +289,15 @@ export default function DialogPopup({
                           type="button"
                           id={`btn-avatar-${idx + 1}`}
                           className={`dialog-avatar-card ${isSelected ? "selected" : ""}`}
-                          onClick={() => setSelectedAvatar(avatarFile)}
+                          onClick={() => {
+                            setSelectedAvatar(avatarFile);
+                            try {
+                              sessionStorage.setItem("aksara_lawu_selected_avatar", avatarFile);
+                              localStorage.setItem("aksara_lawu_selected_avatar", avatarFile);
+                            } catch {
+                              // ignore
+                            }
+                          }}
                           aria-label={`Pilih Avatar ${idx + 1}`}
                         >
                           {isSelected && <span className="dialog-avatar-check">✓</span>}

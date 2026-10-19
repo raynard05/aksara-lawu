@@ -8,7 +8,7 @@ interface SoundToggleProps {
   initialMuted?: boolean;
 }
 
-const STANDALONE_ROUTES = ["/", "/login", "/register", "/menu", "/menu_game"];
+const STANDALONE_ROUTES = ["/", "/login", "/register", "/menu", "/menu_game", "/maps"];
 
 export default function SoundToggle({ initialMuted = false }: SoundToggleProps) {
   const pathname = usePathname();

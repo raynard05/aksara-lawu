@@ -36,8 +36,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 4.9vw;
-  height: 8.7vh;
+  width: 6.37vw;
+  height: 11.3vh;
   transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.15s ease;
   filter: drop-shadow(0 0.5vh 0.8vh rgba(0, 0, 0, 0.55));
 }
@@ -62,7 +62,6 @@
 
 /* =============================================
    RESPONSIVE — Laptop Sedang (1024px - 1366px pada 100% zoom)
-   (Dikecilkan 15%)
    ============================================= */
 @media (min-width: 901px) and (max-width: 1366px) {
   .sound-toggle-wrapper {
@@ -76,14 +75,13 @@
   }
 
   .sound-toggle-btn {
-    width: 6vw;
-    height: 12vh;
+    width: 7.8vw;
+    height: 15.6vh;
   }
 }
 
 /* =============================================
    RESPONSIVE — Monitor / Layar Besar (> 1366px)
-   (Dikecilkan 15%)
    ============================================= */
 @media (min-width: 1367px) {
   .sound-toggle-wrapper {
@@ -97,8 +95,8 @@
   }
 
   .sound-toggle-btn {
-    width: 4.7vw;
-    height: 8.3vh;
+    width: 6.1vw;
+    height: 10.8vh;
   }
 }
 
