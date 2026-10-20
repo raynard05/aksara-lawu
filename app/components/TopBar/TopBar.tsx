@@ -58,6 +58,8 @@ export default function TopBar() {
 
   // Cek apakah halaman saat ini adalah cemorosewu untuk men-disable tombol bag dan maps
   const isCemoroSewu = pathname === "/cemorosewu" || pathname.startsWith("/cemorosewu/");
+  // Cek apakah halaman saat ini adalah inventory untuk men-disable tombol bag
+  const isInventory = pathname === "/inventory" || pathname.startsWith("/inventory/");
 
   // Aksi tombol peta / maps -> buka halaman peta
   const handleMaps = () => {
@@ -111,9 +113,8 @@ export default function TopBar() {
 
   // Aksi tombol tas / inventaris
   const handleBag = () => {
-    if (isCemoroSewu) return;
-    // Aksi membuka inventaris/tas game
-    console.log("Mbukak Tas Inventaris...");
+    if (isCemoroSewu || isInventory) return;
+    router.push("/inventory");
   };
 
   return (
@@ -174,11 +175,19 @@ export default function TopBar() {
               type="button"
               id="btn-topbar-bag"
               onClick={handleBag}
-              disabled={isCemoroSewu}
-              className={`topbar-btn topbar-btn-bag ${isCemoroSewu ? "topbar-btn-disabled" : ""}`}
+              disabled={isCemoroSewu || isInventory}
+              className={`topbar-btn topbar-btn-bag ${
+                isCemoroSewu || isInventory ? "topbar-btn-disabled" : ""
+              }`}
               aria-label="Tas Inventaris (Bag)"
-              aria-disabled={isCemoroSewu}
-              title={isCemoroSewu ? "Tas Ora Kasedhiya" : "Tas (Bag)"}
+              aria-disabled={isCemoroSewu || isInventory}
+              title={
+                isCemoroSewu
+                  ? "Tas Ora Kasedhiya"
+                  : isInventory
+                  ? "Ing Halaman Inventaris"
+                  : "Tas (Bag)"
+              }
             >
               <img
                 src="/main_assets/bag.png"

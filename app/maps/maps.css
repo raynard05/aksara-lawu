@@ -44,6 +44,9 @@
   justify-content: center;
   pointer-events: auto;
   filter: drop-shadow(0 1.2vh 2.4vh rgba(0, 0, 0, 0.65));
+
+  /* Animasi transisi awalan sederhana saat halaman dimuat */
+  animation: mapsLegendEntrance 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .maps-legend-img {
@@ -51,6 +54,34 @@
   height: 100%;
   object-fit: fill;
   pointer-events: none;
+}
+
+/* Animasi transisi awalan untuk papan maps.webp (mmc-board-wrapper) */
+.mmc-board-wrapper {
+  animation: mapsBoardEntrance 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.08s both;
+}
+
+/* Keyframes transisi masuk awalan sederhana: fade-in + slide halus & subtle scale */
+@keyframes mapsLegendEntrance {
+  0% {
+    opacity: 0;
+    transform: translateX(-2.5vw) scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes mapsBoardEntrance {
+  0% {
+    opacity: 0;
+    transform: translateX(2.5vw) scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
 }
 
 /* Tombol Penyimpanan (CEK ITEM) di dalam frame legenda bagian bawah */

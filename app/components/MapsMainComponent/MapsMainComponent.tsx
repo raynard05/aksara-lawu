@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import FlyingEagle from "../FlyingEagle/FlyingEagle";
+import { getUnlockedLevels } from "../../lib/inventoryStorage";
 import "./maps-main-component.css";
 
 export interface Waypoint {
@@ -94,6 +95,9 @@ export default function MapsMainComponent({
 }: MapsMainComponentProps) {
   const router = useRouter();
 
+  // State daftar level yang sudah terbuka
+  const [unlockedLevels, setUnlockedLevels] = useState<number[]>([1]);
+
   // State titik aktif / posisi avatar saat ini di peta
   // Default otomatis di titik ke-2 (Level 1) sesuai instruksi prompt
   const [currentWaypointId, setCurrentWaypointId] = useState<number>(initialWaypointId);
@@ -112,12 +116,37 @@ export default function MapsMainComponent({
     } catch {
       // ignore
     }
+
+    // Ambil initial unlocked levels
+    const lvls = getUnlockedLevels();
+    setUnlockedLevels(lvls);
+
+    const handleLevelChange = (e: Event) => {
+      const customEvent = e as CustomEvent<{ unlockedLevels: number[] }>;
+      if (customEvent.detail && Array.isArray(customEvent.detail.unlockedLevels)) {
+        setUnlockedLevels(customEvent.detail.unlockedLevels);
+      }
+    };
+
+    window.addEventListener("aksara-lawu-levels-change", handleLevelChange);
+    return () => {
+      window.removeEventListener("aksara-lawu-levels-change", handleLevelChange);
+    };
   }, []);
+
+  // Hitung status waypoints dinamis sesuai unlockedLevels
+  const activeWaypoints: Waypoint[] = DEFAULT_WAYPOINTS.map((wp) => {
+    if (wp.levelNumber === 0 || wp.levelNumber === 1) {
+      return { ...wp, isLocked: false };
+    }
+    const isUnlocked = unlockedLevels.includes(wp.levelNumber);
+    return { ...wp, isLocked: !isUnlocked };
+  });
 
   // Temukan waypoint yang sedang aktif
   const currentWaypoint =
-    DEFAULT_WAYPOINTS.find((wp) => wp.id === currentWaypointId) ||
-    DEFAULT_WAYPOINTS[1]; // Fallback titik 2 (Level 1)
+    activeWaypoints.find((wp) => wp.id === currentWaypointId) ||
+    activeWaypoints[1]; // Fallback titik 2 (Level 1)
 
   // Handler saat tombol Njlajahi diklik
   const handleNjlajahi = () => {
@@ -175,7 +204,7 @@ export default function MapsMainComponent({
         <FlyingEagle mode="map-circle" showRoute={true} />
 
         {/* Render 6 Titik Merah Penanda (Waypoints 1 - 6) */}
-        {DEFAULT_WAYPOINTS.map((wp) => {
+        {activeWaypoints.map((wp) => {
           return (
             <button
               key={`waypoint-${wp.id}`}
@@ -188,15 +217,15 @@ export default function MapsMainComponent({
               }}
               onClick={() => handleWaypointClick(wp)}
               aria-label={`Titik ${wp.id}: ${wp.name}`}
-              title={`Titik ${wp.id}: ${wp.name} (Klik kanggo mindhah avatar)`}
+              title={`Titik ${wp.id}: ${wp.name} ${wp.isLocked ? "(Gembok Terkunci)" : "(Kabuka)"}`}
             >
               <span className="mmc-waypoint-label">{wp.id}</span>
             </button>
           );
         })}
 
-        {/* Render Gembok Lock (gembok.webp) untuk Level 3 sampai 6 (Waypoint 3 - 6) */}
-        {DEFAULT_WAYPOINTS.filter((wp) => wp.isLocked).map((wp) => {
+        {/* Render Gembok Lock (gembok.webp) hanya jika wp.isLocked bernilai true */}
+        {activeWaypoints.filter((wp) => wp.isLocked).map((wp) => {
           return (
             <div
               key={`lock-${wp.id}`}
@@ -206,7 +235,7 @@ export default function MapsMainComponent({
                 top: `${wp.y}%`,
               }}
               aria-label={`Terkunci: ${wp.name}`}
-              title={`Level Terkunci: ${wp.name}`}
+              title={`Level Terkunci: ${wp.name} (Gunakake kartu ing Penyimpenan kanggo mbuka)`}
             >
               <img
                 src="/maps/gembok.webp"

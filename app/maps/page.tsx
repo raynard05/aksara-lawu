@@ -1,12 +1,14 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import HomeButton from "../components/HomeButton/HomeButton";
 import FogWind from "../components/FogWind/FogWind";
 import MapsMainComponent from "../components/MapsMainComponent/MapsMainComponent";
 import "./maps.css";
 
 export default function MapsPage() {
+  const router = useRouter();
   const [avatar, setAvatar] = useState<string>("avatar1.webp");
 
   useEffect(() => {
@@ -54,13 +56,13 @@ export default function MapsPage() {
           </div>
         </div>
 
-        {/* Tombol Penyimpanan / Cek Item di area bawah frame legenda */}
+        {/* Tombol Penyimpanan / Cek Item di area bawah frame legenda -> redirect /inventory */}
         <button
           type="button"
           id="btn-maps-cek-item"
           className="maps-legend-btn-cek"
           onClick={() => {
-            console.log("Mbukak Penyimpenan / Cek Item...");
+            router.push("/inventory");
           }}
           aria-label="Cek Item Penyimpenan"
         >

@@ -1,0 +1,52 @@
+[
+  {
+    "id": "cardlevel2",
+    "name": "Aksès Lèvel 2",
+    "type": "card",
+    "targetLevel": 2,
+    "unlockLevelNumber": 2,
+    "passcode": "720",
+    "image": "/assets/inventory/cardlevel2.png",
+    "description": "Kartu iki kanggo mbuka aksès gembok lèvel 2 - pos 2: labirin pendakian kanthi kode kartu 720, gunakake kartu iki kanggo mbuka."
+  },
+  {
+    "id": "cardlevel3",
+    "name": "Aksès Lèvel 3",
+    "type": "card",
+    "targetLevel": 3,
+    "unlockLevelNumber": 3,
+    "passcode": "386",
+    "image": "/assets/inventory/cardlevel3.png",
+    "description": "Kartu iki kanggo mbuka aksès gembok lèvel 3 - pos 3: warung ngaso kanthi kode kartu 386, gunakake kartu iki kanggo nerusake lelampahan."
+  },
+  {
+    "id": "cardlevel4",
+    "name": "Aksès Lèvel 4",
+    "type": "card",
+    "targetLevel": 4,
+    "unlockLevelNumber": 4,
+    "passcode": "540",
+    "image": "/assets/inventory/cardlevel4.png",
+    "description": "Kartu iki kanggo mbuka aksès gembok lèvel 4 - pos 4: nata aksara jawa kanthi kode kartu 540, gunakake kartu iki kanggo mbuka gerbang aksara."
+  },
+  {
+    "id": "cardpeak",
+    "name": "Aksès Puncak Lawu",
+    "type": "card",
+    "targetLevel": 5,
+    "unlockLevelNumber": 5,
+    "passcode": "700",
+    "image": "/assets/inventory/cardpeak.png",
+    "description": "Kartu iki kanggo mbuka aksès pucuking Gunung Lawu (3265 MDPL) kanthi kode kartu 700, gunakake kartu iki kanggo nggayuh puncak kamulyan."
+  },
+  {
+    "id": "money",
+    "name": "Dhuwit Lawu 50",
+    "type": "item",
+    "targetLevel": null,
+    "unlockLevelNumber": null,
+    "passcode": null,
+    "image": "/assets/inventory/money.png",
+    "description": "Dhuwit kuna nominal 50 kanggo blanja lan transaksi karo bakul ing warung ngaso pos 3."
+  }
+]

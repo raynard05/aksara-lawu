@@ -1,0 +1,26 @@
+tombol penyimpenanan yang ada di /maps dan juga bag di komponen topbar.tsx itu action nya untuk redirect halaman /inventory
+
+
+-buatkan halaman inventory bg nya sama dengan halaman /maps 
+-semua asset ada di folder assets/inventory/
+-untuk top bar nya render saja komponen topbar.tsx cuman bag nya di disable dikarenakan ini adalah halaman inventory yang dimaksud 
+-halaman ini memiliki kesamaan seperti /maps di sisi kiri render inventory.png dan di sisi kanan
+-render komponen fog juga 
+-setelah render  desc.png , render logo aksara lawu di pojok bawah kanan seperti /maps 
+-pisah komponen inventory.png dan desc.png menjadi sebuah komponen dari logic dan ui nya juga kode nya jadi satu file 
+-tambahkan tombol gunakake diatas komponen desc.png untuk tujuan tombol ini adalah menggunakan per item nya 
+-detail nya jika tidak ada item di inventory.png maka tampilan nya dalam frame kosong nya render icon X.png 
+-tambahkan animasi transisi sederhana juga pada komponen inventory.png dan inventory.png  seperti /maps
+-auto save semua sesi item yang didapatkan nantinya di setiap level nya karena mendapatkan item itu adalah unlock level selanjutnya
+-ketika item di komponen inventory.png  di klik maka render item nya dan juga deskripsi nya 
+-buatkan deskripsi pendek per item nya dalam bahasa jawa , dan simpan data item dan juga deskripsi dalam .json
+untuk kartu nya deskripsi nya : 
+
+cardlevel2.png : Kartu iki kanggo mbuka aksès gembok lèvel 2 - pos 2: labirin pendakian kanthi kode kartu 720, gunakake kartu iki kanggo mbuka.
+cardlevel3.png : buatkan deksripsinya (lihat kartu secara seksama)
+cardlevel4.png : buatkan deksripsinya (lihat kartu secara seksama)
+cardpeak : buatkan deksripsinya (lihat gambar secara seksama) intinya ini adalah kartu untuk membuka akses puncak guhung lawu 
+money.png : buatkan deksripsinya (lihat gambar secara seksama) intinya ini adalah uang nominal 50 untuk bertransaksi dengan penjaga warung di level 3
+
+- untuk per item yg jenis card bisa membuka gembok di komponen mapsmaincomponent yg gembok maps.webp nya
+- dan save session semua progress yg didapatkan 

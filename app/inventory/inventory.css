@@ -1,0 +1,101 @@
+/* =============================================
+   INVENTORY PAGE — inventory.css
+   Mengikuti AIrule.txt:
+   - File CSS & TSX dipisah (rule 1 & 11)
+   - Class selector unik ber-prefix: invp- (rule 12)
+   - Background murni asset maps1.webp sama persis dengan halaman /maps (aturan 14 & 12)
+   - Layout & orientasi landscape-first (rule 5)
+   - Zoom-lock & konsistensi device (rule 16)
+   ============================================= */
+
+.invp-root {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Background murni ori asset maps1.webp (sama seperti /maps) */
+  background-image: url('/maps/maps1.webp');
+  background-size: 100% 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  user-select: none;
+}
+
+/* =============================================
+   LOGO AKSARA LAWU DI POJOK KANAN BAWAH (SEPERTI /MAPS)
+   ============================================= */
+.invp-logo-wrapper {
+  position: absolute;
+  right: 0.5vw;
+  bottom: -1vh;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  filter: drop-shadow(0 0.8vh 1.6vh rgba(0, 0, 0, 0.7));
+}
+
+.invp-logo-img {
+  width: 25vw;
+  max-width: 25vw;
+  height: 25vh;
+  object-fit: contain;
+  pointer-events: none;
+  transition: transform 0.25s ease;
+}
+
+/* =============================================
+   RESPONSIVE — Layar Besar / Monitor (> 1366px)
+   ============================================= */
+@media (min-width: 1367px) {
+  .invp-logo-wrapper {
+    right: 0.5vw;
+    bottom: -1vh;
+  }
+
+  .invp-logo-img {
+    width: 25vw;
+    max-width: 25vw;
+    height: 25vh;
+  }
+}
+
+/* =============================================
+   RESPONSIVE — Laptop Sedang (1024px - 1366px)
+   ============================================= */
+@media (min-width: 901px) and (max-width: 1366px) {
+  .invp-logo-wrapper {
+    right: 0.5vw;
+    bottom: -1vh;
+  }
+
+  .invp-logo-img {
+    width: 25vw;
+    max-width: 25vw;
+    height: 25vh;
+  }
+}
+
+/* =============================================
+   RESPONSIVE — Layar Mobile Sentuh Landscape Asli
+   ============================================= */
+@media (max-width: 900px) and (orientation: landscape) and (pointer: coarse),
+(max-height: 500px) and (orientation: landscape) and (pointer: coarse) {
+  .invp-logo-wrapper {
+    right: 0.5vw;
+    bottom: 1vh;
+  }
+
+  .invp-logo-img {
+    width: 22vw;
+    max-width: 22vw;
+    height: 22vh;
+  }
+}
