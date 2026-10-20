@@ -307,7 +307,6 @@ export default function DialogPopup({
                             className="dialog-avatar-img"
                             draggable={false}
                           />
-                          <span className="dialog-avatar-label">Avatar {idx + 1}</span>
                         </button>
                       );
                     })}

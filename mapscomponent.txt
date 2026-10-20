@@ -1,4 +1,8 @@
 prompt : 
 
-jadi di halaman /maps kan ada beberapa komponen sepeti yg dibutuhkan maps.webp, all level dan tombol njlajahi ,
+-jadi di halaman /maps kan ada beberapa komponen sepeti yg dibutuhkan maps.webp, all level dan tombol njlajahi. nah untuk ketiga komponen ini  jadikan satu menjadi component dalam folder
+components dan namakakan mapsmaincomponent
+- untuk ketiga component itu secara ui leave it as is peletakannya sama seperti di halaman /maps jadi jangan dirubah cuman ambil saja kode nya dan jadikan component sendiri
+aku mau di mapsmaincomponent  ada kode logic dan ui dari ketiga component itu 
+- ketika user berhasil beranja
 

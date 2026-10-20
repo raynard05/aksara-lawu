@@ -111,6 +111,18 @@
   filter: drop-shadow(0 0.3vh 0.4vh rgba(0, 0, 0, 0.45)) brightness(0.95);
 }
 
+/* Tombol disabled (misal pada halaman cemorosewu) */
+.topbar-btn.topbar-btn-disabled,
+.topbar-btn:disabled,
+button#btn-topbar-maps:disabled,
+button#btn-topbar-bag:disabled {
+  opacity: 0.35 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+  filter: grayscale(0.3) drop-shadow(0 0.2vh 0.4vh rgba(0, 0, 0, 0.4)) !important;
+  transform: none !important;
+}
+
 .topbar-btn-bag:hover {
   transform: scale(1.1) rotate(3deg);
 }

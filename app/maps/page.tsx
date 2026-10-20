@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import HomeButton from "../components/HomeButton/HomeButton";
+import FogWind from "../components/FogWind/FogWind";
 import "./maps.css";
 
 export default function MapsPage() {
@@ -22,6 +23,9 @@ export default function MapsPage() {
 
   return (
     <main className="maps-root" aria-label="Halaman Maps">
+      {/* Efek angin kabut pelan dari kiri menuju kanan di atas background peta */}
+      <FogWind />
+
       {/* Tombol Home Mandiri di Pojok Atas Kiri (tanpa TopBar UI) */}
       <HomeButton />
 

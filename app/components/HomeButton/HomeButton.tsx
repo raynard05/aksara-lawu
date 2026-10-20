@@ -26,6 +26,10 @@ export default function HomeButton({
     setShowConfirm(false);
     try {
       sessionStorage.removeItem("aksara_lawu_current_session");
+      sessionStorage.removeItem("aksara_lawu_cemorosewu_completed");
+      sessionStorage.removeItem("aksara_lawu_selected_avatar");
+      localStorage.removeItem("aksara_lawu_cemorosewu_completed");
+      localStorage.removeItem("aksara_lawu_selected_avatar");
     } catch {
       // Abaikan jika storage tidak dapat diakses
     }

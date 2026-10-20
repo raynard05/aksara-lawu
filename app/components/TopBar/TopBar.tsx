@@ -56,8 +56,12 @@ export default function TopBar() {
     return null;
   }
 
+  // Cek apakah halaman saat ini adalah cemorosewu untuk men-disable tombol bag dan maps
+  const isCemoroSewu = pathname === "/cemorosewu" || pathname.startsWith("/cemorosewu/");
+
   // Aksi tombol peta / maps -> buka halaman peta
   const handleMaps = () => {
+    if (isCemoroSewu) return;
     router.push("/maps");
   };
 
@@ -72,6 +76,10 @@ export default function TopBar() {
     // Bersihkan sesi game sementara jika diperlukan
     try {
       sessionStorage.removeItem("aksara_lawu_current_session");
+      sessionStorage.removeItem("aksara_lawu_cemorosewu_completed");
+      sessionStorage.removeItem("aksara_lawu_selected_avatar");
+      localStorage.removeItem("aksara_lawu_cemorosewu_completed");
+      localStorage.removeItem("aksara_lawu_selected_avatar");
     } catch {
       // Abaikan jika sessionStorage tidak dapat diakses
     }
@@ -103,6 +111,7 @@ export default function TopBar() {
 
   // Aksi tombol tas / inventaris
   const handleBag = () => {
+    if (isCemoroSewu) return;
     // Aksi membuka inventaris/tas game
     console.log("Mbukak Tas Inventaris...");
   };
@@ -134,9 +143,11 @@ export default function TopBar() {
               type="button"
               id="btn-topbar-maps"
               onClick={handleMaps}
-              className="topbar-btn"
+              disabled={isCemoroSewu}
+              className={`topbar-btn ${isCemoroSewu ? "topbar-btn-disabled" : ""}`}
               aria-label="Peta Wilayah (Maps)"
-              title="Peta (Maps)"
+              aria-disabled={isCemoroSewu}
+              title={isCemoroSewu ? "Peta Ora Kasedhiya" : "Peta (Maps)"}
             >
               <img
                 src="/main_assets/maps.png"
@@ -163,9 +174,11 @@ export default function TopBar() {
               type="button"
               id="btn-topbar-bag"
               onClick={handleBag}
-              className="topbar-btn topbar-btn-bag"
+              disabled={isCemoroSewu}
+              className={`topbar-btn topbar-btn-bag ${isCemoroSewu ? "topbar-btn-disabled" : ""}`}
               aria-label="Tas Inventaris (Bag)"
-              title="Tas (Bag)"
+              aria-disabled={isCemoroSewu}
+              title={isCemoroSewu ? "Tas Ora Kasedhiya" : "Tas (Bag)"}
             >
               <img
                 src="/main_assets/bag.png"
