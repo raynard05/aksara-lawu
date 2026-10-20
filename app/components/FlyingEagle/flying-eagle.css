@@ -1,0 +1,310 @@
+/* =============================================
+   FLYING EAGLE COMPONENT — flying-eagle.css
+   Mengikuti AIrule.txt:
+   - File CSS & TSX dipisah (rule 1 & 11)
+   - Class selector unik ber-prefix: eagle- (rule 12)
+   - Satuan vh & vw untuk responsif (rule 4 & 6)
+   - Layout & orientasi landscape-first (rule 5)
+   - Zoom-lock & konsistensi device (rule 16)
+   ============================================= */
+
+/* Wrapper pembungkus langit tempat elang terbang melintasi layar */
+.eagle-sky-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 15;
+}
+
+/* Base elang terbang */
+.eagle-entity {
+  position: absolute;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  user-select: none;
+}
+
+.eagle-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+/* =============================================
+   PRESET JALUR TERBANG (ANIMATIONS)
+   ============================================= */
+
+/* 1. Meluncur diagonal melintasi angkasa dari kiri atas ke kanan bawah */
+.eagle-path-cross {
+  width: 9vw;
+  height: 9vw;
+  top: 8vh;
+  left: -12vw;
+  animation: eagleFlyAcross 24s linear infinite;
+}
+
+@keyframes eagleFlyAcross {
+  0% {
+    transform: translate(0, 0) rotate(105deg) scale(0.7);
+    opacity: 0;
+  }
+
+  5% {
+    opacity: 0.95;
+  }
+
+  48% {
+    transform: translate(60vw, 42vh) rotate(110deg) scale(1);
+    opacity: 0.95;
+  }
+
+  50% {
+    transform: translate(65vw, 45vh) rotate(115deg) scale(0.95);
+    opacity: 0.9;
+  }
+
+  95% {
+    opacity: 0.85;
+  }
+
+  100% {
+    transform: translate(120vw, 85vh) rotate(115deg) scale(0.7);
+    opacity: 0;
+  }
+}
+
+/* 2. Berputar anggun di atas langit pegunungan (circling) */
+.eagle-path-soar {
+  width: 8vw;
+  height: 8vw;
+  top: 14vh;
+  left: 62vw;
+  animation: eagleSoarCircle 18s ease-in-out infinite;
+}
+
+@keyframes eagleSoarCircle {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(0.85);
+  }
+
+  25% {
+    transform: translate(5vw, -3vh) rotate(35deg) scale(0.95);
+  }
+
+  50% {
+    transform: translate(8vw, 3vh) rotate(110deg) scale(0.9);
+  }
+
+  75% {
+    transform: translate(2vw, 5vh) rotate(220deg) scale(0.8);
+  }
+
+  100% {
+    transform: translate(0, 0) rotate(360deg) scale(0.85);
+  }
+}
+
+/* 3. Melayang stabil di tempat dengan desiran angin lembut (hover) */
+.eagle-path-hover {
+  width: 9.5vw;
+  height: 9.5vw;
+  top: 12vh;
+  right: 15vw;
+  animation: eagleGentleHover 4.5s ease-in-out infinite;
+}
+
+@keyframes eagleGentleHover {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+
+  50% {
+    transform: translateY(-1.8vh) rotate(3deg) scale(1.04);
+  }
+}
+
+/* =============================================
+   4. RUTE TERBANG LINGKARAN MERAH DI ATAS MAPS.WEBP
+   ============================================= */
+
+/* Container orbit elang di dalam papan maps.webp */
+.eagle-map-orbit-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 18;
+  overflow: visible;
+}
+
+/* Rute terbang lingkaran/elips merah (panduan visual - transparan tipis) */
+.eagle-map-route-indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 0.15vw dashed rgba(255, 40, 40, 0.25);
+  box-shadow:
+    0 0 0.8vw rgba(255, 40, 40, 0.1),
+    inset 0 0 0.8vw rgba(255, 40, 40, 0.05);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0.25;
+  animation: eagleRoutePulse 4s ease-in-out infinite;
+}
+
+.eagle-map-route-label {
+  margin-top: -1.2vh;
+  background: rgba(255, 40, 40, 0.35);
+  color: rgba(255, 255, 255, 0.6);
+  font-family: inherit;
+  font-size: 0.75vw;
+  font-weight: 800;
+  padding: 0.2vh 0.8vw;
+  border-radius: 1vh;
+  box-shadow: 0 0.2vh 0.4vh rgba(0, 0, 0, 0.2);
+  letter-spacing: 0.05vw;
+}
+
+@keyframes eagleRoutePulse {
+
+  0%,
+  100% {
+    opacity: 0.25;
+    border-color: rgba(255, 40, 40, 0.25);
+  }
+
+  50% {
+    opacity: 0.12;
+    border-color: rgba(255, 40, 40, 0.12);
+  }
+}
+
+/* Track orbit lingkaran presisi yang memutar elang mengelilingi rute merah */
+.eagle-map-orbit-track {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: eagleOrbitSpin 17s linear infinite;
+}
+
+/* Elang menempel pas di perimeter garis lingkaran orbit */
+.eagle-map-flyer {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 5.5vw;
+  height: 5.5vw;
+  transform: translate(-50%, -50%) rotate(90deg);
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  filter: none !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.eagle-map-flyer .eagle-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+}
+
+@keyframes eagleOrbitSpin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* =============================================
+   RESPONSIVE — Laptop Sedang (1024px - 1366px)
+   ============================================= */
+@media (min-width: 901px) and (max-width: 1366px) {
+  .eagle-path-cross {
+    width: 9.2vw;
+    height: 9.2vw;
+  }
+
+  .eagle-path-soar {
+    width: 8.2vw;
+    height: 8.2vw;
+  }
+
+  .eagle-path-hover {
+    width: 9.8vw;
+    height: 9.8vw;
+  }
+}
+
+/* =============================================
+   RESPONSIVE — Monitor / Layar Besar (> 1366px)
+   ============================================= */
+@media (min-width: 1367px) {
+  .eagle-path-cross {
+    width: 8.5vw;
+    height: 8.5vw;
+  }
+
+  .eagle-path-soar {
+    width: 7.8vw;
+    height: 7.8vw;
+  }
+
+  .eagle-path-hover {
+    width: 9.2vw;
+    height: 9.2vw;
+  }
+}
+
+/* =============================================
+   RESPONSIVE — Mobile Landscape Layar Sentuh Asli
+   ============================================= */
+@media (max-width: 900px) and (orientation: landscape) and (pointer: coarse),
+(max-height: 500px) and (orientation: landscape) and (pointer: coarse) {
+  .eagle-path-cross {
+    width: 10.5vw;
+    height: 10.5vw;
+  }
+
+  .eagle-path-soar {
+    width: 9.5vw;
+    height: 9.5vw;
+  }
+
+  .eagle-path-hover {
+    width: 11vw;
+    height: 11vw;
+  }
+}

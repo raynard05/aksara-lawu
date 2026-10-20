@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import HomeButton from "../components/HomeButton/HomeButton";
 import FogWind from "../components/FogWind/FogWind";
+import MapsMainComponent from "../components/MapsMainComponent/MapsMainComponent";
 import "./maps.css";
 
 export default function MapsPage() {
@@ -29,31 +30,8 @@ export default function MapsPage() {
       {/* Tombol Home Mandiri di Pojok Atas Kiri (tanpa TopBar UI) */}
       <HomeButton />
 
-      {/* Header Atas: Banner Level 1 dan Tombol Njlajahi */}
-      <section className="maps-top-header" aria-label="Navigasi Misi Level 1">
-        {/* Banner Kayu Level 1 (level1.webp) */}
-        <div className="maps-level-banner-wrapper">
-          <img
-            src="/maps/level1.webp"
-            alt="Level 1 - Pos 1: Golek Pituduh"
-            className="maps-level-banner-img"
-            draggable={false}
-          />
-        </div>
-
-        {/* Tombol Njlajahi (Jelajah Game) */}
-        <button
-          type="button"
-          id="btn-maps-njlajahi"
-          className="maps-btn-njlajahi"
-          onClick={() => {
-            console.log("Miwiti Njlajahi Level 1...");
-          }}
-          aria-label="Njlajahi Level 1"
-        >
-          <span className="maps-btn-njlajahi-text">Njlajahi</span>
-        </button>
-      </section>
+      {/* Komponen Utama Peta: Maps, All Level Banner, Titik Merah 1-6, Gembok 3-6, dan Tombol Njlajahi */}
+      <MapsMainComponent avatar={avatar} />
 
       {/* Panel Legenda Papan Kayu (legenda.webp) di sisi kiri */}
       <section className="maps-legend-wrapper" aria-label="Legenda Peta">
@@ -89,28 +67,6 @@ export default function MapsPage() {
           <span className="maps-legend-btn-text">Penyimpenan</span>
           <span className="maps-legend-btn-indicator" aria-hidden="true" />
         </button>
-      </section>
-
-      {/* Gambar Konten Peta Papan Kayu / Map Board (maps.webp) */}
-      <section className="maps-board-wrapper" aria-label="Peta Jelajah Aksara Lawu">
-        <img
-          src="/maps/maps.webp"
-          alt="Peta Petualangan Lawu Quest"
-          className="maps-board-img"
-          draggable={false}
-        />
-
-        {/* Avatar Pin / Token di atas jalur peta (Posisi Level 1 Cemoro Sewu) */}
-        <div className="maps-board-avatar-pin" aria-label="Posisi Avatar di Peta">
-          <div className="maps-board-avatar-circle">
-            <img
-              src={`/avatar/${avatar}`}
-              alt="Avatar di Peta"
-              className="maps-board-avatar-img"
-              draggable={false}
-            />
-          </div>
-        </div>
       </section>
 
       {/* Logo Aksara Lawu di Pojok Kanan Bawah */}

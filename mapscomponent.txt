@@ -2,7 +2,11 @@ prompt :
 
 -jadi di halaman /maps kan ada beberapa komponen sepeti yg dibutuhkan maps.webp, all level dan tombol njlajahi. nah untuk ketiga komponen ini  jadikan satu menjadi component dalam folder
 components dan namakakan mapsmaincomponent
-- untuk ketiga component itu secara ui leave it as is peletakannya sama seperti di halaman /maps jadi jangan dirubah cuman ambil saja kode nya dan jadikan component sendiri
-aku mau di mapsmaincomponent  ada kode logic dan ui dari ketiga component itu 
-- ketika user berhasil beranja
-
+- untuk ketiga component itu secara ui leave it as is peletakanny dan render tetap dan sa seperti di halaman /maps jadi jangan dirubah cuman ambil saja kode nya dan jadikan component sendiri
+-aku mau di mapsmaincomponent  ada kode logic dan ui dari ketiga component itu 
+-hapus kode di /maps yang sudah diambil untuk komponen ini karena saya tidak mau ke render double di /maps
+detailed prompt : 
+- - untuk di komponen maps.webp kan ada tuh titik 1 sampai 6 , beri titik merah untuk saya mengetahui itu adalah titik ke titik avatar bisa beranimasi untuk berpindah tempat (kenapa titik merah ? karena saya mau atur titik nya secara rapi cuman secara awal kamu bisa atur dulu)
+- untuk di komponen maps.webp kan ada tuh titik 1 sampai 6 , setiap user berhasil yang beranjak dari  cemoro sewu ke halaman maps auto  di titik ke dua atau level 1 dan level 3 sampai 6 lock dengan render gambar assets/maps/gembok.webp (ini adalah langkah awal default nya nanti level nya terbuka dengan suatu item di inventory itu adalah plan nanti ) 
+- untuk level nya posisi avatar yang  di maps.webp dengan level di top bar /maps harus sesuai 
+-  untuk tombol njlajahi juga sesuai dengan lokasi avatar di maps.webp nya dan levelnya juga jadi action tombol nya yaitu redirect ke halaman yang sesuai 
