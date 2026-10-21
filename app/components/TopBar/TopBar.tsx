@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import { resetGameProgress } from "../../lib/inventoryStorage";
 import "./topbar.css";
 
 // Rute yang dikecualikan dari rendering TopBar sesuai topbarrule.txt:
@@ -75,16 +76,7 @@ export default function TopBar() {
   // Konfirmasi Ya -> reset sesi / arahkan kembali ke menu utama
   const handleConfirmHome = () => {
     setShowHomeConfirm(false);
-    // Bersihkan sesi game sementara jika diperlukan
-    try {
-      sessionStorage.removeItem("aksara_lawu_current_session");
-      sessionStorage.removeItem("aksara_lawu_cemorosewu_completed");
-      sessionStorage.removeItem("aksara_lawu_selected_avatar");
-      localStorage.removeItem("aksara_lawu_cemorosewu_completed");
-      localStorage.removeItem("aksara_lawu_selected_avatar");
-    } catch {
-      // Abaikan jika sessionStorage tidak dapat diakses
-    }
+    resetGameProgress();
     router.push("/menu");
   };
 

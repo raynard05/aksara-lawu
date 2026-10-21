@@ -19,13 +19,30 @@ export default function InventoryBoard() {
   const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
 
-  // Muat item kepemilikan dari session/local storage
+  // Muat item kepemilikan dari session/local storage & dengarkan perubahannya
   useEffect(() => {
-    const items = getSavedInventoryItems();
-    setOwnedItemIds(items);
-    if (items.length > 0) {
-      setSelectedItemId(items[0]);
-    }
+    const syncItems = (items: string[]) => {
+      setOwnedItemIds(items);
+      if (items.length > 0) {
+        setSelectedItemId(items[0]);
+      } else {
+        setSelectedItemId(null);
+      }
+    };
+
+    syncItems(getSavedInventoryItems());
+
+    const handleInvChange = (e: Event) => {
+      const customEvent = e as CustomEvent<{ items: string[] }>;
+      if (customEvent.detail && Array.isArray(customEvent.detail.items)) {
+        syncItems(customEvent.detail.items);
+      }
+    };
+
+    window.addEventListener("aksara-lawu-inventory-change", handleInvChange);
+    return () => {
+      window.removeEventListener("aksara-lawu-inventory-change", handleInvChange);
+    };
   }, []);
 
   // Item yang sedang aktif dipilih

@@ -27,7 +27,7 @@ export const DEFAULT_WAYPOINTS: Waypoint[] = [
     x: 6.5,
     y: 79.0,
     route: "/cemorosewu",
-    bannerImg: "/maps/level1.webp",
+    bannerImg: "/maps/level1_rev.webp",
     isLocked: false,
   },
   {
@@ -37,7 +37,7 @@ export const DEFAULT_WAYPOINTS: Waypoint[] = [
     x: 21.2,
     y: 70.8,
     route: "/level1",
-    bannerImg: "/maps/level1.webp",
+    bannerImg: "/maps/level1_rev.webp",
     isLocked: false, // Default aktif setelah selesai Cemoro Sewu
   },
   {
@@ -112,6 +112,17 @@ export default function MapsMainComponent({
         localStorage.getItem("aksara_lawu_selected_avatar");
       if (storedAvatar) {
         setSelectedAvatar(storedAvatar);
+      }
+
+      // Pastikan titik default diatur ke 2 (Level 1) setelah beranjak dari Cemoro Sewu
+      const storedWp = sessionStorage.getItem("aksara_lawu_current_waypoint");
+      if (storedWp) {
+        const parsedWp = parseInt(storedWp, 10);
+        if (!isNaN(parsedWp)) {
+          setCurrentWaypointId(parsedWp);
+        }
+      } else {
+        setCurrentWaypointId(2);
       }
     } catch {
       // ignore
@@ -191,17 +202,17 @@ export default function MapsMainComponent({
         </button>
       </section>
 
-      {/* Papan Peta Kayu (maps.webp) beserta titik navigasi & avatar */}
+      {/* Papan Peta Kayu (maps_rev.webp) beserta titik navigasi & avatar */}
       <section className="mmc-board-wrapper" aria-label="Peta Jelajah Aksara Lawu">
         <img
-          src="/maps/maps.webp"
+          src="/maps/maps_rev.webp"
           alt="Peta Petualangan Lawu Quest"
           className="mmc-board-img"
           draggable={false}
         />
 
-        {/* Elang Terbang Melingkari maps.webp dengan Rute Lingkaran Merah */}
-        <FlyingEagle mode="map-circle" showRoute={true} />
+        {/* Elang Terbang Melingkari maps.webp tanpa garis penanda rute */}
+        <FlyingEagle mode="map-circle" showRoute={false} />
 
         {/* Render 6 Titik Merah Penanda (Waypoints 1 - 6) */}
         {activeWaypoints.map((wp) => {

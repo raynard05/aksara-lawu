@@ -25,13 +25,13 @@ export function getSavedInventoryItems(): string[] {
       sessionStorage.getItem(INVENTORY_STORAGE_KEY) ||
       localStorage.getItem(INVENTORY_STORAGE_KEY);
     if (!raw) {
-      // Default untuk awal game: berikan kartu awal / item awal jika ada, atau kosong
-      return ["cardlevel2", "money"];
+      // Default inventory kosong sesuai permintaan user
+      return [];
     }
     const parsed = JSON.parse(raw);
     return Array.isArray(parsed) ? parsed : [];
   } catch {
-    return ["cardlevel2", "money"];
+    return [];
   }
 }
 
@@ -92,5 +92,41 @@ export function unlockLevel(levelNumber: number) {
     }
   } catch (err) {
     console.error("Gagal nyimpen level unlock:", err);
+  }
+}
+
+/**
+ * Mereset seluruh sesi permainan:
+ * - Progress gembok / level di peta (kembali ke level 1)
+ * - Item di inventory (kembali kosong)
+ * - Avatar terpilih & status completion cemorosewu
+ */
+export function resetGameProgress() {
+  if (typeof window === "undefined") return;
+  try {
+    sessionStorage.removeItem("aksara_lawu_current_session");
+    sessionStorage.removeItem("aksara_lawu_cemorosewu_completed");
+    sessionStorage.removeItem("aksara_lawu_selected_avatar");
+    sessionStorage.removeItem(INVENTORY_STORAGE_KEY);
+    sessionStorage.removeItem(UNLOCKED_LEVELS_KEY);
+
+    localStorage.removeItem("aksara_lawu_cemorosewu_completed");
+    localStorage.removeItem("aksara_lawu_selected_avatar");
+    localStorage.removeItem(INVENTORY_STORAGE_KEY);
+    localStorage.removeItem(UNLOCKED_LEVELS_KEY);
+
+    // Dispatch event agar seluruh listener aktif otomatis ter-reset
+    window.dispatchEvent(
+      new CustomEvent("aksara-lawu-inventory-change", {
+        detail: { items: [] },
+      })
+    );
+    window.dispatchEvent(
+      new CustomEvent("aksara-lawu-levels-change", {
+        detail: { unlockedLevels: DEFAULT_UNLOCKED_LEVELS },
+      })
+    );
+  } catch (err) {
+    console.error("Gagal reset progress game:", err);
   }
 }
