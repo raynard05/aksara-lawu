@@ -4,55 +4,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import "./intro-level1.css";
 
-// 8 Bagian Dialog Intro Level 1 Standar (Desktop & Laptop)
-const DESKTOP_DIALOGS = [
-  {
-    id: 1,
-    type: "text_and_video" as const,
-    text: "Sugeng rawuh ing Pos 1: Jejak Lawu!",
-  },
-  {
-    id: 2,
-    type: "text_and_video" as const,
-    text: "Ing pos iki, para pendaki bakal nyusuri sejarah Gunung Lawu liwat video cekak. Gatekna video kanthi tliti, amarga informasi ing sajrone video dadi bekal kanggo ngrampungake tantangan.",
-  },
-  {
-    id: 3,
-    type: "text_and_video" as const,
-    text: "Sawise nonton video, wangsulana pitakon kanthi milih salah siji saka patang pilihan jawaban sing ditulis nganggo Aksara Jawa.",
-  },
-  {
-    id: 4,
-    type: "text_and_video" as const,
-    text: "Ayo disemak videone dhisik kanthi tliti sadurunge mangsuli!",
-    showVideo: true,
-  },
-  {
-    id: 5,
-    type: "text_and_video" as const,
-    text: "Rampungna kabeh tantangan kanthi bener kanggo entuk Kode Jejak Lawu. Gunakna kode kasebut kanggo mbukak dalan menyang Pos 2 lan nerusake petualangan!",
-  },
-  {
-    id: 6,
-    type: "text_and_video" as const,
-    text: "Ayo, temokake jejak sejarah Gunung Lawu lan rampungna tantangane!",
-  },
-  {
-    id: 7,
-    type: "text_and_video" as const,
-    text: "Mengko kowé bisa ngeklik tombol-tombol iki trep karo wangsulan sing bener:",
-    showSymbols: true,
-  },
-  {
-    id: 8,
-    type: "text_and_video" as const,
-    text: "Yen wis siap kabeh, pencet tombol ing ngisor iki kanggo miwiti dolanan tantangan!",
-    showStartButton: true,
-  },
-];
-
-// 9 Bagian Dialog Khusus Mobile Landscape (Memisahkan Teks Pengantar & Video YouTube ke Slide Sendiri)
-const MOBILE_DIALOGS = [
+// 9 Bagian Dialog Intro Level 1 (Teks dan Video dipisah menjadi slide mandiri untuk SEMUA RESPONSIVE)
+const INTRO_DIALOGS = [
   {
     id: 1,
     type: "text" as const,
@@ -114,23 +67,7 @@ const SYSTEM_SYMBOLS = [
 export default function IntroLevel1Page() {
   const router = useRouter();
 
-  // Deteksi khusus mobile landscape
-  const [isMobileLandscape, setIsMobileLandscape] = useState<boolean>(false);
-
-  useEffect(() => {
-    const checkMobileLandscape = () => {
-      const isMobileQuery = window.matchMedia(
-        "(max-width: 900px) and (orientation: landscape) and (pointer: coarse), (max-height: 500px) and (orientation: landscape)"
-      ).matches;
-      setIsMobileLandscape(isMobileQuery);
-    };
-
-    checkMobileLandscape();
-    window.addEventListener("resize", checkMobileLandscape);
-    return () => window.removeEventListener("resize", checkMobileLandscape);
-  }, []);
-
-  const activeDialogs = isMobileLandscape ? MOBILE_DIALOGS : DESKTOP_DIALOGS;
+  const activeDialogs = INTRO_DIALOGS;
 
   // State dialog saat ini (0 sampai activeDialogs.length - 1)
   const [currentStep, setCurrentStep] = useState<number>(0);

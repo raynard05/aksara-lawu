@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Rubik_Mono_One, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import FullscreenPrompt from "./components/FullscreenPrompt/FullscreenPrompt";
+import OrientationGuard from "./components/OrientationGuard/OrientationGuard";
 import SoundToggle from "./components/SoundToggle/SoundToggle";
 import TopBar from "./components/TopBar/TopBar";
 
@@ -45,6 +46,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} ${rubikMonoOne.variable} ${plusJakartaSans.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <OrientationGuard />
         <FullscreenPrompt />
         <SoundToggle />
         <TopBar />
