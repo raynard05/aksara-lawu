@@ -1,0 +1,584 @@
+/* =============================================
+   INTRO LEVEL 1 PAGE — intro-level1.css
+   Rule AI:
+   1. Pisah file css dan tsx
+   2. Satuan vh & vw (no px untuk layout & komponen, kecuali background)
+   3. Landscape only (kunci orientasi game)
+   4. Selector class unik dengan prefix: il1-
+   5. Responsif mobile landscape, laptop sedang, monitor/laptop besar
+   6. Font Jakarta Sans untuk dialog, Rubik One untuk tombol/judul
+   7. Zoom-lock: tampilan terkunci proporsional dan terlindungi guard pointer
+   ============================================= */
+
+/* Root Halaman Intro Level 1 */
+.il1-root {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+
+  /* Background introlevel1_rev.webp yang pas 16:9 landscape */
+  background-image: url('/pos1/introlevel1_rev.webp');
+  background-size: 100% 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: #2b180d;
+}
+
+/* Fallback / safe container */
+.il1-viewport {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* =============================================
+   AVATAR PEMAIN (SESI AKTIF)
+   Diletakkan di lingkaran avatar bawah kiri (menimpa frame lingkaran kosong pada background)
+   Ukuran & koordinat disesuaikan persis dengan posisi lingkaran di introlevel1_rev.webp
+   ============================================= */
+.il1-avatar-container {
+  position: absolute;
+  left: 9.8vw;
+  bottom: 2.2vh;
+  width: 16.5vw;
+  height: 16.5vw;
+  max-width: 32vh;
+  max-height: 32vh;
+  border-radius: 50%;
+  z-index: 10;
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.il1-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  filter: drop-shadow(0 0.8vh 1.4vh rgba(0, 0, 0, 0.6));
+}
+
+/* =============================================
+   BANNER LEVEL (BAGIAN BAWAH TENGAH)
+   Menampilkan assets/maps/level1_rev.webp di papan bawah tengah
+   Ukuran diperbesar 40% dari ukuran semula
+   ============================================= */
+.il1-level-banner-container {
+  position: absolute;
+  left: 48.5vw;
+  bottom: 3.5vh;
+  transform: translateX(-50%);
+  width: 53.2vw;
+  max-width: 58vw;
+  height: 14.7vh;
+  z-index: 12;
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.il1-level-banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0.8vh 1.5vh rgba(0, 0, 0, 0.75));
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.il1-level-banner-img:hover {
+  transform: scale(1.03);
+}
+
+/* =============================================
+   AREA DIALOG PERGAMEN KERTAS KANAN
+   Sesuai desain screenshot: kertas perkamen kuno di panel kanan atas-tengah
+   ============================================= */
+.il1-dialog-section {
+  position: absolute;
+  top: 21.5vh;
+  right: 4.5vw;
+  width: 48.5vw;
+  height: 48vh;
+  z-index: 20;
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2vh 2.5vw 2.5vh 2.5vw;
+  box-sizing: border-box;
+}
+
+/* Navigasi Previous & Next untuk Dialog di dalam kertas */
+.il1-dialog-nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 1vh;
+}
+
+.il1-dialog-step-badge {
+  font-family: var(--font-rubik-one), "Rubik One", sans-serif;
+  font-size: 1.1vw;
+  color: #5c3516;
+  background: rgba(184, 137, 86, 0.25);
+  border: 0.15vw solid rgba(92, 53, 22, 0.4);
+  border-radius: 1.5vh;
+  padding: 0.4vh 1.2vw;
+  letter-spacing: 0.05vw;
+  text-shadow: 0 0.1vh 0.2vh rgba(255, 255, 255, 0.4);
+}
+
+.il1-dialog-nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.9vw;
+}
+
+.il1-dialog-nav-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: 3.4vw;
+  height: 6vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease, filter 0.15s ease;
+  filter: drop-shadow(0 0.3vh 0.5vh rgba(0, 0, 0, 0.45));
+}
+
+.il1-dialog-nav-btn:hover:not(:disabled) {
+  transform: scale(1.15);
+  filter: drop-shadow(0 0.5vh 0.8vh rgba(0, 0, 0, 0.6));
+}
+
+.il1-dialog-nav-btn:active:not(:disabled) {
+  transform: scale(0.92);
+}
+
+.il1-dialog-nav-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  filter: grayscale(0.5);
+}
+
+.il1-dialog-nav-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Wadah Teks Dialog (Font Jakarta Sans) */
+.il1-dialog-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow-y: auto;
+  padding-right: 0.5vw;
+}
+
+/* Custom Scrollbar tipis jika teks panjang */
+.il1-dialog-body::-webkit-scrollbar {
+  width: 0.4vw;
+}
+
+.il1-dialog-body::-webkit-scrollbar-track {
+  background: rgba(92, 53, 22, 0.1);
+  border-radius: 0.5vw;
+}
+
+.il1-dialog-body::-webkit-scrollbar-thumb {
+  background: rgba(92, 53, 22, 0.35);
+  border-radius: 0.5vw;
+}
+
+.il1-dialog-text {
+  font-family: var(--font-jakarta-sans), "Plus Jakarta Sans", sans-serif;
+  font-size: 1.55vw;
+  line-height: 1.55;
+  font-weight: 700;
+  color: #3b2010;
+  margin: 0;
+  text-align: left;
+  letter-spacing: -0.01vw;
+  text-shadow: 0 0.1vh 0.2vh rgba(255, 255, 255, 0.5);
+  word-wrap: break-word;
+}
+
+/* Kata yang sedang beranimasi muncul */
+.il1-word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.5vh);
+  animation: il1WordFadeIn 0.32s cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+  white-space: pre-wrap;
+}
+
+@keyframes il1WordFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(0.6vh) scale(0.96);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* =============================================
+   CONTAINER TOMBOL SISTEM O, +, X, Y (LANGKAH 6)
+   Dirender dengan animasi menarik saat langkah 6
+   Diberi gap longgar & nyaman antara teks dan tombol
+   ============================================= */
+.il1-system-symbols-wrapper {
+  margin-top: 4vh;
+  margin-bottom: 1.5vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.2vw;
+  animation: il1SymbolsAppear 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes il1SymbolsAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(2vh) scale(0.85);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.il1-symbol-card {
+  position: relative;
+  width: 5.6vw;
+  height: 5.6vw;
+  max-width: 10.5vh;
+  max-height: 10.5vh;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0;
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s ease;
+  animation: il1PulseSymbol 2.4s ease-in-out infinite alternate;
+}
+
+.il1-symbol-card:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.il1-symbol-card:nth-child(2) {
+  animation-delay: 0.25s;
+}
+
+.il1-symbol-card:nth-child(3) {
+  animation-delay: 0.5s;
+}
+
+.il1-symbol-card:nth-child(4) {
+  animation-delay: 0.75s;
+}
+
+@keyframes il1PulseSymbol {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  100% {
+    transform: translateY(-0.6vh) rotate(2deg);
+  }
+}
+
+.il1-symbol-card:hover {
+  transform: scale(1.22) rotate(-4deg) !important;
+  filter: drop-shadow(0 0.8vh 1.4vh rgba(255, 215, 0, 0.65)) brightness(1.12);
+}
+
+.il1-symbol-card:active {
+  transform: scale(0.92) !important;
+}
+
+.il1-symbol-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0.5vh 0.8vh rgba(0, 0, 0, 0.45));
+}
+
+/* =============================================
+   TOMBOL "WIWIT LEVEL 1" (LANGKAH 7)
+   Font Rubik One, warna & style tema kayu emas Lawu
+   Gap lega antara teks dan tombol
+   ============================================= */
+.il1-start-button-wrapper {
+  margin-top: 4.8vh;
+  margin-bottom: 1.5vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  animation: il1StartBtnPop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes il1StartBtnPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(2vh);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.il1-btn-start {
+  font-family: var(--font-rubik-one), "Rubik One", sans-serif;
+  font-size: 1.4vw;
+  color: #fff9ea;
+  text-shadow: 0 0.2vh 0.4vh #3d1c06, 0 0.4vh 0.8vh rgba(0, 0, 0, 0.8);
+  letter-spacing: 0.08vw;
+  text-transform: uppercase;
+  background: linear-gradient(180deg, #628c2e 0%, #46691c 50%, #2f4711 100%);
+  border: 0.3vw solid #ffd269;
+  border-radius: 4vh;
+  padding: 1.6vh 3.5vw;
+  box-shadow:
+    inset 0 0.3vh 0.5vh rgba(255, 255, 255, 0.4),
+    inset 0 -0.4vh 0.6vh rgba(0, 0, 0, 0.5),
+    0 1vh 2vh rgba(0, 0, 0, 0.65);
+  cursor: pointer;
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8vw;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.il1-btn-start::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.35) 50%,
+      transparent 100%);
+  transform: rotate(25deg);
+  animation: il1Shine 3s infinite ease-in-out;
+}
+
+@keyframes il1Shine {
+  0% {
+    left: -60%;
+  }
+
+  30%,
+  100% {
+    left: 140%;
+  }
+}
+
+.il1-btn-start:hover {
+  transform: scale(1.07) translateY(-0.3vh);
+  background: linear-gradient(180deg, #71a234 0%, #517a21 50%, #375314 100%);
+  border-color: #fff1b0;
+  box-shadow:
+    inset 0 0.4vh 0.6vh rgba(255, 255, 255, 0.5),
+    inset 0 -0.4vh 0.6vh rgba(0, 0, 0, 0.5),
+    0 1.4vh 2.8vh rgba(60, 110, 20, 0.55),
+    0 0.8vh 1.4vh rgba(0, 0, 0, 0.7);
+}
+
+.il1-btn-start:active {
+  transform: scale(0.96) translateY(0.3vh);
+  box-shadow:
+    inset 0 0.2vh 0.4vh rgba(0, 0, 0, 0.6),
+    0 0.4vh 0.8vh rgba(0, 0, 0, 0.5);
+}
+
+/* =============================================
+   RESPONSIVE — Laptop Sedang (1024px - 1366px)
+   Zoom-lock sesuai AIrule.txt (rule 16)
+   ============================================= */
+@media (min-width: 901px) and (max-width: 1366px) {
+  .il1-dialog-section {
+    top: 21vh;
+    right: 4.2vw;
+    width: 49vw;
+    height: 48vh;
+    padding: 1.8vh 2.2vw 2.2vh 2.2vw;
+  }
+
+  .il1-dialog-text {
+    font-size: 1.6vw;
+    line-height: 1.5;
+  }
+
+  .il1-system-symbols-wrapper {
+    margin-top: 4.2vh;
+    gap: 2.4vw;
+  }
+
+  .il1-start-button-wrapper {
+    margin-top: 5vh;
+  }
+
+  .il1-btn-start {
+    font-size: 1.5vw;
+    padding: 1.6vh 3.2vw;
+  }
+
+  .il1-symbol-card {
+    width: 6vw;
+    height: 6vw;
+  }
+
+  .il1-level-banner-container {
+    width: 60vw;
+    height: 17vh;
+    bottom: 4.2vh;
+  }
+
+  .il1-avatar-container {
+    width: 17.5vw;
+    height: 17.5vw;
+    bottom: 2vh;
+    left: 9.2vw;
+  }
+}
+
+/* =============================================
+   RESPONSIVE — Monitor / Layar Besar (> 1366px)
+   ============================================= */
+@media (min-width: 1367px) {
+  .il1-dialog-section {
+    top: 22vh;
+    right: 4.8vw;
+    width: 48vw;
+    height: 47vh;
+  }
+
+  .il1-dialog-text {
+    font-size: 1.45vw;
+    line-height: 1.58;
+  }
+
+  .il1-system-symbols-wrapper {
+    margin-top: 4vh;
+    gap: 2vw;
+  }
+
+  .il1-start-button-wrapper {
+    margin-top: 4.6vh;
+  }
+
+  .il1-btn-start {
+    font-size: 1.35vw;
+    padding: 1.8vh 3.8vw;
+  }
+
+  .il1-symbol-card {
+    width: 5.2vw;
+    height: 5.2vw;
+  }
+
+  .il1-level-banner-container {
+    width: 60vw;
+    height: 17vh;
+    bottom: 4.2vh;
+  }
+
+  .il1-avatar-container {
+    width: 15.8vw;
+    height: 15.8vw;
+    bottom: 2.5vh;
+    left: 10.2vw;
+  }
+}
+
+/* =============================================
+   RESPONSIVE — Mobile Landscape (Layar Sentuh HP)
+   Dilindungi dengan guard pointer: coarse
+   ============================================= */
+@media (max-width: 900px) and (orientation: landscape) and (pointer: coarse),
+(max-height: 500px) and (orientation: landscape) {
+  .il1-dialog-section {
+    top: 21vh;
+    right: 3.5vw;
+    width: 50vw;
+    height: 48vh;
+    padding: 1vh 2vw;
+  }
+
+  .il1-dialog-text {
+    font-size: 1.9vw;
+    line-height: 1.45;
+  }
+
+  .il1-system-symbols-wrapper {
+    margin-top: 3.5vh;
+    gap: 2.5vw;
+  }
+
+  .il1-start-button-wrapper {
+    margin-top: 4vh;
+  }
+
+  .il1-dialog-step-badge {
+    font-size: 1.5vw;
+    padding: 0.2vh 1vw;
+  }
+
+  .il1-dialog-nav-btn {
+    width: 4.5vw;
+    height: 7vh;
+  }
+
+  .il1-btn-start {
+    font-size: 1.8vw;
+    padding: 1.2vh 3vw;
+    border-radius: 3.5vh;
+  }
+
+  .il1-symbol-card {
+    width: 6.8vw;
+    height: 6.8vw;
+  }
+
+  .il1-level-banner-container {
+    width: 70vw;
+    height: 20vh;
+    bottom: 4.2vh;
+  }
+
+  .il1-avatar-container {
+    width: 17vw;
+    height: 17vw;
+    bottom: 1.8vh;
+    left: 9vw;
+  }
+}

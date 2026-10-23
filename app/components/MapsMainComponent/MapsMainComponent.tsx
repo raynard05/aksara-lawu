@@ -36,7 +36,7 @@ export const DEFAULT_WAYPOINTS: Waypoint[] = [
     levelNumber: 1,
     x: 21.2,
     y: 70.8,
-    route: "/level1",
+    route: "/intro_level1",
     bannerImg: "/maps/level1_rev.webp",
     isLocked: false, // Default aktif setelah selesai Cemoro Sewu
   },

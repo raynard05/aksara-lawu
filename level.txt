@@ -1,0 +1,30 @@
+prompt : 
+-buatkan persis sesuai ss desain
+-bagian atas render top bar jika sudah biarkan
+-namakan dengan intro_level1 , dst sesuai dengan level dari map setiap halaman level ada intro 
+-dan halaman ini digunakan redirect dari tombol "njlajahi dari /map" atau mainmapcomponent
+-halaman menggunakan bg  \assets\pos1\introlevel1_rev.webp atau nanti level lainnya kedepannya pake namanya bg sebagai background page
+-dan render assets\maps hanya asset icon level nya di bagian bawah tengah bg 
+- dan disisi kanan ada dialog  , setiap level juga ada dialog nya dan menggunakan font jakarta sans
+-render avatar sesuai dengan sesi
+- semua peletakan text , level , dan juga avatar harus sesuai referensi desain
+- buatkan tombol previous dan next .
+- dialog tanpa pop up karena sudah ada tempat nya sendiri
+- dialog beranimasi dari kata perkata jeda 0,2s per kata 
+- dialog bisa dijelaskan dibawah : 
+
+dialog level 1 di halaman intro
+1.Sugeng rawuh ing Pos 1: Jejak Lawu!
+
+2.Ing pos iki, para pendaki bakal nyusuri sejarah Gunung Lawu liwat video cekak. Gatekna video kanthi tliti, amarga informasi ing sajrone video dadi bekal kanggo ngrampungake tantangan.
+
+3. Sawise nonton video, wangsulana pitakon kanthi milih salah siji saka patang pilihan jawaban sing ditulis nganggo Aksara Jawa. 
+
+4.Rampungna kabeh tantangan kanthi bener kanggo entuk Kode Jejak Lawu. Gunakna kode kasebut kanggo mbukak dalan menyang Pos 2 lan nerusake petualangan!
+
+5. Ayo, temokake jejak sejarah Gunung Lawu lan rampungna tantangane!
+
+6. nanti kamu bisa mengklik tombol tombol ini sesuai dengan jawaban yang benar (sistem  render gambar "o", "+" ,"x" , dan "Y" di assets/pos1, tambahkan animasi juga saat render itu agar menarik)
+
+7 buatkan tombol "wiwit level 1"  font rubik one  menggunakan css sesuai tema  , dan tombol ini action nya untuk ke halaman level1_game
+
