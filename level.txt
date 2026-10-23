@@ -20,11 +20,13 @@ dialog level 1 di halaman intro
 
 3. Sawise nonton video, wangsulana pitakon kanthi milih salah siji saka patang pilihan jawaban sing ditulis nganggo Aksara Jawa. 
 
-4.Rampungna kabeh tantangan kanthi bener kanggo entuk Kode Jejak Lawu. Gunakna kode kasebut kanggo mbukak dalan menyang Pos 2 lan nerusake petualangan!
+4. tambahkan dialog "yuk simak video nya sebelum menjawab (translate kan dalam bahasa jawa yg sesuai)" render embed video youtube ini <iframe width="560" height="315" src="https://www.youtube.com/embed/INUeKTTdV-U?si=tVMbz6OIVBQ9JuBi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> dengan frame yg css nya match dengan konsep 
 
-5. Ayo, temokake jejak sejarah Gunung Lawu lan rampungna tantangane!
+5. Rampungna kabeh tantangan kanthi bener kanggo entuk Kode Jejak Lawu. Gunakna kode kasebut kanggo mbukak dalan menyang Pos 2 lan nerusake petualangan!
 
-6. nanti kamu bisa mengklik tombol tombol ini sesuai dengan jawaban yang benar (sistem  render gambar "o", "+" ,"x" , dan "Y" di assets/pos1, tambahkan animasi juga saat render itu agar menarik)
+6. Ayo, temokake jejak sejarah Gunung Lawu lan rampungna tantangane!
 
-7 buatkan tombol "wiwit level 1"  font rubik one  menggunakan css sesuai tema  , dan tombol ini action nya untuk ke halaman level1_game
+7. nanti kamu bisa mengklik tombol tombol ini sesuai dengan jawaban yang benar (sistem  render gambar "o", "+" ,"x" , dan "Y" di assets/pos1, tambahkan animasi juga saat render itu agar menarik)
+
+8. buatkan tombol "wiwit level 1"  font rubik one  menggunakan css sesuai tema  , dan tombol ini action nya untuk ke halaman level1_game
 

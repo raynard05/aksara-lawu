@@ -4,39 +4,106 @@ import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import "./intro-level1.css";
 
-// 7 Bagian Dialog Intro Level 1 sesuai level.txt
-const INTRO_DIALOGS: { id: number; text: string }[] = [
+// 8 Bagian Dialog Intro Level 1 Standar (Desktop & Laptop)
+const DESKTOP_DIALOGS = [
   {
     id: 1,
+    type: "text_and_video" as const,
     text: "Sugeng rawuh ing Pos 1: Jejak Lawu!",
   },
   {
     id: 2,
+    type: "text_and_video" as const,
     text: "Ing pos iki, para pendaki bakal nyusuri sejarah Gunung Lawu liwat video cekak. Gatekna video kanthi tliti, amarga informasi ing sajrone video dadi bekal kanggo ngrampungake tantangan.",
   },
   {
     id: 3,
+    type: "text_and_video" as const,
     text: "Sawise nonton video, wangsulana pitakon kanthi milih salah siji saka patang pilihan jawaban sing ditulis nganggo Aksara Jawa.",
   },
   {
     id: 4,
-    text: "Rampungna kabeh tantangan kanthi bener kanggo entuk Kode Jejak Lawu. Gunakna kode kasebut kanggo mbukak dalan menyang Pos 2 lan nerusake petualangan!",
+    type: "text_and_video" as const,
+    text: "Ayo disemak videone dhisik kanthi tliti sadurunge mangsuli!",
+    showVideo: true,
   },
   {
     id: 5,
-    text: "Ayo, temokake jejak sejarah Gunung Lawu lan rampungna tantangane!",
+    type: "text_and_video" as const,
+    text: "Rampungna kabeh tantangan kanthi bener kanggo entuk Kode Jejak Lawu. Gunakna kode kasebut kanggo mbukak dalan menyang Pos 2 lan nerusake petualangan!",
   },
   {
     id: 6,
-    text: "Mengko kowé bisa ngeklik tombol-tombol iki trep karo wangsulan sing bener:",
+    type: "text_and_video" as const,
+    text: "Ayo, temokake jejak sejarah Gunung Lawu lan rampungna tantangane!",
   },
   {
     id: 7,
+    type: "text_and_video" as const,
+    text: "Mengko kowé bisa ngeklik tombol-tombol iki trep karo wangsulan sing bener:",
+    showSymbols: true,
+  },
+  {
+    id: 8,
+    type: "text_and_video" as const,
     text: "Yen wis siap kabeh, pencet tombol ing ngisor iki kanggo miwiti dolanan tantangan!",
+    showStartButton: true,
   },
 ];
 
-// Tombol simbol sistem untuk langkah ke-6 (o, +, x, Y)
+// 9 Bagian Dialog Khusus Mobile Landscape (Memisahkan Teks Pengantar & Video YouTube ke Slide Sendiri)
+const MOBILE_DIALOGS = [
+  {
+    id: 1,
+    type: "text" as const,
+    text: "Sugeng rawuh ing Pos 1: Jejak Lawu!",
+  },
+  {
+    id: 2,
+    type: "text" as const,
+    text: "Ing pos iki, para pendaki bakal nyusuri sejarah Gunung Lawu liwat video cekak. Gatekna video kanthi tliti, amarga informasi ing sajrone video dadi bekal kanggo ngrampungake tantangan.",
+  },
+  {
+    id: 3,
+    type: "text" as const,
+    text: "Sawise nonton video, wangsulana pitakon kanthi milih salah siji saka patang pilihan jawaban sing ditulis nganggo Aksara Jawa.",
+  },
+  {
+    id: 4,
+    type: "text" as const,
+    text: "Ayo disemak videone dhisik kanthi tliti sadurunge mangsuli!",
+  },
+  {
+    id: 5,
+    type: "video_only" as const,
+    text: "Video Sejarah Gunung Lawu",
+    showVideo: true,
+  },
+  {
+    id: 6,
+    type: "text" as const,
+    text: "Rampungna kabeh tantangan kanthi bener kanggo entuk Kode Jejak Lawu. Gunakna kode kasebut kanggo mbukak dalan menyang Pos 2 lan nerusake petualangan!",
+  },
+  {
+    id: 7,
+    type: "text" as const,
+    text: "Ayo, temokake jejak sejarah Gunung Lawu lan rampungna tantangane!",
+  },
+  {
+    id: 8,
+    type: "text" as const,
+    text: "Mengko kowé bisa ngeklik tombol-tombol iki trep karo wangsulan sing bener:",
+    showSymbols: true,
+  },
+  {
+    id: 9,
+    type: "text" as const,
+    text: "Yen wis siap kabeh, pencet tombol ing ngisor iki kanggo miwiti dolanan tantangan!",
+    showStartButton: true,
+  },
+];
+
+// Tombol simbol sistem untuk langkah simbol (o, +, x, Y)
 const SYSTEM_SYMBOLS = [
   { id: "o", src: "/pos1/o.webp", alt: "Tombol O" },
   { id: "plus", src: "/pos1/+.webp", alt: "Tombol Tambah" },
@@ -47,7 +114,25 @@ const SYSTEM_SYMBOLS = [
 export default function IntroLevel1Page() {
   const router = useRouter();
 
-  // State dialog saat ini (0 sampai 6)
+  // Deteksi khusus mobile landscape
+  const [isMobileLandscape, setIsMobileLandscape] = useState<boolean>(false);
+
+  useEffect(() => {
+    const checkMobileLandscape = () => {
+      const isMobileQuery = window.matchMedia(
+        "(max-width: 900px) and (orientation: landscape) and (pointer: coarse), (max-height: 500px) and (orientation: landscape)"
+      ).matches;
+      setIsMobileLandscape(isMobileQuery);
+    };
+
+    checkMobileLandscape();
+    window.addEventListener("resize", checkMobileLandscape);
+    return () => window.removeEventListener("resize", checkMobileLandscape);
+  }, []);
+
+  const activeDialogs = isMobileLandscape ? MOBILE_DIALOGS : DESKTOP_DIALOGS;
+
+  // State dialog saat ini (0 sampai activeDialogs.length - 1)
   const [currentStep, setCurrentStep] = useState<number>(0);
   // State avatar pemain dari sesi aktif
   const [selectedAvatar, setSelectedAvatar] = useState<string>("avatar3.webp");
@@ -74,7 +159,15 @@ export default function IntroLevel1Page() {
 
   // Animasi kata per kata: jeda 0.2s (200ms) per kata sesuai prompt level.txt
   useEffect(() => {
-    const dialogItem = INTRO_DIALOGS[currentStep];
+    const dialogItem = activeDialogs[currentStep];
+    const isVideoOnly = dialogItem?.type === "video_only";
+
+    if (isVideoOnly) {
+      setVisibleWordsCount(0);
+      setIsTyping(false);
+      return;
+    }
+
     const words = dialogItem ? dialogItem.text.split(" ") : [];
 
     // Reset hitungan kata & set status mengetik
@@ -108,7 +201,7 @@ export default function IntroLevel1Page() {
         clearInterval(wordTimerRef.current);
       }
     };
-  }, [currentStep]);
+  }, [currentStep, activeDialogs]);
 
   // Aksi tombol Previous pada dialog
   const handlePrevious = () => {
@@ -119,18 +212,20 @@ export default function IntroLevel1Page() {
 
   // Aksi tombol Next pada dialog
   const handleNext = () => {
-    // Jika masih typing, percepat langsung tampilkan seluruh kata
-    const words = INTRO_DIALOGS[currentStep].text.split(" ");
-    if (isTyping && visibleWordsCount < words.length) {
-      if (wordTimerRef.current) {
-        clearInterval(wordTimerRef.current);
+    const currentItem = activeDialogs[currentStep];
+    if (currentItem?.type !== "video_only") {
+      const words = currentItem.text.split(" ");
+      if (isTyping && visibleWordsCount < words.length) {
+        if (wordTimerRef.current) {
+          clearInterval(wordTimerRef.current);
+        }
+        setVisibleWordsCount(words.length);
+        setIsTyping(false);
+        return;
       }
-      setVisibleWordsCount(words.length);
-      setIsTyping(false);
-      return;
     }
 
-    if (currentStep < INTRO_DIALOGS.length - 1) {
+    if (currentStep < activeDialogs.length - 1) {
       setCurrentStep((prev) => prev + 1);
     }
   };
@@ -140,8 +235,9 @@ export default function IntroLevel1Page() {
     router.push("/level1_game");
   };
 
-  const currentDialog = INTRO_DIALOGS[currentStep];
-  const allWords = currentDialog.text.split(" ");
+  const currentDialog = activeDialogs[currentStep];
+  const isVideoOnly = currentDialog?.type === "video_only";
+  const allWords = currentDialog?.text ? currentDialog.text.split(" ") : [];
   const displayedWords = allWords.slice(0, visibleWordsCount);
 
   return (
@@ -188,7 +284,7 @@ export default function IntroLevel1Page() {
           aria-label="Dialog Pengantar Pos 1"
           onClick={() => {
             // Klik area kertas mempercepat teks jika sedang mengetik
-            if (isTyping) {
+            if (isTyping && !isVideoOnly) {
               if (wordTimerRef.current) {
                 clearInterval(wordTimerRef.current);
               }
@@ -200,7 +296,7 @@ export default function IntroLevel1Page() {
           {/* Header Navigasi Dialog: Badge Nomor & Tombol Prev / Next */}
           <div className="il1-dialog-nav-bar">
             <span className="il1-dialog-step-badge">
-              {currentStep + 1} / {INTRO_DIALOGS.length}
+              {currentStep + 1} / {activeDialogs.length}
             </span>
 
             <div className="il1-dialog-nav-buttons">
@@ -231,7 +327,7 @@ export default function IntroLevel1Page() {
                   e.stopPropagation();
                   handleNext();
                 }}
-                disabled={currentStep === INTRO_DIALOGS.length - 1 && !isTyping}
+                disabled={currentStep === activeDialogs.length - 1 && !isTyping}
                 className="il1-dialog-nav-btn"
                 aria-label="Dialog Sabanjure (Next)"
                 title="Sabanjure"
@@ -247,21 +343,42 @@ export default function IntroLevel1Page() {
           </div>
 
           {/* Isi Teks Dialog Beranimasi Kata per Kata */}
-          <div className="il1-dialog-body">
-            <p className="il1-dialog-text">
-              {displayedWords.map((word, idx) => (
-                <span
-                  key={`word-${currentStep}-${idx}`}
-                  className="il1-word"
-                  style={{ animationDelay: `${idx * 0.02}s` }}
-                >
-                  {word}{" "}
-                </span>
-              ))}
-            </p>
+          <div className={`il1-dialog-body ${isVideoOnly ? "il1-dialog-body-video-only" : ""}`}>
+            {!isVideoOnly && (
+              <p className="il1-dialog-text">
+                {displayedWords.map((word, idx) => (
+                  <span
+                    key={`word-${currentStep}-${idx}`}
+                    className="il1-word"
+                    style={{ animationDelay: `${idx * 0.02}s` }}
+                  >
+                    {word}{" "}
+                  </span>
+                ))}
+              </p>
+            )}
 
-            {/* Render 4 Tombol Pilihan O, +, X, Y saat dialog ke-6 */}
-            {currentStep === 5 && !isTyping && (
+            {/* Render Embed Video YouTube (Jika showVideo aktif pada slide ini) */}
+            {currentDialog?.showVideo && (
+              <div
+                className={`il1-video-frame-wrapper ${isVideoOnly ? "il1-video-frame-wrapper-solo" : ""}`}
+                aria-label="Video Sejarah Gunung Lawu"
+              >
+                <div className={`il1-video-frame ${isVideoOnly ? "il1-video-frame-solo" : ""}`}>
+                  <iframe
+                    className="il1-video-iframe"
+                    src="https://www.youtube.com/embed/INUeKTTdV-U?si=tVMbz6OIVBQ9JuBi"
+                    title="YouTube video player"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Render 4 Tombol Pilihan O, +, X, Y */}
+            {currentDialog?.showSymbols && !isTyping && (
               <div
                 className="il1-system-symbols-wrapper"
                 aria-label="Pilihan Simbol Jawaban"
@@ -286,8 +403,8 @@ export default function IntroLevel1Page() {
               </div>
             )}
 
-            {/* Render Tombol 'Wiwit Level 1' saat dialog ke-7 */}
-            {currentStep === 6 && !isTyping && (
+            {/* Render Tombol 'Wiwit Level 1' */}
+            {currentDialog?.showStartButton && !isTyping && (
               <div className="il1-start-button-wrapper">
                 <button
                   type="button"
