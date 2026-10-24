@@ -28,6 +28,8 @@ export default function TopBar() {
   const [isMuted, setIsMuted] = useState<boolean>(false);
   // State untuk modal dialog konfirmasi keluar game
   const [showHomeConfirm, setShowHomeConfirm] = useState<boolean>(false);
+  // State override untuk disable maps dan bag selama in-game (misal level1_game)
+  const [inGameDisabled, setInGameDisabled] = useState<boolean>(false);
 
   useEffect(() => {
     try {
@@ -52,6 +54,27 @@ export default function TopBar() {
     };
   }, []);
 
+  useEffect(() => {
+    // Jika rute adalah /level1_game, defaultnya inGameDisabled = true
+    if (pathname.includes("level1_game")) {
+      setInGameDisabled(true);
+    } else {
+      setInGameDisabled(false);
+    }
+
+    const handleTopBarToggle = (event: Event) => {
+      const customEvent = event as CustomEvent<{ disableInGame?: boolean }>;
+      if (customEvent.detail && typeof customEvent.detail.disableInGame === "boolean") {
+        setInGameDisabled(customEvent.detail.disableInGame);
+      }
+    };
+
+    window.addEventListener("aksara-lawu-topbar-toggle", handleTopBarToggle);
+    return () => {
+      window.removeEventListener("aksara-lawu-topbar-toggle", handleTopBarToggle);
+    };
+  }, [pathname]);
+
   // Jika berada di login, register, menu, atau menu_game, jangan render TopBar
   if (EXCLUDED_ROUTES.includes(pathname)) {
     return null;
@@ -62,9 +85,12 @@ export default function TopBar() {
   // Cek apakah halaman saat ini adalah inventory untuk men-disable tombol bag
   const isInventory = pathname === "/inventory" || pathname.startsWith("/inventory/");
 
+  const isMapsDisabled = isCemoroSewu || inGameDisabled;
+  const isBagDisabled = isCemoroSewu || isInventory || inGameDisabled;
+
   // Aksi tombol peta / maps -> buka halaman peta
   const handleMaps = () => {
-    if (isCemoroSewu) return;
+    if (isMapsDisabled) return;
     router.push("/maps");
   };
 
@@ -105,7 +131,7 @@ export default function TopBar() {
 
   // Aksi tombol tas / inventaris
   const handleBag = () => {
-    if (isCemoroSewu || isInventory) return;
+    if (isBagDisabled) return;
     router.push("/inventory");
   };
 
@@ -136,11 +162,11 @@ export default function TopBar() {
               type="button"
               id="btn-topbar-maps"
               onClick={handleMaps}
-              disabled={isCemoroSewu}
-              className={`topbar-btn ${isCemoroSewu ? "topbar-btn-disabled" : ""}`}
+              disabled={isMapsDisabled}
+              className={`topbar-btn ${isMapsDisabled ? "topbar-btn-disabled" : ""}`}
               aria-label="Peta Wilayah (Maps)"
-              aria-disabled={isCemoroSewu}
-              title={isCemoroSewu ? "Peta Ora Kasedhiya" : "Peta (Maps)"}
+              aria-disabled={isMapsDisabled}
+              title={isMapsDisabled ? "Peta Ora Kasedhiya" : "Peta (Maps)"}
             >
               <img
                 src="/main_assets/maps.png"
@@ -167,14 +193,14 @@ export default function TopBar() {
               type="button"
               id="btn-topbar-bag"
               onClick={handleBag}
-              disabled={isCemoroSewu || isInventory}
+              disabled={isBagDisabled}
               className={`topbar-btn topbar-btn-bag ${
-                isCemoroSewu || isInventory ? "topbar-btn-disabled" : ""
+                isBagDisabled ? "topbar-btn-disabled" : ""
               }`}
               aria-label="Tas Inventaris (Bag)"
-              aria-disabled={isCemoroSewu || isInventory}
+              aria-disabled={isBagDisabled}
               title={
-                isCemoroSewu
+                isBagDisabled
                   ? "Tas Ora Kasedhiya"
                   : isInventory
                   ? "Ing Halaman Inventaris"

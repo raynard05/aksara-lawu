@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Rubik_Mono_One, Plus_Jakarta_Sans } from "next/font/google";
+import { Geist, Geist_Mono, Rubik_Mono_One, Plus_Jakarta_Sans, Noto_Sans_Javanese } from "next/font/google";
 import "./globals.css";
 import FullscreenPrompt from "./components/FullscreenPrompt/FullscreenPrompt";
 import OrientationGuard from "./components/OrientationGuard/OrientationGuard";
@@ -34,6 +34,12 @@ const plusJakartaSans = Plus_Jakarta_Sans({
   weight: ["400", "500", "600", "700", "800"],
 });
 
+const notoSansJavanese = Noto_Sans_Javanese({
+  variable: "--font-javanese",
+  subsets: ["javanese"],
+  weight: ["400", "500", "600", "700"],
+});
+
 export const metadata: Metadata = {
   title: "Aksara Lawu — Game Petualangan",
   description: "Game sinau aksara lan budaya Jawa kanggo bocah sekolah",
@@ -43,7 +49,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="id"
-      className={`${geistSans.variable} ${geistMono.variable} ${rubikMonoOne.variable} ${plusJakartaSans.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${rubikMonoOne.variable} ${plusJakartaSans.variable} ${notoSansJavanese.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <OrientationGuard />

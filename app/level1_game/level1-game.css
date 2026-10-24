@@ -1,0 +1,695 @@
+/* =============================================
+   LEVEL 1 GAME PAGE — level1-game.css
+   Mengikuti AIrule.txt:
+   - File css dan tsx dipisah (rule 1 & 11)
+   - Selector class ber-prefix unik: l1g- (rule 12)
+   - Satuan vh & vw (rule 4 & 6, no px untuk komponen kecuali background)
+   - Orientasi landscape-only (rule 5)
+   - Font global Rubik One & Jakarta Sans (rule 9)
+   - Zoom-lock & konsistensi device (rule 16)
+   - Background bg_rev.webp pas di viewport (rule 14 & 17)
+   ============================================= */
+
+/* Root Kontainer Permainan Level 1 */
+.l1g-root {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+
+  /* Background Pos 1 Game */
+  background-image: url('/pos1/bg_rev.webp');
+  background-size: 100% 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: #2b180d;
+}
+
+/* Viewport pembatas */
+.l1g-viewport {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* =============================================
+   PAPAH SOAL DAN JAWABAN (AREA PAPAN KAYU)
+   Sesuai desain ss referensi & bg_rev.webp:
+   Papan atas terletak di tengah (Top ~19vh - 74vh)
+   ============================================= */
+/* =============================================
+   PAPAN SOAL DAN JAWABAN (AREA PAPAN KAYU)
+   Sesuai gambar 2 referensi:
+   Papan atas terletak rapi dan simetris di tengah
+   ============================================= */
+.l1g-board-content {
+  position: absolute;
+  top: 60.5vh;
+  left: 20.8vw;
+  width: 58.4vw;
+  height: 36.5vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0.5vh 2.2vw;
+  z-index: 20;
+  pointer-events: auto;
+}
+
+/* Indikator kesempatan mencoba per soal - tepat di atas papan soal tanpa menabrak atap segitiga */
+.l1g-attempts-indicator {
+  position: absolute;
+  top: 38.2vh;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.8vw;
+  z-index: 25;
+  font-family: var(--font-rubik-one), sans-serif;
+  font-size: 1.5vh;
+  color: #3e2211;
+  text-shadow: 0 0.1vh 0.3vh rgba(255, 255, 255, 0.7);
+  letter-spacing: 0.05vw;
+}
+
+.l1g-attempts-indicator span {
+  font-weight: 700;
+  font-size: 2.2vh;
+  color: #3e2211;
+}
+
+.l1g-attempt-dot {
+  width: 1.6vh;
+  height: 1.6vh;
+  border-radius: 50%;
+  background: #27ae60;
+  border: 0.25vh solid #1e824c;
+  box-shadow: 0 0.2vh 0.4vh rgba(0, 0, 0, 0.35);
+  transition: all 0.2s ease;
+}
+
+.l1g-attempt-dot.l1g-dot-used {
+  background: #c0392b;
+  border-color: #962d22;
+  opacity: 0.85;
+}
+
+/* Soal Aksara Jawa */
+.l1g-question-box {
+  width: 100%;
+  min-height: 7vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 3vh;
+  margin-top: 17vh;
+}
+
+.l1g-question-text {
+
+  font-family: var(--font-javanese), var(--font-jakarta-sans), sans-serif;
+  font-size: 3.4vh;
+  font-weight: 600;
+  line-height: 1.35;
+  color: #2b180d;
+  text-shadow: 0 0.1vh 0.2vh rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.04vw;
+  word-break: break-word;
+  margin: 0;
+}
+
+/* Daftar Opsi Jawaban Aksara Jawa (Grid 2 Kolom mirip gambar 2) */
+.l1g-options-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2vh 2vw;
+  box-sizing: border-box;
+}
+
+.l1g-option-card {
+  display: flex;
+  align-items: center;
+  background: #fffdf8;
+  border: 0.28vh solid #9d713c;
+  border-radius: 1.5vh;
+  padding: 1vh 1vw;
+  gap: 1vw;
+  box-shadow: 0 0.4vh 0.6vh rgba(0, 0, 0, 0.18), inset 0 0.2vh 0.3vh rgba(255, 255, 255, 0.8);
+  transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+  min-height: 7.2vh;
+  box-sizing: border-box;
+}
+
+.l1g-option-card:hover {
+  background: #ffffff;
+  border-color: #7b4f23;
+  transform: translateY(-0.2vh);
+}
+
+.l1g-option-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5.2vh;
+  height: 5.2vh;
+  min-width: 5.2vh;
+  border-radius: 1vh;
+  background: transparent;
+}
+
+.l1g-badge-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0.2vh 0.3vh rgba(0, 0, 0, 0.3));
+}
+
+.l1g-option-text {
+  font-family: var(--font-javanese), var(--font-jakarta-sans), sans-serif;
+  font-size: 2.8vh;
+  font-weight: 500;
+  color: #2b180d;
+  line-height: 1.25;
+  text-align: left;
+}
+
+/* =============================================
+   BAGIAN BAWAH: 4 TOMBOL ICON (O, +, X, Y)
+   Ditempatkan presisi di atas slot heksagonal kayu
+   pada papan bawah bg_rev.webp sesuai gambar 2
+   ============================================= */
+.l1g-bottom-controls-bar {
+  position: absolute;
+  bottom: 3.5vh;
+  left: 50.6%;
+  transform: translateX(-50.6%);
+  width: 50.8vw;
+  height: 11.5vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 25;
+  pointer-events: auto;
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.l1g-symbol-button {
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0;
+  width: 6.2vw;
+  height: 11vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.15s ease;
+  filter: drop-shadow(0 0.6vh 1vh rgba(0, 0, 0, 0.5));
+}
+
+/* Penyesuaian presisi posisi individual tombol terhadap ornamen background */
+#btn-game-symbol-plus {
+  transform: translateX(0.9vw);
+}
+
+#btn-game-symbol-plus:hover:not(:disabled) {
+  transform: translateX(0.9vw) scale(1.1) translateY(-0.4vh);
+}
+
+#btn-game-symbol-plus:active:not(:disabled) {
+  transform: translateX(0.9vw) scale(0.92) translateY(0.2vh);
+}
+
+#btn-game-symbol-x {
+  transform: translateX(1.1vw);
+}
+
+#btn-game-symbol-x:hover:not(:disabled) {
+  transform: translateX(1.1vw) scale(1.1) translateY(-0.4vh);
+}
+
+#btn-game-symbol-x:active:not(:disabled) {
+  transform: translateX(1.1vw) scale(0.92) translateY(0.2vh);
+}
+
+#btn-game-symbol-y {
+  transform: translateX(1.4vw);
+}
+
+#btn-game-symbol-y:hover:not(:disabled) {
+  transform: translateX(1.4vw) scale(1.1) translateY(-0.4vh);
+}
+
+#btn-game-symbol-y:active:not(:disabled) {
+  transform: translateX(1.4vw) scale(0.92) translateY(0.2vh);
+}
+
+.l1g-symbol-button:hover:not(:disabled) {
+  transform: scale(1.1) translateY(-0.4vh);
+  filter: drop-shadow(0 0.9vh 1.4vh rgba(0, 0, 0, 0.6)) brightness(1.08);
+}
+
+.l1g-symbol-button:active:not(:disabled) {
+  transform: scale(0.92) translateY(0.2vh);
+  filter: drop-shadow(0 0.3vh 0.5vh rgba(0, 0, 0, 0.4)) brightness(0.95);
+}
+
+.l1g-symbol-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  filter: grayscale(0.25);
+}
+
+.l1g-symbol-btn-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.l1g-symbol-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(0.2);
+}
+
+.l1g-symbol-btn-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+/* =============================================
+   INTRO FLOW: LOADING, COUNTDOWN & READY
+   Dengan background shadow/dimming overlay yang memfokuskan elemen di tengah
+   tanpa kotak background cokelat di dalamnya
+   ============================================= */
+.l1g-intro-stage {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 750;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(18, 9, 4, 0.68);
+  backdrop-filter: blur(0.35vh);
+  pointer-events: none;
+  user-select: none;
+  animation: l1gFadeIn 0.3s ease-out;
+}
+
+@keyframes l1gFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.l1g-intro-loading-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Spinner / Loading 2.5s */
+.l1g-loading-spinner {
+  width: 9vh;
+  height: 9vh;
+  border: 0.9vh solid rgba(255, 230, 180, 0.25);
+  border-top-color: #f1c40f;
+  border-radius: 50%;
+  animation: l1gSpin 0.9s linear infinite;
+  margin-bottom: 2.2vh;
+  filter: drop-shadow(0 0.6vh 1.2vh rgba(0, 0, 0, 0.5));
+}
+
+@keyframes l1gSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.l1g-loading-text {
+  font-family: var(--font-rubik-one), sans-serif;
+  font-size: 2.8vh;
+  color: #fff4d1;
+  text-shadow: 0 0.3vh 0.8vh rgba(0, 0, 0, 0.8), 0 0 1.2vh rgba(243, 156, 18, 0.6);
+  letter-spacing: 0.08vw;
+}
+
+/* Countdown 3, 2, 1 */
+.l1g-countdown-img {
+  width: 16vh;
+  height: 16vh;
+  object-fit: contain;
+  animation: l1gCountPop 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+@keyframes l1gCountPop {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+
+  60% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Banner Ready.png (Siap, Mulai) - Sekilas & Non-interaktif */
+.l1g-ready-banner-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28vw;
+  height: 14vh;
+  pointer-events: none;
+  filter: drop-shadow(0 0.8vh 1.4vh rgba(0, 0, 0, 0.5));
+  animation: l1gReadyPop 0.85s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+@keyframes l1gReadyPop {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+
+  30% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+
+  75% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1.04);
+    opacity: 0.95;
+  }
+}
+
+.l1g-ready-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+/* =============================================
+   POPUP KEMENANGAN & KARTU ACCESS LEVEL 2
+   - pop up coklat no shadow focus
+   - animasi mengkilau
+   - kartu assets/inventory/cardlevel2 di tengah
+   - teks "cek penyimpenan untuk mendapatkan informasi lebih lanjut"
+   - tombol "kembali" bahasa jawa ("Bali menyang Peta")
+   ============================================= */
+/* Overlay Layar Penuh untuk Pop Up Kemenangan */
+.l1g-focus-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 840;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 8, 3, 0.65);
+  backdrop-filter: blur(0.3vh);
+  pointer-events: auto;
+  user-select: none;
+}
+
+.l1g-victory-box {
+  position: relative;
+  width: 46vw;
+  max-height: 75vh;
+  margin-top: 13vh;
+  background: #3e2211;
+  background-image: linear-gradient(180deg, #532e17 0%, #3a1f0f 70%, #261307 100%);
+  border: 0.5vh solid #946036;
+  border-radius: 3vh;
+  padding: 2vh 2.5vw 2.2vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: none;
+  animation: l1gShineGlow 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes l1gShineGlow {
+  0% {
+    border-color: #946036;
+  }
+
+  50% {
+    border-color: #f39c12;
+  }
+
+  100% {
+    border-color: #ffd700;
+  }
+}
+
+.l1g-victory-title {
+  font-family: var(--font-rubik-one), sans-serif;
+  font-size: 2.8vh;
+  color: #ffd875;
+  text-shadow: 0 0.3vh 0.6vh rgba(0, 0, 0, 0.8), 0 0 1.2vh rgba(243, 156, 18, 0.6);
+  margin-top: 0;
+  margin-bottom: 1.2vh;
+  letter-spacing: 0.08vw;
+}
+
+.l1g-card-wrapper {
+  position: relative;
+  width: 15vw;
+  height: 31vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.2vh;
+  filter: drop-shadow(0 0.8vh 1.6vh rgba(0, 0, 0, 0.65));
+}
+
+.l1g-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 1.2vh;
+  animation: l1gCardFloat 3s ease-in-out infinite alternate;
+}
+
+@keyframes l1gCardFloat {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+
+  100% {
+    transform: translateY(-0.6vh) scale(1.02);
+  }
+}
+
+.l1g-victory-desc {
+  font-family: var(--font-jakarta-sans), sans-serif;
+  font-size: 1.8vh;
+  font-weight: 700;
+  color: #fff1c4;
+  line-height: 1.35;
+  margin-top: 0;
+  margin-bottom: 1.8vh;
+  max-width: 38vw;
+}
+
+.l1g-btn-back {
+  background: #27ae60;
+  background-image: linear-gradient(180deg, #2ecc71 0%, #27ae60 60%, #1e824c 100%);
+  border: 0.35vh solid #52be80;
+  border-radius: 1.5vh;
+  padding: 1vh 3vw;
+  font-family: var(--font-rubik-one), sans-serif;
+  font-size: 2vh;
+  color: #ffffff;
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.15s ease, filter 0.15s ease;
+  filter: drop-shadow(0 0.5vh 0.8vh rgba(0, 0, 0, 0.4));
+}
+
+.l1g-btn-back:hover {
+  transform: scale(1.06) translateY(-0.3vh);
+  filter: drop-shadow(0 0.8vh 1.4vh rgba(0, 0, 0, 0.5)) brightness(1.1);
+}
+
+.l1g-btn-back:active {
+  transform: scale(0.95);
+}
+
+/* =============================================
+   BINTANG STAR.WEBP & ANIMASI TERBANG KE TOPBAR BAG
+   ============================================= */
+.l1g-star-celebration-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 920;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.l1g-star-element {
+  position: absolute;
+  width: 26vh;
+  height: 26vh;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  filter: drop-shadow(0 0 2vh #f1c40f) drop-shadow(0 0 4vh rgba(255, 215, 0, 0.8));
+  animation: l1gStarGleam 0.75s ease-in-out infinite alternate;
+}
+
+@keyframes l1gStarGleam {
+  0% {
+    transform: scale(1) rotate(0deg);
+    filter: drop-shadow(0 0 1.5vh #f39c12) brightness(1);
+  }
+
+  100% {
+    transform: scale(1.15) rotate(5deg);
+    filter: drop-shadow(0 0 3.5vh #ffd700) brightness(1.3);
+  }
+}
+
+/* Animasi terbang dari tengah (left 50%, top 50%) ke tombol bag di topbar kanan (left ~86vw, top ~8vh) */
+.l1g-star-element.l1g-star-fly {
+  animation: l1gFlyToBag 1.1s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
+}
+
+@keyframes l1gFlyToBag {
+  0% {
+    left: 50vw;
+    top: 50vh;
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 1;
+  }
+
+  50% {
+    transform: translate(-50%, -50%) scale(1.4) rotate(180deg);
+    opacity: 1;
+  }
+
+  100% {
+    left: 86vw;
+    top: 8.5vh;
+    transform: translate(-50%, -50%) scale(0.2) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* =============================================
+   RESPONSIVE — Laptop Sedang (1024px - 1366px)
+   ============================================= */
+@media (max-width: 1366px) {
+  .l1g-board-content {
+    top: 25vh;
+    left: 20vw;
+    width: 60vw;
+    height: 48vh;
+  }
+
+  .l1g-question-text {
+    font-size: 3vh;
+  }
+
+  .l1g-option-text {
+    font-size: 2.2vh;
+  }
+
+  .l1g-bottom-controls-bar {
+    width: 50.8vw;
+  }
+}
+
+/* =============================================
+   RESPONSIVE — Monitor / Layar Besar (>= 1400px)
+   ============================================= */
+@media (min-width: 1400px) {
+  .l1g-board-content {
+    top: 25.5vh;
+    left: 21vw;
+    width: 58vw;
+    height: 46vh;
+  }
+
+  .l1g-question-text {
+    font-size: 3.4vh;
+  }
+
+  .l1g-option-text {
+    font-size: 2.4vh;
+  }
+}
+
+/* =============================================
+   RESPONSIVE — Mobile Landscape (Khusus Layar Sentuh HP)
+   ============================================= */
+@media (max-width: 900px) and (orientation: landscape) and (pointer: coarse),
+(max-height: 500px) and (orientation: landscape) {
+  .l1g-board-content {
+    top: 24vh;
+    left: 19vw;
+    width: 62vw;
+    height: 50vh;
+    padding: 1vh 1.5vw;
+  }
+
+  .l1g-question-text {
+    font-size: 3vh;
+  }
+
+  .l1g-option-text {
+    font-size: 2.1vh;
+  }
+
+
+
+
+}

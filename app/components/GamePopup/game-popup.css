@@ -1,0 +1,162 @@
+/* =============================================
+   GAME POPUP COMPONENT — game-popup.css
+   Sesuai AIrule.txt & popup.txt:
+   - File css dan tsx terpisah
+   - Satuan vh & vw (tanpa px untuk komponen)
+   - Font global Rubik One
+   - Orientasi landscape & zoom-lock
+   - Selector class prefix unik: gp-
+   - Efek goyang (shake) & red screen border untuk salah
+   - Efek animasi pop up, z-index di bawah TopBar namun di atas board permainan
+   ============================================= */
+
+.gp-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  pointer-events: auto;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Background overlay default */
+.gp-overlay-default {
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(0.2vh);
+}
+
+/* Red edge warning saat jawaban salah */
+.gp-overlay-wrong {
+  background: rgba(70, 0, 0, 0.35);
+  box-shadow: inset 0 0 6vw 3vw rgba(230, 20, 20, 0.65);
+  animation: gpRedPulse 1s ease-in-out infinite alternate;
+}
+
+@keyframes gpRedPulse {
+  0% {
+    box-shadow: inset 0 0 4vw 2vw rgba(200, 20, 20, 0.5);
+  }
+  100% {
+    box-shadow: inset 0 0 8vw 4vw rgba(255, 30, 30, 0.85);
+  }
+}
+
+/* Box wrapper pop up */
+.gp-box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 46vw;
+  max-height: 78vh;
+  cursor: pointer;
+  transform-origin: center center;
+}
+
+/* Animasi Pop up benar / masuk halus membal */
+.gp-anim-pop {
+  animation: gpPopIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes gpPopIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.65) translateY(4vh);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.04) translateY(-0.8vh);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Animasi Goyang (shake) saat jawaban salah */
+.gp-anim-shake {
+  animation: gpShake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes gpShake {
+  10%, 90% {
+    transform: translate3d(-0.6vw, 0, 0) rotate(-1.5deg);
+  }
+  20%, 80% {
+    transform: translate3d(0.8vw, 0, 0) rotate(1.8deg);
+  }
+  30%, 50%, 70% {
+    transform: translate3d(-0.8vw, 0, 0) rotate(-1.8deg);
+  }
+  40%, 60% {
+    transform: translate3d(0.6vw, 0, 0) rotate(1.2deg);
+  }
+}
+
+/* Gambar Pop Up Banner */
+.gp-banner-img {
+  width: auto;
+  height: 52vh;
+  max-width: 44vw;
+  object-fit: contain;
+  filter: drop-shadow(0 1.2vh 2.4vh rgba(0, 0, 0, 0.65));
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.gp-box:hover .gp-banner-img {
+  transform: scale(1.03);
+}
+
+.gp-box:active .gp-banner-img {
+  transform: scale(0.98);
+}
+
+/* Hint klik pada game over */
+.gp-gameover-hint {
+  margin-top: 1.5vh;
+  font-family: var(--font-rubik-one), sans-serif;
+  font-size: 1.8vh;
+  color: #fff;
+  text-shadow: 0 0.2vh 0.6vh rgba(0, 0, 0, 0.9), 0 0 1vh #f39c12;
+  letter-spacing: 0.08vw;
+  animation: gpHitPulse 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes gpHitPulse {
+  0% {
+    opacity: 0.7;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(-0.4vh);
+  }
+}
+
+/* =============================================
+   RESPONSIVE — Monitor / Layar Besar (>= 1400px)
+   ============================================= */
+@media (min-width: 1400px) {
+  .gp-banner-img {
+    height: 54vh;
+    max-width: 42vw;
+  }
+}
+
+/* =============================================
+   RESPONSIVE — Mobile Landscape (Khusus Layar Sentuh HP)
+   ============================================= */
+@media (max-width: 900px) and (orientation: landscape) and (pointer: coarse),
+       (max-height: 500px) and (orientation: landscape) {
+  .gp-banner-img {
+    height: 60vh;
+    max-width: 50vw;
+  }
+}

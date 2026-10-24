@@ -1,0 +1,194 @@
+ini adalah halaman redirect dari tombol "wiwit level 1 " dari introlevel 1 
+
+- buatkan level1  game dengan bg  \assets\pos1\bg_rev.webp
+- munculkan top bar jika sudah biarkan   , jika selama in game disable maps dan bag nya 
+- render o,+,x,Y icon sesuai ss referensi desain di bagian bawah secara rapi dan urut
+- beri delay 2 detik untuk memunculkan pop up buatkan pop up coklat yg match tanpa shadow yg mengfokuskan pop up nya, dan beri loading dulu 2,5s lalu beri countdown icon  assets\pos1\3,2,1 png 
+setelah count down selesai, render icon ready.png 
+- render soal dan opsi jawaban akasara jawa , soal harus rapi dan mirip dan  abcd diganti dengan icon  o,+,x,Y
+
+contoh : 
+Opsi jawaban : 
+a . hanacaraka 
+b .  bataksara
+c . carakan
+d .  
+
+nah dijadikan icon :
+
+o . 
++ .
+x . 
+Y .
+
+sistem menjawab soal  : 
+
+- soal nya saya mau jatah 2 soal , dan acakkan soal nya . setiap soal jatah menjawab cuman 2 kali jika tetap salah otomatis lanjut ke soal selanjut nya  jika per soal pertama salah
+dan total soal nya 3 , dan aku mau 2 soal benar , jika soal yang pertama benar dan soal keduanya salah dan kesempatan 2  kesempatan menjawab habis untuk soal kedua ini render soal berikutnya jadi aku mau tetap 3 soal
+
+- dan jika soal pertama dan kedua benar berikan pop up coklat no shadow focuse animasi mengkilau yg sangat menarik dan keluar  untuk merender kartu \assets\inventory\cardlevel2 
+di bagiab tengah pop up dan ada teks juga  dibawahnya "cek penyimpenan untuk mendapatkan informasi lebih lanjut ". dan ada tombol di bagian bawah "kembali" dalam bahasa jawa ,
+kemudian  ada  di tengah layar ada star.webp  animasi mengkilau dan confetti juga di setiap sudut dan beri delay 2.2 detik lalu star nya ke topbar component ke bagian bag dan disini sudah ke auto enable bag nya dan maps nya 
+untuk komponen topbar nya 
+-cek popup.txt jika jawaban benar , salah dan game over sesuaikan sistemnya dengan level ini dan terapkan
+-soal ditaruh dalam papan dan bagian bawah untuk icon 
+- simpan semua sesi progress dalam game 
+
+
+
+rules : 
+{
+1. render soal aksara dengan baik , jadi saya mau user nya membaca dengan seksama , 
+2.abcd nya digannti dengan icon seperti yang dijelaskan sebelumnya
+3. acak kan soal nya biar user satu dengan lain beda soal nya
+4. abcd nya sesuai urutan titik
+
+}
+
+
+SOAL DAN JAWABAN  
+
+1.	꧋ꦒꦸꦤꦸꦁ ꦭꦮꦸ ꦢꦸꦩꦸꦤꦸꦁ ꦲꦶꦁꦠꦥꦺꦭ꧀ꦮꦠꦼꦱ꧀ꦥꦿꦺꦴꦥꦶꦤ꧀ꦱꦶꦲꦼꦤ꧀ꦢꦶ?
+
+•	ꦗꦮꦠꦶꦩꦸꦂꦭꦤ꧀ꦗꦮꦧꦫꦠ꧀ = a 
+•	ꦗꦮꦠꦼꦔꦃꦭꦤ꧀ꦗꦮꦠꦶꦩꦸꦂ   = b  (kunci jawaban)
+•	ꦗꦮꦠꦼꦔꦃꦭꦤ꧀ꦪꦺꦴꦒꦾꦏꦂꦠ = c
+•	ꦗꦮꦧꦫꦠ꧀ꦭꦤ꧀ꦪꦺꦴꦒꦾꦏꦂꦠ = d
+
+
+
+2.	꧋ꦲꦥꦗꦼꦤꦼꦁꦮꦶꦮꦶꦠꦤ꧀ꦒꦸꦤꦸꦁꦭꦮꦸꦲꦶꦁꦏꦶꦠꦧ꧀ꦠꦤ꧀ꦠꦸꦥꦁꦒꦼꦭꦫꦤ꧀?
+
+•	ꦩꦲꦩꦺꦫꦸ = a 
+•	ꦏꦠꦺꦴꦁ - b (kunci jawaban)
+•	ꦭꦸꦩꦮꦸꦭꦮꦺꦴ =  c 
+•	ꦲꦂꦒꦺꦴꦢꦭꦼꦩ꧀ = dalam
+
+3.	꧋ꦒꦸꦤꦸꦁꦭꦮꦸꦢꦶꦥꦼꦂꦕꦪꦩꦶꦤꦁꦏꦥꦼꦕꦲꦤ꧀ꦱꦏꦒꦸꦤꦸꦁꦲꦥ?
+
+•	ꦒꦸꦤꦸꦁꦱꦼꦩꦺꦫꦸ = a 
+•	ꦒꦸꦤꦸꦁꦩꦼꦫꦥꦶ = b 
+•	ꦒꦸꦤꦸꦁꦩꦲꦩꦺꦫꦸ = c (kunci jawaban)
+•	ꦒꦸꦤꦸꦁꦩꦼꦂꦧꦧꦸ = d 
+
+
+4.	꧋ꦩꦶꦠꦸꦫꦸꦠ꧀ꦮꦕꦤ꧀‌ꦗꦼꦤꦼꦁꦭꦮꦸꦢꦶꦲꦫꦤꦶꦲꦱꦭꦺꦱꦏꦠꦼꦩ꧀ꦧꦸꦁꦲꦥ?
+
+•	ꦭꦸꦩꦮꦸꦭꦮꦺꦴ = a (kunci jawaban)
+•	ꦠꦤ꧀ꦠꦸꦥꦁꦒꦼꦭꦫꦤ꧀ = b
+•	ꦧꦸꦗꦁꦒꦩꦤꦶꦏ꧀ = c 
+•	ꦮꦁꦱꦩꦼꦁꦒꦭ     = d 
+
+5.	꧋ꦲꦥꦱꦶꦁꦢꦶꦒꦩ꧀ꦧꦫꦏꦺꦱꦏꦠꦼꦩ꧀ꦧꦸꦁꦭꦸꦩꦮꦸꦭꦮꦺꦴ?
+
+•	ꦒꦸꦤꦸꦁꦱꦶꦁꦏꦼꦉꦥ꧀ꦲꦚ꧀ꦗꦺꦧ꧀ꦭꦸꦒ꧀ 
+•	ꦒꦸꦤꦸꦁꦱꦶꦁꦏꦼꦧꦏ꧀ꦲꦭꦱ꧀
+•	ꦒꦸꦤꦸꦁꦱꦶꦁꦏꦠꦺꦴꦤ꧀ꦒꦼꦣꦺꦭꦤ꧀ꦩꦼꦒꦃꦱꦏꦏꦢꦺꦴꦲꦤ꧀ = kunci jawaban
+•	ꦒꦸꦤꦸꦁꦱꦶꦁꦢꦢꦶꦥꦥꦤ꧀ꦠꦼꦠꦤꦺꦤ꧀
+
+
+6.	꧋ꦤꦱ꧀ꦏꦃꦏꦸꦤꦲꦥꦱꦶꦁꦚꦜꦼꦠ꧀ꦒꦸꦤꦸꦁꦭꦮꦸ?
+
+•	ꦧꦸꦗꦁꦒꦩꦤꦶꦏ꧀ꦭꦤ꧀ꦱꦼꦫꦠ꧀ꦕꦼꦤ꧀ꦛꦶꦤꦶ =  kunci jawaban
+•	ꦤꦼꦒꦫꦏꦼꦂꦠꦒꦩꦭꦤ꧀ꦱꦸꦠꦱꦺꦴꦩ
+•	ꦥꦫꦫꦠꦺꦴꦤ꧀ꦭꦤ꧀ꦲꦂꦗꦸꦤꦮꦶꦮꦲ
+•	ꦱꦼꦫꦠ꧀ꦏꦭꦠꦶꦣꦭꦤ꧀ꦱꦼꦫꦠ꧀ꦮꦼꦣꦠꦩ
+
+7.	꧋ꦱꦼꦗꦫꦃꦒꦸꦤꦸꦁꦭꦮꦸꦲꦤꦒꦤ꧀ꦝꦺꦔꦤꦺꦏꦫꦺꦴꦏꦼꦢꦢꦺꦪꦤ꧀ꦲꦥ?
+
+•	ꦫꦸꦤ꧀ꦠꦸꦲꦺꦏꦫꦗꦤ꧀ꦩꦗꦥꦲꦶꦠ꧀   = kunci jawaban
+•	ꦩꦢꦼꦒꦺꦏꦫꦗꦤ꧀ꦢꦼꦩꦏ꧀
+•	ꦥꦼꦫꦁꦢꦶꦥꦺꦴꦤꦼꦒꦺꦴꦫꦺꦴ 
+•	ꦩꦢꦼꦒꦺꦏꦫꦗꦤ꧀ꦩꦠꦫꦩ꧀ꦲꦶꦱ꧀ꦭꦩ꧀
+
+
+8.	꧋ꦱꦥꦫꦗꦱꦶꦁꦩꦶꦠꦸꦫꦸꦠ꧀ꦭꦼꦒꦺꦤ꧀ꦝꦠꦶꦤ꧀ꦢꦏ꧀ꦩꦼꦚꦁꦒꦸꦤꦸꦁꦭꦮꦸ?
+
+•	ꦲꦪꦩ꧀ꦮꦸꦫꦸꦏ꧀
+•	ꦏꦺꦤ꧀ꦲꦫꦺꦴꦏ꧀
+•	ꦥꦿꦧꦸꦧꦿꦮꦶꦗꦪ = kunci jawaban 
+•	ꦫꦢꦺꦤ꧀ꦮꦶꦗꦪ
+
+
+9.	꧋ꦱꦥꦮꦲꦺꦥꦼꦔꦶꦏꦸꦠ꧀ꦥꦿꦧꦸꦧꦿꦮꦶꦗꦪ?
+
+•	ꦒꦗꦃꦩꦣ꧈ꦲꦪꦩ꧀ꦮꦸꦫꦸꦏ꧀‌ꦭꦤ꧀ꦏꦼꦤ꧀ꦲꦫꦺꦴꦏ꧀
+•	ꦱꦧ꧀ꦢꦺꦴꦥꦭꦺꦴꦤ꧀‌ꦢꦶꦥꦩꦼꦁꦒꦭ꧈ꦭꦤ꧀ꦮꦁꦱꦩꦼꦁꦒꦭ
+•	ꦢꦶꦥꦩꦼꦁꦒꦭ꧈ꦒꦗꦃꦩꦣ꧈ꦭꦤ꧀ꦫꦢꦺꦤ꧀ꦮꦶꦗꦪ
+•	ꦱꦧ꧀ꦢꦺꦴꦥꦭꦺꦴꦤ꧀‌ꦲꦪꦩ꧀ꦮꦸꦫꦸꦏ꧀‌ꦭꦤ꧀ꦏꦺꦤ꧀ꦲꦫꦺꦴꦏ꧀
+
+10.	꧋ꦲꦶꦁꦔꦼꦤ꧀ꦢꦶꦥꦿꦧꦸꦧꦿꦮꦶꦗꦪꦢꦶꦥꦼꦂꦕꦪꦔꦭꦩꦶꦩꦺꦴꦏ꧀ꦱ?
+
+•	ꦲꦂꦒꦺꦴꦢꦸꦩꦶꦭꦃ
+•	ꦲꦂꦒꦺꦴꦢꦭꦼꦩ꧀
+•	ꦕꦤ꧀ꦝꦶꦱꦸꦏꦸꦃ
+•	ꦕꦤ꧀ꦝꦶꦕꦼꦛꦺꦴ
+
+11.	꧋ꦲꦥꦠꦼꦒꦼꦱꦺꦩꦺꦴꦏ꧀ꦱꦩꦶꦠꦸꦫꦸꦠ꧀ꦮꦕꦤ꧀ꦏꦱꦼꦧꦸꦠ꧀?
+
+•	ꦲꦁꦭꦏꦺꦴꦤꦶꦱꦼꦩꦺꦢꦶꦲꦶꦁꦒꦸꦤꦸꦁ 
+•	ꦤꦶꦁꦒꦭꦏꦺꦏꦿꦠꦺꦴꦤ꧀ꦏꦁꦒꦺꦴꦥꦼꦫꦁ
+•	ꦲꦸꦮꦭ꧀ꦱꦏꦢꦺꦴꦚꦏꦢꦺꦴꦚꦤ꧀
+•	ꦔꦢꦼꦒ꧀ꦲꦏꦺꦥꦥꦤ꧀ꦥꦔꦶꦧꦢꦃ
+
+12.	꧋ꦕꦿꦶꦠꦥꦿꦧꦸꦧꦿꦮꦶꦗꦪꦲꦶꦁꦒꦸꦤꦸꦁꦭꦮꦸꦏꦭꦼꦧꦸꦕꦿꦶꦠꦲꦥ?
+
+•	ꦭꦼꦒꦺꦤ꧀ꦝ
+•	ꦢꦺꦴꦔꦺꦁꦏꦺꦮꦤ꧀
+•	ꦕꦿꦶꦠꦥꦼꦔꦭꦩꦤ꧀
+•	ꦕꦿꦶꦠꦒꦸꦪꦺꦴꦤꦤ꧀
+
+13.	꧋ꦱꦥꦱꦶꦁꦲꦶꦱꦶꦃꦔꦸꦂꦩꦠꦶꦭꦼꦒꦺꦤ꧀ꦝꦥꦿꦧꦸꦧꦿꦮꦶꦗꦪꦩꦶꦠꦸꦫꦸꦠ꧀ꦮꦕꦤ꧀?
+•	ꦥꦫꦥꦼꦢꦒꦁꦭꦤ꧀ꦥꦼꦠꦤꦶ
+•	ꦥꦫꦲꦶꦭ꧀ꦩꦸꦮꦤ꧀ꦭꦤ꧀ꦒꦸꦫꦸ
+•	ꦥꦫꦥꦼꦤ꧀ꦢꦏꦶꦭꦤ꧀ꦥꦼꦗꦶꦲꦫꦃ
+•	ꦥꦫꦤꦼꦭꦪꦤ꧀ꦭꦤ꧀ꦥꦼꦭꦲꦸꦠ꧀
+
+14.	꧋ꦲꦥꦱꦶꦁꦢꦶꦠꦶꦁꦒꦭꦏꦺꦥꦿꦧꦸꦧꦿꦮꦶꦗꦪꦤꦭꦶꦏꦠꦶꦤ꧀ꦢꦏ꧀ꦩꦼꦚꦁꦒꦸꦤꦸꦁꦭꦮꦸ?
+•	ꦥꦥꦤ꧀ꦥꦔꦶꦧꦢꦃ
+•	ꦏꦿꦠꦺꦴꦤ꧀
+•	ꦥꦱꦂ
+•	ꦥꦼꦭꦧꦸꦲꦤ꧀
+
+15.	꧋ꦕꦤ꧀ꦝꦶꦲꦥꦮꦲꦺꦱꦶꦁꦢꦸꦩꦸꦤꦸꦁꦲꦶꦁꦭꦺꦫꦺꦁꦒꦸꦤꦸꦁꦭꦮꦸ?
+•	ꦕꦤ꧀ꦝꦶꦧꦺꦴꦫꦺꦴꦧꦸꦢꦸꦂꦭꦤ꧀ꦕꦤ꧀ꦝꦶꦥꦿꦩ꧀ꦧꦤꦤ꧀
+•	ꦕꦤ꧀ꦝꦶꦱꦸꦏꦸꦃꦭꦤ꧀ꦕꦤ꧀ꦝꦶꦕꦼꦛꦺꦴ
+•	ꦕꦤ꧀ꦝꦶꦱꦶꦔꦱꦫꦶꦭꦤ꧀ꦕꦤ꧀ꦝꦶꦗꦒꦺꦴ
+•	ꦕꦤ꧀ꦝꦶꦥꦼꦤꦠꦫꦤ꧀ꦭꦤ꧀ꦕꦤ꧀ꦝꦶꦠꦶꦏꦸꦱ꧀
+
+16.	꧋ꦲꦥꦠꦶꦠꦶꦏꦤ꧀ꦮꦔꦸꦤ꧀ꦕꦤ꧀ꦝꦶꦱꦸꦏꦸꦃꦭꦤ꧀ꦕꦤ꧀ꦝꦶꦕꦼꦛꦺꦴꦩꦶꦠꦸꦫꦸꦠ꧀ꦮꦕꦤ꧀?
+•	ꦮꦔꦸꦤ꧀ꦏꦸꦧꦃꦒꦼꦣꦺ 
+•	ꦮꦔꦸꦤ꧀ꦥꦸꦤ꧀ꦝꦺꦤ꧀ꦲꦸꦤ꧀ꦝꦏ꧀ꦲꦸꦤ꧀ꦝꦏꦤ꧀
+•	ꦮꦔꦸꦤ꧀ꦩꦼꦤꦫꦣꦸꦮꦸꦂ
+•	ꦮꦔꦸꦤ꧀ꦲꦺꦴꦩꦃꦥꦁꦒꦸꦁ
+
+17.	꧋ꦲꦥꦱꦸꦩ꧀ꦧꦼꦂꦕꦿꦶꦠꦧꦧꦒꦤ꧀ꦲꦱꦭ꧀ꦲꦸꦱꦸꦭ꧀ꦒꦸꦤꦸꦁꦭꦮꦸꦱꦶꦁꦢꦶꦱꦼꦧꦸꦠꦏꦺꦲꦶꦁꦮꦕꦤ꧀?
+•	ꦧꦸꦏꦸꦥꦼꦭꦗꦫꦤ꧀ꦲꦚꦂ
+•	ꦏꦶꦠꦧ꧀ꦠꦤ꧀ꦠꦸꦥꦁꦒꦼꦭꦫꦤ꧀
+•	ꦏꦺꦴꦫꦤ꧀ꦗꦩꦤ꧀ꦭꦮꦱ꧀
+•	ꦕꦛꦼꦠꦤ꧀ꦮꦶꦱꦠꦮꦤ꧀
+
+18.	꧋ꦱꦭꦶꦪꦤꦺꦠꦤ꧀ꦠꦸꦥꦁꦒꦼꦭꦫꦤ꧀‌ꦤꦱ꧀ꦏꦃꦏꦸꦤꦲꦥꦱꦶꦁꦢꦶꦱꦼꦧꦸꦠꦏꦺꦲꦶꦁꦮꦕꦤ꧀?
+•	ꦧꦸꦗꦁꦒꦩꦤꦶꦏ꧀ꦭꦤ꧀ꦱꦼꦫꦠ꧀ꦕꦼꦤ꧀ꦛꦶꦤꦶ
+•	ꦱꦸꦠꦱꦺꦴꦩꦭꦤ꧀ꦱꦼꦫꦠ꧀ꦮꦼꦣꦠꦩ
+•	ꦥꦫꦫꦠꦺꦴꦤ꧀ꦭꦤ꧀ꦱꦼꦫꦠ꧀ꦏꦭꦠꦶꦣ
+•	ꦤꦼꦒꦫꦏꦼꦂꦠꦒꦩꦭꦤ꧀ꦲꦂꦗꦸꦤꦮꦶꦮꦲ
+
+19.	꧋ꦱꦥꦠꦺꦴꦏꦺꦴꦃꦱꦶꦁꦢꦶꦥꦼꦂꦕꦪꦔꦭꦩꦶꦩꦺꦴꦏ꧀ꦱꦲꦶꦁꦲꦂꦒꦺꦴꦢꦭꦼꦩ꧀?
+•	ꦱꦧ꧀ꦢꦺꦴ ꦥꦭꦺꦴꦤ꧀
+•	ꦢꦶꦥ ꦩꦼꦤ꧀ꦒ꧀ꦒꦭ
+•	ꦮꦤ꧀ꦒ꧀ꦱ ꦩꦼꦤ꧀ꦒ꧀ꦒꦭ
+•	ꦥꦿꦧꦸꦧꦸꦮꦶꦗꦪ
+
+20.	꧋ꦲꦥꦱꦶꦁꦢꦢꦶꦧꦸꦏ꧀ꦠꦶꦲꦤꦤꦺꦠꦶꦁꦒꦭꦤ꧀ꦧꦸꦢꦪꦲꦶꦁꦭꦺꦫꦺꦁꦒꦸꦤꦸꦁꦭꦮꦸ?
+•	ꦥꦱꦂ ꦱꦪꦸꦂ
+•	ꦕꦤ꧀ꦝꦶ ꦱꦸꦏꦸꦃꦭꦤ꧀ꦕꦤ꧀ꦝꦶꦕꦼꦛꦺꦴ
+•	ꦥꦧꦿꦶꦏ꧀ꦭꦤ꧀ꦒꦸꦢꦁ
+•	ꦱꦮꦃ
+
+
+
+kunci jawaban 9 sampai 20 
+
+9b 10b 11c  12a 13c 14b 15b 16b  17b 18a 19d 20b
+

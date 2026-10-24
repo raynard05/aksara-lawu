@@ -1,0 +1,10 @@
+buatkan sebagai component  
+
+- pop up dalam game jika benar menggunakan \assets\gamepopup\correct.webp dan munculkan confetti juga , dan beri delay 2,3 detik 
+- jika salah menggunakan \assets\gamepopup\salah.webp dan beri efek red di sisi sisi screen dan efek goyang sedikit  pop up nya,  beri delay 2,3 detik 
+- jika gameover menggunakan \assets\gamepopup\gameover.webp  dan jika gabar nya di klik dia kembali ke halaman intro sesuai game level itu juga  , until user clicked the pop up 
+
+
+
+
+
