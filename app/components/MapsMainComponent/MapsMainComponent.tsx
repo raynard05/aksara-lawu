@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import FlyingEagle from "../FlyingEagle/FlyingEagle";
-import { getUnlockedLevels } from "../../lib/inventoryStorage";
+import { getUnlockedLevels, getCompletedLevels } from "../../lib/inventoryStorage";
 import "./maps-main-component.css";
 
 export interface Waypoint {
@@ -98,6 +98,9 @@ export default function MapsMainComponent({
   // State daftar level yang sudah terbuka
   const [unlockedLevels, setUnlockedLevels] = useState<number[]>([1]);
 
+  // State daftar level/pos yang sudah selesai dituntaskan & dikunjungi
+  const [completedLevels, setCompletedLevels] = useState<number[]>([]);
+
   // State titik aktif / posisi avatar saat ini di peta
   // Default otomatis di titik ke-2 (Level 1) sesuai instruksi prompt
   const [currentWaypointId, setCurrentWaypointId] = useState<number>(initialWaypointId);
@@ -128,9 +131,12 @@ export default function MapsMainComponent({
       // ignore
     }
 
-    // Ambil initial unlocked levels
+    // Ambil initial unlocked levels & completed levels
     const lvls = getUnlockedLevels();
     setUnlockedLevels(lvls);
+
+    const doneLvls = getCompletedLevels();
+    setCompletedLevels(doneLvls);
 
     const handleLevelChange = (e: Event) => {
       const customEvent = e as CustomEvent<{ unlockedLevels: number[] }>;
@@ -139,9 +145,18 @@ export default function MapsMainComponent({
       }
     };
 
+    const handleCompletedLevelChange = (e: Event) => {
+      const customEvent = e as CustomEvent<{ completedLevels: number[] }>;
+      if (customEvent.detail && Array.isArray(customEvent.detail.completedLevels)) {
+        setCompletedLevels(customEvent.detail.completedLevels);
+      }
+    };
+
     window.addEventListener("aksara-lawu-levels-change", handleLevelChange);
+    window.addEventListener("aksara-lawu-completed-levels-change", handleCompletedLevelChange);
     return () => {
       window.removeEventListener("aksara-lawu-levels-change", handleLevelChange);
+      window.removeEventListener("aksara-lawu-completed-levels-change", handleCompletedLevelChange);
     };
   }, []);
 
@@ -159,8 +174,14 @@ export default function MapsMainComponent({
     activeWaypoints.find((wp) => wp.id === currentWaypointId) ||
     activeWaypoints[1]; // Fallback titik 2 (Level 1)
 
+  // Cek apakah waypoint saat ini sudah tuntas diselesaikan pemain
+  const isCurrentCompleted = completedLevels.includes(currentWaypoint.levelNumber);
+  const isButtonDisabled = isCurrentCompleted || currentWaypoint.isLocked;
+
   // Handler saat tombol Njlajahi diklik
   const handleNjlajahi = () => {
+    if (isButtonDisabled) return;
+
     console.log(`Miwiti Njlajahi: ${currentWaypoint.name} -> ${currentWaypoint.route}`);
     if (onNavigate) {
       onNavigate(currentWaypoint.route, currentWaypoint);
@@ -193,12 +214,28 @@ export default function MapsMainComponent({
         <button
           type="button"
           id="btn-maps-njlajahi"
-          className="mmc-btn-njlajahi"
+          className={`mmc-btn-njlajahi ${isButtonDisabled ? "mmc-btn-njlajahi-disabled" : ""}`}
           onClick={handleNjlajahi}
-          aria-label={`Njlajahi ${currentWaypoint.name}`}
-          title={`Njlajahi ${currentWaypoint.name}`}
+          disabled={isButtonDisabled}
+          aria-disabled={isButtonDisabled}
+          aria-label={
+            isCurrentCompleted
+              ? `${currentWaypoint.name} wis rampung dituntaske`
+              : currentWaypoint.isLocked
+              ? `${currentWaypoint.name} isih kakunci`
+              : `Njlajahi ${currentWaypoint.name}`
+          }
+          title={
+            isCurrentCompleted
+              ? "Lokasi iki wis kasil dituntaske!"
+              : currentWaypoint.isLocked
+              ? "Lokasi iki isih kakunci!"
+              : `Njlajahi ${currentWaypoint.name}`
+          }
         >
-          <span className="mmc-btn-njlajahi-text">Njlajahi</span>
+          <span className="mmc-btn-njlajahi-text">
+            {isCurrentCompleted ? "Wis Tuntas" : "Njlajahi"}
+          </span>
         </button>
       </section>
 

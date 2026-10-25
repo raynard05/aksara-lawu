@@ -12,7 +12,8 @@ import {
 import {
   getSavedInventoryItems,
   saveInventoryItems,
-  unlockLevel,
+  markLevelCompleted,
+  getCompletedLevels,
 } from "../lib/inventoryStorage";
 import "./level1-game.css";
 
@@ -104,14 +105,25 @@ export default function Level1GamePage() {
   };
 
   // Inisialisasi pertanyaan acak & jalankan sekuens intro dari awal setiap kali halaman dibuka
+  // Route guard: Jika Level 1 sudah selesai dituntaskan, alihkan kembali ke /maps
   useEffect(() => {
+    try {
+      const completed = getCompletedLevels();
+      if (completed.includes(1)) {
+        router.replace("/maps");
+        return;
+      }
+    } catch {
+      // ignore
+    }
+
     resetLevel1Session();
     startIntroSequence();
 
     return () => {
       clearIntroTimers();
     };
-  }, []);
+  }, [router]);
 
   // Helper untuk memicu confetti di setiap sudut
   const triggerCornerConfetti = () => {
@@ -155,7 +167,8 @@ export default function Level1GamePage() {
 
   // Menangani alur kemenangan (2 soal benar)
   const handleWinFlow = () => {
-    // 1. Simpan item kartu level 2 ke inventaris pemain (Level 2 TETAP TERKUNCI sampai kartu digunakan di InventoryBoard)
+    // 1. Simpan item kartu level 2 ke inventaris pemain & tandai Pos 1 telah tuntas
+    markLevelCompleted(1);
     const currentItems = getSavedInventoryItems();
     if (!currentItems.includes("cardlevel2")) {
       saveInventoryItems([...currentItems, "cardlevel2"]);
@@ -241,23 +254,21 @@ export default function Level1GamePage() {
         }, 2300);
       } else {
         // Kesempatan 2 kali habis untuk soal ini!
-        setPopupType("salah");
-        setTimeout(() => {
-          setPopupType(null);
-          // Cek apakah pemain masih bisa mencapai 2 benar
-          // Soal yang tersisa: (3 - (currentQIndex + 1))
-          const remainingQuestions = 3 - (currentQIndex + 1);
-          const maxPossibleWins = correctAnswersCount + remainingQuestions;
+        const remainingQuestions = 3 - (currentQIndex + 1);
+        const maxPossibleWins = correctAnswersCount + remainingQuestions;
 
-          if (maxPossibleWins >= 2 && currentQIndex < 2) {
-            // Masih bisa menang, render soal berikutnya
+        if (maxPossibleWins >= 2 && currentQIndex < 2) {
+          // Masih bisa menang di soal berikutnya -> tampilkan popup salah sebentar lalu ganti soal
+          setPopupType("salah");
+          setTimeout(() => {
+            setPopupType(null);
             setCurrentQIndex((prev) => prev + 1);
             setAttemptsUsed(0);
-          } else {
-            // Sudah tidak mungkin mencapai 2 benar -> game over
-            setPopupType("gameover");
-          }
-        }, 2300);
+          }, 2300);
+        } else {
+          // Sudah tidak mungkin mencapai 2 benar -> LANGSUNG TAMPILKAN GAME OVER sampai user klik gambar
+          setPopupType("gameover");
+        }
       }
     }
   };

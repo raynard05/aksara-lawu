@@ -294,6 +294,19 @@
   transform: scale(0.96);
 }
 
+/* State disabled saat item sudah digunakan / sudah dipencet */
+.invb-btn-gunakake:disabled,
+.invb-btn-gunakake.invb-btn-gunakake-disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  pointer-events: none;
+  filter: grayscale(0.6) brightness(0.8);
+  box-shadow:
+    inset 0 0.2vh 0.4vh rgba(0, 0, 0, 0.6),
+    0 0.3vh 0.7vh rgba(0, 0, 0, 0.4);
+  transform: none;
+}
+
 .invb-btn-gunakake-text {
   font-family: var(--font-rubik-one), sans-serif;
   font-size: 1.3vw;
@@ -303,6 +316,160 @@
     0 0.2vh 0 #120702,
     0 0.3vh 0.5vh rgba(0, 0, 0, 0.8);
   user-select: none;
+}
+
+/* =============================================
+   POP UP PAPAN KODE DENGAN PAPAN_KODE.WEBP
+   ============================================= */
+.invb-code-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(0.4vh);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  pointer-events: auto;
+  user-select: none;
+  animation: invbFadeIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.invb-code-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.2vh;
+  animation: invbCardPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* Pembungkus Papan Kode Kayu */
+.invb-code-board-wrapper {
+  position: relative;
+  width: 48vw;
+  max-width: 48vw;
+  aspect-ratio: 1024 / 454;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 1.5vh 3vh rgba(0, 0, 0, 0.85));
+}
+
+.invb-code-board-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+/* Grid 3 Kotak Digit Pas di Atas Kotak Putih/Krem papan_kode.webp */
+.invb-code-digits-grid {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 87.5%;
+  height: 52%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1vw;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
+/* Kotak untuk Masing-masing Digit */
+.invb-code-digit-box {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Karakter Angka yang Dirender di Atas Kotak Krem */
+.invb-code-digit-char {
+  margin-top: 11vh;
+  font-family: var(--font-rubik-one), sans-serif;
+  font-size: 5vw;
+  line-height: 1;
+  color: #3b200d;
+  letter-spacing: 0.1vw;
+  text-shadow:
+    0 0.15vh 0 rgba(255, 255, 255, 0.7),
+    0 0.3vh 0.6vh rgba(0, 0, 0, 0.35);
+  animation: invbDigitDrop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes invbDigitDrop {
+  0% {
+    opacity: 0;
+    transform: translateY(-1.5vh) scale(0.8);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Box Keterangan & Tombol Tutup di Bawah Papan Kode */
+.invb-code-info-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.8vh;
+}
+
+.invb-code-desc {
+  font-family: var(--font-jakarta-sans), sans-serif;
+  font-size: 1.25vw;
+  font-weight: 700;
+  color: #ffeed0;
+  margin: 0;
+  text-align: center;
+  text-shadow: 0 0.2vh 0.5vh rgba(0, 0, 0, 0.9);
+}
+
+.invb-code-btn-close {
+  width: 15vw;
+  height: 6.5vh;
+  background: #3e2413;
+  background-image: linear-gradient(180deg, #4f2d18 0%, #2b1408 100%);
+  border: 0.28vw solid #eed688;
+  border-radius: 1.6vh;
+  font-family: var(--font-rubik-one), sans-serif;
+  font-size: 1.25vw;
+  color: #fed976;
+  letter-spacing: 0.08vw;
+  text-shadow:
+    0 0.2vh 0 #120702,
+    0 0.3vh 0.5vh rgba(0, 0, 0, 0.8);
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    inset 0 0.25vh 0.5vh rgba(255, 230, 160, 0.25),
+    0 0.8vh 1.8vh rgba(0, 0, 0, 0.7);
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.15s ease;
+}
+
+.invb-code-btn-close:hover {
+  transform: scale(1.05);
+  filter: brightness(1.18);
+  box-shadow:
+    inset 0 0.3vh 0.6vh rgba(255, 230, 160, 0.35),
+    0 1.2vh 2.4vh rgba(0, 0, 0, 0.8);
+}
+
+.invb-code-btn-close:active {
+  transform: scale(0.96);
 }
 
 
@@ -536,10 +703,35 @@
 
   .invb-btn-gunakake {
     width: 15vw;
-    height: 6vh;
+    height: 9vh;
   }
 
   .invb-btn-gunakake-text {
     font-size: 1.15vw;
+
   }
+
+  /* Pop up Papan Kode Responsive */
+  .invb-code-board-wrapper {
+    width: 58vw;
+    max-width: 58vw;
+  }
+
+  .invb-code-digit-char {
+    font-size: 6vw;
+    margin-top: 9VW;
+  }
+
+  .invb-code-desc {
+    font-size: 1.35vw;
+    margin-bottom: 2.5vh;
+  }
+
+  .invb-code-btn-close {
+    width: 16vw;
+    height: 8vh;
+    font-size: 1.5vw;
+  }
+
+
 }

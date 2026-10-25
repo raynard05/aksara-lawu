@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
+import { getCompletedLevels } from "../lib/inventoryStorage";
 import "./intro-level1.css";
 
 // 9 Bagian Dialog Intro Level 1 (Teks dan Video dipisah menjadi slide mandiri untuk SEMUA RESPONSIVE)
@@ -80,8 +81,18 @@ export default function IntroLevel1Page() {
   // Timer ref untuk membersihkan interval kata
   const wordTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Ambil avatar pemain yang dipilih saat di Cemoro Sewu dari sessionStorage / localStorage
+  // Route Guard: Jika Level 1 sudah selesai dituntaskan, cegah akses (copy URL / back button) dan redirect ke /maps
   useEffect(() => {
+    try {
+      const completed = getCompletedLevels();
+      if (completed.includes(1)) {
+        router.replace("/maps");
+        return;
+      }
+    } catch {
+      // ignore
+    }
+
     try {
       const storedAvatar =
         sessionStorage.getItem("aksara_lawu_selected_avatar") ||
@@ -92,7 +103,7 @@ export default function IntroLevel1Page() {
     } catch {
       // Fallback tetap ke default
     }
-  }, []);
+  }, [router]);
 
   // Animasi kata per kata: jeda 0.2s (200ms) per kata sesuai prompt level.txt
   useEffect(() => {

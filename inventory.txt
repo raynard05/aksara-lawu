@@ -24,3 +24,12 @@ money.png : buatkan deksripsinya (lihat gambar secara seksama) intinya ini adala
 
 - untuk per item yg jenis card bisa membuka gembok di komponen mapsmaincomponent yg gembok maps.webp nya
 - dan save session semua progress yg didapatkan 
+
+
+tambahan 
+- ketika item kartu digunakake pop up muncul , dan di pop up nya tambahkan papan_kode.webp didalam nya dan render angka sesuai kartu nya
+cardlevel2 = 720
+cardlevel3 = 386
+cardlevel4 = 540
+cardpeak =  700
+- ketika item sudah digunakan/sudah dipencet tombol gunakake simpan session nya dan disable tombol nya agar item yang sudah dipakai tidak bisa digunakan kembali
