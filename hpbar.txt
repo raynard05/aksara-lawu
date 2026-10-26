@@ -1,0 +1,15 @@
+- buatkan komponen hp bar  dari referensi dari desainer 
+- bg bar ada di assets \assets\hp_bar\bar.png
+- sesuaikan avatar hp bar nya dengan avatar yang telah dipilih , untuk avatar hp bar khusus \assets\hp_bar\hp1 ,hp 2  , hp3 , hp4 .  jadi sesuaikan saja dengan nomor yang di nama \assets\avatar yg telah dipilih di cemoro sewu
+
+
+system nya 
+- ada hubungannya dengan halaman  level1_game
+- render komponen ini di  dalam level_game untuk mereplace kesempatan mangsuli  degan komponen hp bar ini
+- darah nya berkurang setiap  kesalahan dalam menjawab dan juga berikan animasi avatar hp nya beranimasi getar setiap salah 
+-maksimal salah adalah 4x , jadi jika hp habis gameover 
+
+
+
+
+

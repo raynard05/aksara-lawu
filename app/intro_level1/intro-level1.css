@@ -402,7 +402,46 @@
 }
 
 /* =============================================
-   TOMBOL "WIWIT LEVEL 1" (LANGKAH 7)
+   PREVIEW HP BAR (LANGKAH 9)
+   Menampilkan preview assets/pos1/hpbar.png
+   di bawah teks penjelasan nyawa
+   ============================================= */
+.il1-hpbar-preview-wrapper {
+  margin-top: 3.5vh;
+  margin-bottom: 1.5vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  animation: il1HpBarPreviewPop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes il1HpBarPreviewPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.85) translateY(1.5vh);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.il1-hpbar-preview-img {
+  width: 28vw;
+  max-width: 440px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0.8vh 1.6vh rgba(0, 0, 0, 0.45));
+  transition: transform 0.25s ease;
+}
+
+.il1-hpbar-preview-img:hover {
+  transform: scale(1.04);
+}
+
+/* =============================================
+   TOMBOL "WIWIT LEVEL 1" (LANGKAH 10)
    Font Rubik One, warna & style tema kayu emas Lawu
    Gap lega antara teks dan tombol
    ============================================= */
@@ -691,6 +730,14 @@
   .il1-system-symbols-wrapper {
     margin-top: 2vh;
     gap: 2vw;
+  }
+
+  .il1-hpbar-preview-wrapper {
+    margin-top: 1.8vh;
+  }
+
+  .il1-hpbar-preview-img {
+    width: 32vw;
   }
 
   .il1-start-button-wrapper {

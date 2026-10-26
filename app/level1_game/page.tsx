@@ -15,6 +15,7 @@ import {
   markLevelCompleted,
   getCompletedLevels,
 } from "../lib/inventoryStorage";
+import HpBar from "../components/HpBar/HpBar";
 import "./level1-game.css";
 
 // Definisi 4 Ikon Simbol Pilihan Jawaban
@@ -35,10 +36,12 @@ export default function Level1GamePage() {
     "initial_wait" | "loading" | "countdown_3" | "countdown_2" | "countdown_1" | "ready" | "in_game"
   >("initial_wait");
 
-  // 2. STATE GAMEPLAY PERTANYAAN:
+  // 2. STATE GAMEPLAY PERTANYAAN & HP:
   const [questions, setQuestions] = useState<QuestionItem[]>([]);
   const [currentQIndex, setCurrentQIndex] = useState<number>(0);
-  const [attemptsUsed, setAttemptsUsed] = useState<number>(0); // Maks 2 kali kesempatan per soal
+  const [attemptsUsed, setAttemptsUsed] = useState<number>(0); // Percobaan pada soal saat ini
+  const [totalWrongAnswers, setTotalWrongAnswers] = useState<number>(0); // Total salah maksimal 4x
+  const [isHpShaking, setIsHpShaking] = useState<boolean>(false);
   const [correctAnswersCount, setCorrectAnswersCount] = useState<number>(0);
 
   // 3. STATE POPUP FEEDBACK (popup.txt):
@@ -96,6 +99,8 @@ export default function Level1GamePage() {
     setQuestions(freshQuestions);
     setCurrentQIndex(0);
     setAttemptsUsed(0);
+    setTotalWrongAnswers(0);
+    setIsHpShaking(false);
     setCorrectAnswersCount(0);
     setPopupType(null);
     setShowStarCelebration(false);
@@ -196,15 +201,13 @@ export default function Level1GamePage() {
     }, 2200);
   };
 
-  // Logika Menjawab Soal:
-  // - Setiap soal jatah menjawab 2 kali
-  // - Total soal yang diuji = 3
+  // Logika Menjawab Soal dengan Sistem HP Bar:
+  // - Maksimal salah 4x (setiap salah darah berkurang 25%, misal 100 -> 75 -> 50 -> 25 -> 0)
+  // - Setiap salah: animasi avatar HP bergetar (isHpShaking = true)
+  // - Jika HP habis (4x salah atau newWrong >= 4) -> GAME OVER
   // - Butuh 2 soal benar untuk menang
-  // - Jika salah pada kesempatan 1 -> popup salah (2.3s) -> coba lagi di soal yang sama (kesempatan ke-2)
-  // - Jika salah pada kesempatan 2 -> kesempatan habis:
-  //   - Cek apakah masih bisa menang (misal baru soal 1 atau soal 2):
-  //     - Jika masih ada soal ke-3 dan belum game over permanen -> lanjut ke soal berikutnya
-  //     - Jika sudah tidak mungkin mencapai 2 benar (misal sudah 2 soal gagal) -> popup gameover
+  // - Jika salah pada percobaan ke-1 per soal -> popup salah (2.3s) -> coba lagi di soal yang sama
+  // - Jika salah pada percobaan ke-2 per soal -> ganti ke soal berikutnya selama HP masih ada dan masih bisa menang
   const handleSelectAnswer = (selectedSymbol: "o" | "plus" | "x" | "y") => {
     if (popupType !== null || introStep !== "in_game" || questions.length === 0) {
       return;
@@ -242,9 +245,24 @@ export default function Level1GamePage() {
         }, 2300);
       }
     } else {
-      // JAWABAN SALAH
+      // JAWABAN SALAH: Kurangi HP (1 kesalahan = -25 HP) & trigger avatar getar
+      const newWrong = totalWrongAnswers + 1;
+      setTotalWrongAnswers(newWrong);
       const newAttempts = attemptsUsed + 1;
       setAttemptsUsed(newAttempts);
+
+      // Trigger avatar getar
+      setIsHpShaking(true);
+      setTimeout(() => {
+        setIsHpShaking(false);
+      }, 600);
+
+      // Cek apakah HP sudah habis (maksimal 4x salah)
+      if (newWrong >= 4) {
+        // Darah habis -> langsung GAME OVER
+        setPopupType("gameover");
+        return;
+      }
 
       if (newAttempts < 2) {
         // Masih ada 1 kesempatan tersisa untuk soal ini
@@ -253,7 +271,7 @@ export default function Level1GamePage() {
           setPopupType(null);
         }, 2300);
       } else {
-        // Kesempatan 2 kali habis untuk soal ini!
+        // Kesempatan 2 kali pada soal ini habis!
         const remainingQuestions = 3 - (currentQIndex + 1);
         const maxPossibleWins = correctAnswersCount + remainingQuestions;
 
@@ -266,7 +284,7 @@ export default function Level1GamePage() {
             setAttemptsUsed(0);
           }, 2300);
         } else {
-          // Sudah tidak mungkin mencapai 2 benar -> LANGSUNG TAMPILKAN GAME OVER sampai user klik gambar
+          // Sudah tidak mungkin mencapai 2 benar -> Game over
           setPopupType("gameover");
         }
       }
@@ -291,6 +309,9 @@ export default function Level1GamePage() {
 
   const currentQuestion = questions[currentQIndex];
 
+  // Hitung HP saat ini: Maksimal 100, tiap salah -25 (100, 75, 50, 25, 0)
+  const currentHp = Math.max(0, 100 - totalWrongAnswers * 25);
+
   return (
     <main className="l1g-root" aria-label="Game Level 1: Pos 1 Jejak Lawu">
       <div className="l1g-viewport">
@@ -300,16 +321,12 @@ export default function Level1GamePage() {
             ============================================= */}
         {introStep === "in_game" && currentQuestion && (
           <>
-            {/* Indikator kesempatan menjawab (2 jatah dot per soal) di atas atap papan */}
-            <div className="l1g-attempts-indicator" aria-label="Indikator Kesempatan">
-              <span>KESEMPATAN MANGSULI :</span>
-              <div
-                className={`l1g-attempt-dot ${attemptsUsed >= 1 ? "l1g-dot-used" : ""}`}
-                title="Kesempatan 1"
-              />
-              <div
-                className={`l1g-attempt-dot ${attemptsUsed >= 2 ? "l1g-dot-used" : ""}`}
-                title="Kesempatan 2"
+            {/* HP Bar menggantikan kesempatan mangsuli di atas papan soal */}
+            <div className="l1g-hpbar-slot">
+              <HpBar
+                currentHp={currentHp}
+                maxHp={100}
+                isShaking={isHpShaking}
               />
             </div>
 

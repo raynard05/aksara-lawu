@@ -52,6 +52,12 @@ const INTRO_DIALOGS = [
   {
     id: 9,
     type: "text" as const,
+    text: "Saben wangsulan sing salah bakal nyuda nyawamu ing bar nyawa, mula digatekake kanthi premati ya!",
+    showHpBar: true,
+  },
+  {
+    id: 10,
+    type: "text" as const,
     text: "Yen wis siap kabeh, pencet tombol ing ngisor iki kanggo miwiti dolanan tantangan!",
     showStartButton: true,
   },
@@ -348,6 +354,21 @@ export default function IntroLevel1Page() {
                     />
                   </button>
                 ))}
+              </div>
+            )}
+
+            {/* Render Gambar HP Bar (/pos1/hpbar.png) */}
+            {(currentDialog as unknown as { showHpBar?: boolean })?.showHpBar && !isTyping && (
+              <div
+                className="il1-hpbar-preview-wrapper"
+                aria-label="Preview HP Bar"
+              >
+                <img
+                  src="/pos1/hpbar.png"
+                  alt="HP Bar Nyawa Pemain"
+                  className="il1-hpbar-preview-img"
+                  draggable={false}
+                />
               </div>
             )}
 

@@ -26,7 +26,11 @@ dialog level 1 di halaman intro
 
 6. Ayo, temokake jejak sejarah Gunung Lawu lan rampungna tantangane!
 
-7. nanti kamu bisa mengklik tombol tombol ini sesuai dengan jawaban yang benar (sistem  render gambar "o", "+" ,"x" , dan "Y" di assets/pos1, tambahkan animasi juga saat render itu agar menarik)
+7. nanti kamu bisa mengklik tombol tombol ini sesuai dengan jawaban yang benar (sistem  render gambar "o", "+" ,"x" , dan "Y" di assets/pos1, tambahkan animasi juga saat render itu agar menarik) {sudah ditranslate jangan diganti}
+
+8. setiap jawaban salah membuat nyawa kamu berkurang di bar nyawa , jadi perhatikan ya (render hp bar dibawah teks assets\pos1\hpbar.png)
 
 8. buatkan tombol "wiwit level 1"  font rubik one  menggunakan css sesuai tema  , dan tombol ini action nya untuk ke halaman level1_game
+
+
 

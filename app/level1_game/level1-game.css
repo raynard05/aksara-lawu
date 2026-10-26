@@ -64,43 +64,16 @@
   pointer-events: auto;
 }
 
-/* Indikator kesempatan mencoba per soal - tepat di atas papan soal tanpa menabrak atap segitiga */
-.l1g-attempts-indicator {
+/* HP Bar Slot - Menggantikan kesempatan mangsuli di atas papan soal */
+.l1g-hpbar-slot {
   position: absolute;
-  top: 38.2vh;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 25vh;
+  left: 20%;
+  transform: translateX(-20%);
+  z-index: 30;
   display: flex;
   align-items: center;
-  gap: 0.8vw;
-  z-index: 25;
-  font-family: var(--font-rubik-one), sans-serif;
-  font-size: 1.5vh;
-  color: #3e2211;
-  text-shadow: 0 0.1vh 0.3vh rgba(255, 255, 255, 0.7);
-  letter-spacing: 0.05vw;
-}
-
-.l1g-attempts-indicator span {
-  font-weight: 700;
-  font-size: 2.2vh;
-  color: #3e2211;
-}
-
-.l1g-attempt-dot {
-  width: 1.6vh;
-  height: 1.6vh;
-  border-radius: 50%;
-  background: #27ae60;
-  border: 0.25vh solid #1e824c;
-  box-shadow: 0 0.2vh 0.4vh rgba(0, 0, 0, 0.35);
-  transition: all 0.2s ease;
-}
-
-.l1g-attempt-dot.l1g-dot-used {
-  background: #c0392b;
-  border-color: #962d22;
-  opacity: 0.85;
+  justify-content: center;
 }
 
 /* Soal Aksara Jawa */
@@ -112,7 +85,7 @@
   justify-content: center;
   text-align: center;
   margin-bottom: 3vh;
-  margin-top: 17vh;
+  margin-top: 15vh;
 }
 
 .l1g-question-text {
@@ -636,7 +609,7 @@
   }
 
   .l1g-question-text {
-    font-size: 3vh;
+    font-size: 4vh;
   }
 
   .l1g-option-text {
@@ -673,9 +646,21 @@
    ============================================= */
 @media (max-width: 900px) and (orientation: landscape) and (pointer: coarse),
 (max-height: 500px) and (orientation: landscape) {
+
+  .l1g-question-box {
+    width: 100%;
+    min-height: 7vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: vh;
+    margin-top: 17vh;
+  }
+
   .l1g-board-content {
     top: 24vh;
-    left: 19vw;
+    left: 20.8vw;
     width: 62vw;
     height: 50vh;
     padding: 1vh 1.5vw;

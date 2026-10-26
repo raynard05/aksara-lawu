@@ -1,0 +1,143 @@
+/* =============================================
+   HP BAR COMPONENT — hpbar.css
+   Mengikuti AIrule.txt:
+   - File CSS & TSX dipisah (rule 1 & 11)
+   - Selector class prefix unik: hpbar- (rule 12)
+   - Satuan vh & vw (rule 4 & 6, no px untuk komponen)
+   - Orientasi landscape-only (rule 5)
+   - Font global Rubik One (rule 9)
+   - Zoom-lock & konsistensi device (rule 16)
+   - Animasi getar saat salah menjawab
+   ============================================= */
+
+.hpbar-container {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  user-select: none;
+  pointer-events: auto;
+  filter: drop-shadow(0 0.4vh 0.8vh rgba(0, 0, 0, 0.45));
+}
+
+/* Animasi Avatar & HP Bar Bergetar saat Salah Menjawab */
+.hpbar-shake {
+  animation: hpbarShakeAnim 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes hpbarShakeAnim {
+
+  10%,
+  90% {
+    transform: translate3d(-0.25vw, 0, 0) rotate(-1deg);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(0.35vw, 0, 0) rotate(1.5deg);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-0.4vw, -0.15vh, 0) rotate(-1.5deg);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(0.4vw, 0.15vh, 0) rotate(1deg);
+  }
+}
+
+/* 1. Lingkaran Avatar di Kiri */
+.hpbar-avatar-wrapper {
+  position: relative;
+  z-index: 5;
+  width: 9.5vh;
+  height: 9.5vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: -5vh;
+  /* Overlap sedikit dengan bar seperti pada desain */
+  flex-shrink: 0;
+}
+
+.hpbar-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0.3vh 0.6vh rgba(0, 0, 0, 0.5));
+}
+
+/* 2. Papan Bar Kayu Coklat */
+.hpbar-board-wrap {
+  position: relative;
+  width: 38vh;
+  height: 8vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.hpbar-board-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Header di atas bar: teks score HP kanan (misal 80 / 100) */
+.hpbar-header-row {
+  position: absolute;
+  top: 1.6vh;
+  right: 3vh;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.hpbar-score-text {
+  font-family: var(--font-rubik-one), sans-serif;
+  font-size: 1.5vh;
+  font-weight: 700;
+  color: #fff9ea;
+  text-shadow: 0 0.15vh 0.3vh rgba(0, 0, 0, 0.8), 0 0 0.2vh #301705;
+  letter-spacing: 0.05vw;
+}
+
+/* 3. Track Bar Progress Hijau */
+.hpbar-track {
+  position: absolute;
+  bottom: 1.6vh;
+  left: 3.2vh;
+  right: 2.8vh;
+  height: 2vh;
+  background: #1c2e17;
+  border-radius: 1vh;
+  box-shadow: inset 0 0.25vh 0.4vh rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+  z-index: 2;
+  border: 0.15vh solid rgba(40, 20, 10, 0.6);
+}
+
+.hpbar-fill {
+  height: 100%;
+  background: linear-gradient(180deg, #99e344 0%, #5cb825 45%, #3d8a14 100%);
+  border-radius: 1vh;
+  box-shadow:
+    inset 0 0.3vh 0.3vh rgba(255, 255, 255, 0.6),
+    0 0 0.4vh rgba(120, 220, 50, 0.5);
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Responsive Zoom-lock & Mobile */
+@media (max-width: 900px) and (orientation: landscape) and (pointer: coarse),
+(max-height: 500px) and (orientation: landscape) {
+
+}
