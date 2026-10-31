@@ -78,7 +78,7 @@
   overflow: hidden;
 }
 
-/* Header dialog: nama pembicara & nomor urut paragraf */
+/* Header dialog: nama pembicara, tombol navigasi, dan counter tersusun rapi */
 .dialog-popup-header {
   position: relative;
   display: flex;
@@ -88,34 +88,53 @@
   padding-bottom: 1.2vh;
   margin-bottom: 1.5vh;
   z-index: 2;
+  gap: 1.5vw;
 }
 
-/* Navigasi Previous & Next di Tengah Atas: digeser ke atas 4% agar tidak menempel batas line */
-.dialog-popup-header-nav {
-  position: absolute;
-  left: 50%;
-  top: 10%;
-  /* Dinaikkan 4% dari batas garis bawah header */
-  transform: translate(-50%, -50%);
+/* Sisi Kiri Header: Speaker Badge dengan lebar fleksibel agar teks panjang tetap terbaca */
+.dialog-popup-speaker-badge {
+  font-family: var(--font-rubik-one), 'Rubik One', 'Arial Black', sans-serif;
+  font-size: 1.25vw;
+  color: #ffde73;
+  text-shadow:
+    0.15vw 0.15vw 0 #3e1b00,
+    -0.15vw -0.15vw 0 #3e1b00,
+    0.15vw -0.15vw 0 #3e1b00,
+    -0.15vw 0.15vw 0 #3e1b00,
+    0 0.4vh 0.8vh rgba(0, 0, 0, 0.85);
+  letter-spacing: 0.04vw;
   display: flex;
   align-items: center;
-  gap: 1vw;
+  gap: 0.6vw;
+  white-space: nowrap;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Navigasi Previous & Next di Tengah: diposisikan rapi di tengah header tanpa menabrak judul */
+.dialog-popup-header-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8vw;
   z-index: 5;
+  flex-shrink: 0;
 }
 
 .dialog-nav-btn {
   font-family: var(--font-jakarta-sans), 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.95vw;
+  font-size: 0.9vw;
   font-weight: 700;
   color: #fff4d6;
   background: linear-gradient(180deg, #6b3b19 0%, #4a250c 100%);
   border: 0.16vw solid #9e5b29;
-  border-radius: 18px;
-  padding: 0.8vh 1.25vw; /* Height bertambah sedikit lebih tebal dan kokoh */
-  min-height: 3.4vh;
+  border-radius: 20px;
+  padding: 0.6vh 1.1vw;
+  min-height: 3.2vh;
   display: flex;
   align-items: center;
-  gap: 0.7vw;
+  justify-content: center;
+  gap: 0.4vw;
   cursor: pointer;
   outline: none;
   box-shadow: 0 0.4vh 0.8vh rgba(0, 0, 0, 0.45);
@@ -136,16 +155,18 @@
 }
 
 .dialog-nav-btn:disabled {
-  opacity: 0.4;
+  opacity: 0.35;
   cursor: not-allowed;
-  filter: grayscale(0.6);
+  filter: grayscale(0.8);
   transform: none;
   box-shadow: none;
+  background: rgba(60, 30, 15, 0.6);
+  border-color: #5a2e12;
 }
 
 .dialog-nav-btn-icon {
-  width: 1.1vw;
-  height: 1.1vw;
+  width: 1vw;
+  height: 1vw;
   stroke-width: 2.8;
   flex-shrink: 0;
 }
@@ -294,21 +315,6 @@
   padding: 0.5vh 0.5vw;
 }
 
-.dialog-popup-speaker-badge {
-  font-family: var(--font-rubik-one), 'Rubik One', 'Arial Black', sans-serif;
-  font-size: 1.5vw;
-  color: #ffde73;
-  text-shadow:
-    0.15vw 0.15vw 0 #3e1b00,
-    -0.15vw -0.15vw 0 #3e1b00,
-    0.15vw -0.15vw 0 #3e1b00,
-    -0.15vw 0.15vw 0 #3e1b00,
-    0 0.4vh 0.8vh rgba(0, 0, 0, 0.85);
-  letter-spacing: 0.06vw;
-  display: flex;
-  align-items: center;
-  gap: 0.6vw;
-}
 
 .dialog-popup-speaker-dot {
   width: 0.8vw;
@@ -456,20 +462,34 @@
   text-shadow: 0.1vw 0.1vw 0 #1f0b00;
 }
 
-.dialog-avatar-check {
-  position: absolute;
-  top: -0.6vh;
-  right: -0.4vw;
-  background: #27ae60;
-  color: #fff;
-  font-size: 0.8vw;
-  border-radius: 50%;
-  width: 1.5vw;
-  height: 1.5vw;
+.dialog-reward-box {
   display: flex;
   align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 0.6vw #2ecc71;
+  gap: 1vw;
+  margin-top: 1.2vh;
+  padding: 0.8vh 1.4vw;
+  background: rgba(30, 20, 10, 0.85);
+  border: 0.2vh solid #ffd700;
+  border-radius: 1vh;
+  box-shadow: 0 0 1.5vh rgba(255, 215, 0, 0.35);
+  animation: owFadeSlideUp 0.5s ease-out both;
+  width: fit-content;
+}
+
+.dialog-reward-badge-img {
+  width: 7vh;
+  height: 7vh;
+  object-fit: contain;
+  filter: drop-shadow(0 0 0.8vh rgba(255, 215, 0, 0.8));
+  animation: owStarFloat 1.8s ease-in-out infinite alternate;
+}
+
+.dialog-reward-badge-title {
+  font-family: var(--font-rubik-one), sans-serif;
+  font-size: 1.3vh;
+  color: #ffd700;
+  text-shadow: 0 0.1vh 0.2vh rgba(0, 0, 0, 0.8);
+  letter-spacing: 0.04vw;
 }
 
 
@@ -698,48 +718,63 @@
   }
 
   .dialog-popup-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.2vw;
     padding-bottom: 1.2vh;
     margin-bottom: 1.5vh;
-    /* Beri space lega antara header dengan teks di bawahnya */
     border-bottom-width: 0.22vw;
   }
 
-  .dialog-popup-header-nav {
-    top: 46%;
-    /* Dinaikkan 4% dari batas garis header di mobile */
-    gap: 1.2vw;
-  }
-
-  .dialog-nav-btn {
-    font-size: 1.35vw;
-    padding: 0.8vh 1.4vw; /* Height bertambah sedikit lebih nyaman */
-    min-height: 4vh;
-    border-radius: 2vh;
-    border-width: 0.2vw;
-    gap: 0.5vw;
-  }
-
-  .dialog-nav-btn-icon {
-    width: 1.4vw;
-    height: 1.4vw;
-  }
-
   .dialog-popup-speaker-badge {
-    font-size: 2.2vw;
-    letter-spacing: 0.05vw;
-    gap: 0.6vw;
+    font-size: 1.45vw;
+    letter-spacing: 0.03vw;
+    gap: 0.5vw;
+    flex-shrink: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .dialog-popup-speaker-dot {
-    width: 1vw;
-    height: 1vw;
+    width: 0.9vw;
+    height: 0.9vw;
+    flex-shrink: 0;
+  }
+
+  .dialog-popup-header-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.6vw;
+    flex-shrink: 0;
+  }
+
+  .dialog-nav-btn {
+    font-size: 1.05vw;
+    padding: 0.6vh 1.1vw;
+    min-height: 3.5vh;
+    border-radius: 1.8vh;
+    border-width: 0.18vw;
+    gap: 0.4vw;
+  }
+
+  .dialog-nav-btn-icon {
+    width: 1.1vw;
+    height: 1.1vw;
+  }
+
+  .dialog-popup-header-right {
+    display: flex;
+    align-items: center;
+    gap: 0.8vw;
+    flex-shrink: 0;
   }
 
   .dialog-popup-step-counter {
-    font-size: 1.6vw;
-    padding: 0.4vh 1.2vw;
-    border-radius: 2vh;
-    border-width: 0.18vw;
+    font-size: 1.2vw;
+    padding: 0.35vh 1vw;
+    border-radius: 1.8vh;
+    border-width: 0.16vw;
   }
 
   .dialog-popup-content-layout {
@@ -749,34 +784,34 @@
     /* Beri ruang bernapas atas dan bawah teks */
   }
 
-  /* Kolom spacer karakter: diperlebar proporsional dengan pembesaran karakter 30% */
+  /* Kolom spacer karakter: diperkecil 20% agar teks memiliki ruang lebih leluasa */
   .dialog-popup-char-col {
-    width: 28vw;
+    width: 22.4vw;
     flex-shrink: 0;
   }
 
   .dialog-popup-char-anchor.anchor-left {
-    left: 1.8vw;
+    left: 2.2vw;
   }
 
   .dialog-popup-char-anchor.anchor-right {
-    right: 1.8vw;
+    right: 2.2vw;
   }
 
-  /* Ukuran karakter diperbesar 30% di mobile */
+  /* Ukuran karakter diperkecil 20% di mobile (width: 22.4vw, height: 36.8vh) agar tidak menabrak header */
   .dialog-popup-char-in-frame {
-    width: 28vw;
-    max-width: 28vw;
-    height: 46vh;
-    max-height: 48vh;
+    width: 22.4vw;
+    max-width: 22.4vw;
+    height: 36.8vh;
+    max-height: 38.4vh;
   }
 
-  /* Karakter saat pemilihan avatar diperbesar 30% di mobile */
+  /* Karakter saat pemilihan avatar disesuaikan proporsional */
   .dialog-popup-char-anchor.has-system-command .dialog-popup-char-in-frame {
-    width: 31.2vw;
-    max-width: 31.2vw;
-    height: 57.5vh;
-    max-height: 59vh;
+    width: 25vw;
+    max-width: 25vw;
+    height: 46vh;
+    max-height: 47vh;
   }
 
   .dialog-popup-body {

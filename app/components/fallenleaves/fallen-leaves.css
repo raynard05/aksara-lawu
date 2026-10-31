@@ -10,22 +10,36 @@
 .fallen-leaves-container {
   position: absolute;
   top: 0;
+  left: 0;
+  width: 100vw;
   height: 100vh;
   height: 100dvh;
   pointer-events: none;
   overflow: hidden;
-  z-index: 2;
+  z-index: 5;
   user-select: none;
 }
 
 /* Varian khusus panel kiri (login & register) */
 .fallen-leaves-container.fallen-leaves-left {
   left: 0;
-  width: 54vw;
+  width: 100vw;
 }
 
 /* Varian khusus tengah atas (menu & game menus) */
 .fallen-leaves-container.fallen-leaves-center {
+  left: 0;
+  width: 100vw;
+}
+
+/* Varian khusus panel kanan */
+.fallen-leaves-container.fallen-leaves-right {
+  left: 0;
+  width: 100vw;
+}
+
+/* Varian full layar kiri dan kanan */
+.fallen-leaves-container.fallen-leaves-all {
   left: 0;
   width: 100vw;
 }
@@ -93,10 +107,6 @@
 
 /* Media query mobile landscape */
 @media (max-width: 900px) and (orientation: landscape) and (pointer: coarse) {
-  .fallen-leaves-container {
-    width: 52vw;
-  }
-
   .fallen-leaf-image {
     filter: drop-shadow(0 0.3vh 0.4vh rgba(0, 0, 0, 0.3));
   }

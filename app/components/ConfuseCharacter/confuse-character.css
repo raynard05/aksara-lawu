@@ -1,0 +1,189 @@
+/* =============================================
+   CONFUSE CHARACTER COMPONENT — confuse-character.css
+   Rule AI:
+   - File CSS & TSX dipisah
+   - Satuan vh & vw
+   - Animasi idle bingung berayun perlahan
+   ============================================= */
+
+.confuse-char-entity {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  pointer-events: auto;
+  cursor: pointer;
+  z-index: 6;
+  user-select: none;
+  filter: drop-shadow(0 0.5vh 1vh rgba(0, 0, 0, 0.55));
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.confuse-char-entity:hover {
+  filter: drop-shadow(0 0.8vh 1.4vh rgba(255, 200, 0, 0.6));
+}
+
+/* Label nama */
+.confuse-char-nametag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4vw;
+  background: rgba(30, 18, 10, 0.9);
+  border: 0.18vh solid #eab308;
+  border-radius: 0.9vh;
+  padding: 0.3vh 0.9vh;
+  margin-bottom: 0.4vh;
+  box-shadow: 0 0.3vh 0.8vh rgba(0, 0, 0, 0.6), inset 0 0.1vh 0.2vh rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  white-space: nowrap;
+}
+
+/* Big ? Emoji di dalam nametag */
+.confuse-char-nametag-emoji {
+  font-size: 1.8vh;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  animation: confuse-emoji-pulse 1.2s ease-in-out infinite alternate;
+  filter: drop-shadow(0 0.2vh 0.3vh rgba(0, 0, 0, 0.5));
+}
+
+@keyframes confuse-emoji-pulse {
+  0% {
+    transform: scale(0.95) rotate(-5deg);
+  }
+
+  100% {
+    transform: scale(1.2) rotate(5deg);
+  }
+}
+
+.confuse-char-nametag-icon {
+  font-size: 1vh;
+  line-height: 1;
+}
+
+.confuse-char-nametag-text {
+  font-family: var(--font-rubik-one), sans-serif;
+  font-size: 0.95vh;
+  color: #fef08a;
+  text-shadow: 0 0.1vh 0.2vh rgba(0, 0, 0, 0.8);
+  letter-spacing: 0.03vw;
+}
+
+/* Sprite container */
+.confuse-char-sprite-wrap {
+  position: relative;
+  width: 8.5vh;
+  height: 12.5vh;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.confuse-char-sprite {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+  pointer-events: none;
+  user-select: none;
+  animation: confuse-sway 2.4s ease-in-out infinite alternate;
+}
+
+/* Bayangan Tanah */
+.confuse-char-shadow {
+  position: absolute;
+  bottom: -0.2vh;
+  width: 5.5vh;
+  height: 1.2vh;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 70%);
+  border-radius: 50%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Lingkaran Merah di bawah karakter (seperti hitbox pendaki user namun berwarna merah) */
+.confuse-char-hitbox {
+  position: absolute;
+  bottom: 0;
+  width: 1.8vw;
+  height: 1.6vh;
+  border-radius: 50%;
+  background: rgba(239, 68, 68, 0.45);
+  border: 0.15vh dashed #ef4444;
+  box-shadow: 0 0 0.8vh rgba(239, 68, 68, 0.6);
+  pointer-events: none;
+  display: block;
+}
+
+/* Range Lingkaran Merah untuk Interaksi (radius trigger sekitar karakter) */
+.confuse-char-trigger-zone {
+  position: absolute;
+  bottom: -1vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 18vw;
+  height: 18vh;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(239, 68, 68, 0.22) 0%, rgba(239, 68, 68, 0.05) 70%, transparent 100%);
+  border: 0.22vh dashed rgba(239, 68, 68, 0.75);
+  box-shadow: 0 0 1.5vh rgba(239, 68, 68, 0.4), inset 0 0 1vh rgba(239, 68, 68, 0.2);
+  pointer-events: none;
+  animation: confuse-trigger-pulse 2s ease-in-out infinite;
+  z-index: -2;
+}
+
+@keyframes confuse-trigger-pulse {
+
+  0%,
+  100% {
+    transform: translateX(-50%) scale(0.98);
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: translateX(-50%) scale(1.05);
+    opacity: 1;
+    border-color: rgba(239, 68, 68, 0.95);
+  }
+}
+
+/* Balon tanya / indikator di atas kepala */
+.confuse-bubble {
+  position: absolute;
+  top: -2vh;
+  right: -0.5vh;
+  font-size: 1.4vh;
+  animation: confuse-bubble-bob 1.5s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+/* Animasi bingung */
+@keyframes confuse-sway {
+  0% {
+    transform: rotate(-2deg) translateY(0);
+  }
+
+  50% {
+    transform: rotate(0deg) translateY(-0.3vh);
+  }
+
+  100% {
+    transform: rotate(2deg) translateY(0);
+  }
+}
+
+@keyframes confuse-bubble-bob {
+  0% {
+    transform: translateY(0) scale(0.95);
+  }
+
+  100% {
+    transform: translateY(-0.5vh) scale(1.1);
+  }
+}

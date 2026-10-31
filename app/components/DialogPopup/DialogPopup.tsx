@@ -12,6 +12,10 @@ export interface DialogItem {
   characterSide?: "left" | "right";
   bgTexture?: string;
   speakerName?: string;
+  rewardItem?: {
+    image: string;
+    name: string;
+  };
   systemCommand?: {
     type: "avatar_select" | string;
     avatars: string[];
@@ -183,9 +187,20 @@ export default function DialogPopup({
 
   if (!isOpen || !isInitialDelayPassed) return null;
 
-  // Resolusi character image path
-  const charImageName = currentItem.character ? `${currentItem.character}.png` : "guider_pose1.png";
-  const charSrc = `/character/${charImageName}`;
+  // Resolusi character image path (mendukung .webp, .png, atau path kustom)
+  let charSrc = "/character/guider_pose1.png";
+  if (currentItem.character) {
+    if (currentItem.character.startsWith("/")) {
+      charSrc = currentItem.character;
+    } else if (
+      currentItem.character.endsWith(".webp") ||
+      currentItem.character.endsWith(".png")
+    ) {
+      charSrc = `/character/${currentItem.character}`;
+    } else {
+      charSrc = `/character/${currentItem.character}.png`;
+    }
+  }
   const charSide = currentItem.characterSide || "left";
 
   return (
@@ -311,6 +326,21 @@ export default function DialogPopup({
                       );
                     })}
                   </div>
+                </div>
+              )}
+
+              {/* Render Badge Reward jika dialog menghadiahkan item (misal: badge1.webp) */}
+              {currentItem.rewardItem && !isTyping && (
+                <div className="dialog-reward-box">
+                  <img
+                    src={currentItem.rewardItem.image}
+                    alt={currentItem.rewardItem.name}
+                    className="dialog-reward-badge-img"
+                    draggable={false}
+                  />
+                  <span className="dialog-reward-badge-title">
+                    {currentItem.rewardItem.name}
+                  </span>
                 </div>
               )}
             </div>

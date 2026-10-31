@@ -1,0 +1,64 @@
+-buatkan halaman open world   dengan bg yang ada di assets/openworld
+- render juga komponen top bar 
+- render fog wind 
+
+
+
+
+
+detailed prompt characters : 
+-buatkan komponen asset di  assets\character , nah asset nya sudah saya sudah ku webpkan semua 
+- gunakn semua asset disitu jika digerakkan animasi depan . belakang , samping kanan , samping kiri (lengkap )
+- buatkan karakter bergerak dengan pose animasi jalan (depan, belakang, samping)
+- tambahkan analog lingkaran pojok kanan bawah (analog lingkaran seperti game mobile legends )
+- kan di maps itu ada rute jalan nya ya , nah ada juga pephonan dan batu batu itu seharusnya player tidak bisa melewati nya , nah buatkan frame berwarna  saja nanti saya atur juga secara uI daerah mana saja yang tidak bisa dilewati 
+
+
+
+
+
+detailed prompt untuk pendaki bingung dan lain lain : 
+- render star.webp di sepanjang jalan  maksimal 5 untuk dikumpulkan oleh pendaki  (berikan range nya juga untuk trigger mengambil nya )
+- buatkan frame  untuk penanda seperti "kumpulkan dan penuhi progress ": 
+0/ 5 bintang 
+0/1 tantangan 
+buatkan framenya di pojok bawah kiri  , setiap bintang yang sudah dikumpulkan dan tantangan yang sudah selesai dari pendaki binggung akan muncul di frame ini untuk sebagai tanda progress dan berikan presentase nya
+
+
+
+
+-  berikan range lingkaran merah untuk  memunculkan tombol " interaksi " cuman translate kan dalam bahasa jawa dulu , letaknya disamping kiri analog , berikan lock responsif  untuk semua device
+- kemudian saat tombol interaksi dipencet muncul komponen dialog , dan munculkan juga character assets\character\confusecharacter\confusedcharacterfullbody dalam dialog nya persis kayak dialog di cemoro sewu 
+- munculkan nama "pendaki bingung"  didalam pop up nya juga
+- dialog nya seperti ini "halo , aku bayu terimasih atas perhatiannya sebelumnya aku lagi bingung kacamataku hilang , apakah kamu bisa membantu mencarinya ?, sepertinya saya rasa  hilangnya di sekitar toko perlengkapan pendaki disaat saya belanja  "
+- tranlate dulu dialog nya kedalam bahasa jawa
+- buat dialog nya pakai font  jakarta sans , damn dialognya jangan dijadikan satu pisah pisah saja biar rapi 
+- setelah dialog selesai render assets\openworld\kacamata.webp didalam openworld, dan tambahkan sinar yang mengkilau (glow ) di asset kacamatanya , dan simpan sesi dialog tadi dan progress
+- nah berikan lingkaran disekitar kacamatanya untuk range logic trigger untuk mengambil kacamata . lalu berikan dialog untuk user 
+- munculkan nama tanpa character didalam dialog nya "wah ketemu kacamatanya si bayu saaatnya mengembalikannya "
+- dan ketika user mendaki pendaki bingung lagi berikan pop up dialog yang ada nametag dan juga character pendaki binggung assets\character\confusecharacter\confusedcharacterfullbody 
+- dialog nya "wah terimakasih ya sudah menemukan kacamata saya ,sebagai imbalan kamu diperbolehkan masuk ke pos 1 dan bawa badge pos 1 ini , untuk lanjutkan perjalanan setelah pos 1 kamu bisa ke titik kuning di pos 1", (render \assets\badge\badge1.webp)
+- setelah itu      id: "pohon-kanan-atas",
+    name: "Wit Kandel Kanan",
+    x: 70,
+    y: 0,
+    w: 35,
+    h: 43.5,
+  ini adalah salah satu range yang dekat dengan pos 1 yang awalnya gelap menjadi hilang dan bisa dilewati oleh user tetapi beri range kuning  disekitar pos 1 untuk tempat  transisi closing scene dengan ditutupnya halaman dengan D:\aksara_lawu\assets\cover\gamecover dari atas menutup semua halaman lalu membuka sudah terlihat ke halaman maps
+- simpan  badge1 tadi kedalam /inventory tetapi tidak perlu dengan tombol gunakake karna ini hanya hiasan saja (berikan deskripsi "ini adalah badge penghormatan dari bayu , bayu sangat berterimakasih padamu ", translatekan dalam bahasa jawa)
+- simpan semua sesi
+
+
+
+
+
+bug afterjob : 
+-confusedcharacterfullbody.webp tidak kerender dalam dialog pendaki binggung dan juga 
+-   id: "pohon-kanan-atas",
+    name: "Wit Kandel Kanan",
+    x: 70,
+    y: 0,
+    w: 35,
+    h: 43.5, hilangkan rintangan ini setelah tantangan dari pendaki bingung selesai 
+- scene dialog ini asset webp nya tidak kerender  "wah terimakasih ya sudah menemukan kacamata saya ,sebagai imbalan kamu diperbolehkan masuk ke pos 1 dan bawa badge pos 1 ini , untuk lanjutkan perjalanan setelah pos 1 kamu bisa ke titik kuning di pos 1", (render \assets\badge\badge1.webp)
+- titik pos tidak usah teks cukup range lingkaran yang jelas dan kontras 

@@ -1,7 +1,7 @@
 export interface InventoryItemData {
   id: string;
   name: string;
-  type: "card" | "item";
+  type: "card" | "item" | "badge";
   targetLevel: number | null;
   unlockLevelNumber: number | null;
   passcode: string | null;

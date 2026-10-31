@@ -273,17 +273,155 @@ const CENTER_LEAVES: LeafConfig[] = [
   },
 ];
 
+// Daun berjatuhan khusus di panel kanan (50vw s/d 95vw)
+const RIGHT_PANEL_LEAVES: LeafConfig[] = [
+  {
+    id: 201,
+    src: LEAF_ASSETS[0],
+    leftVw: 55,
+    widthVw: 2.8,
+    durationSec: 8.7,
+    delaySec: 0.5,
+    swayDistanceVw: 3.5,
+    startRotateDeg: -20,
+    endRotateDeg: 165,
+    opacity: 0.9,
+  },
+  {
+    id: 202,
+    src: LEAF_ASSETS[1],
+    leftVw: 64,
+    widthVw: 2.3,
+    durationSec: 10.4,
+    delaySec: 2.8,
+    swayDistanceVw: 4.0,
+    startRotateDeg: 15,
+    endRotateDeg: -185,
+    opacity: 0.85,
+  },
+  {
+    id: 203,
+    src: LEAF_ASSETS[2],
+    leftVw: 73,
+    widthVw: 3.1,
+    durationSec: 9.3,
+    delaySec: 4.2,
+    swayDistanceVw: 3.6,
+    startRotateDeg: -35,
+    endRotateDeg: 205,
+    opacity: 0.95,
+  },
+  {
+    id: 204,
+    src: LEAF_ASSETS[3],
+    leftVw: 82,
+    widthVw: 2.6,
+    durationSec: 11.2,
+    delaySec: 1.8,
+    swayDistanceVw: 4.2,
+    startRotateDeg: 38,
+    endRotateDeg: -170,
+    opacity: 0.88,
+  },
+  {
+    id: 205,
+    src: LEAF_ASSETS[4],
+    leftVw: 90,
+    widthVw: 2.4,
+    durationSec: 9.7,
+    delaySec: 6.2,
+    swayDistanceVw: 3.2,
+    startRotateDeg: -15,
+    endRotateDeg: 175,
+    opacity: 0.9,
+  },
+  {
+    id: 206,
+    src: LEAF_ASSETS[5],
+    leftVw: 58,
+    widthVw: 3.0,
+    durationSec: 11.8,
+    delaySec: 3.4,
+    swayDistanceVw: 3.9,
+    startRotateDeg: 22,
+    endRotateDeg: -215,
+    opacity: 0.92,
+  },
+  {
+    id: 207,
+    src: LEAF_ASSETS[6],
+    leftVw: 77,
+    widthVw: 2.5,
+    durationSec: 10.6,
+    delaySec: 5.2,
+    swayDistanceVw: 3.7,
+    startRotateDeg: -40,
+    endRotateDeg: 170,
+    opacity: 0.86,
+  },
+  {
+    id: 208,
+    src: LEAF_ASSETS[7],
+    leftVw: 86,
+    widthVw: 2.9,
+    durationSec: 9.5,
+    delaySec: 7.0,
+    swayDistanceVw: 4.0,
+    startRotateDeg: 32,
+    endRotateDeg: -190,
+    opacity: 0.9,
+  },
+  {
+    id: 209,
+    src: LEAF_ASSETS[2],
+    leftVw: 68,
+    widthVw: 2.3,
+    durationSec: 10.9,
+    delaySec: 8.3,
+    swayDistanceVw: 3.3,
+    startRotateDeg: -12,
+    endRotateDeg: 155,
+    opacity: 0.82,
+  },
+  {
+    id: 210,
+    src: LEAF_ASSETS[0],
+    leftVw: 93,
+    widthVw: 2.7,
+    durationSec: 10.1,
+    delaySec: 9.2,
+    swayDistanceVw: 3.5,
+    startRotateDeg: 45,
+    endRotateDeg: -175,
+    opacity: 0.89,
+  },
+];
+
 interface FallenLeavesProps {
   className?: string;
-  variant?: "left" | "center";
+  variant?: "left" | "center" | "right" | "all";
 }
 
 export default function FallenLeaves({
   className = "",
   variant = "left",
 }: FallenLeavesProps) {
-  const leaves = variant === "center" ? CENTER_LEAVES : LEFT_PANEL_LEAVES;
-  const variantClass = variant === "center" ? "fallen-leaves-center" : "fallen-leaves-left";
+  let leaves: LeafConfig[];
+  let variantClass: string;
+
+  if (variant === "center") {
+    leaves = CENTER_LEAVES;
+    variantClass = "fallen-leaves-center";
+  } else if (variant === "right") {
+    leaves = RIGHT_PANEL_LEAVES;
+    variantClass = "fallen-leaves-right";
+  } else if (variant === "all") {
+    leaves = [...LEFT_PANEL_LEAVES, ...RIGHT_PANEL_LEAVES];
+    variantClass = "fallen-leaves-all";
+  } else {
+    leaves = LEFT_PANEL_LEAVES;
+    variantClass = "fallen-leaves-left";
+  }
 
   return (
     <div

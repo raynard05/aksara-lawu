@@ -1,0 +1,776 @@
+/* =============================================
+   OPENWORLD PAGE — openworld.css
+   Mengikuti AIrule.txt:
+   - File CSS & TSX dipisah (rule 1 & 11)
+   - Selector class ber-prefix unik: ow- (rule 12)
+   - Background murni /assets/openworld/cemoro_pos1.webp memenuhi 100vw x 100vh (rule 14 & 17)
+   - Layout & orientasi landscape-first (rule 5)
+   - Satuan vh & vw (rule 4 & 6)
+   - Font global Rubik One (rule 9)
+   - Zoom-lock & konsistensi device (rule 16):
+     Semua device mobile landscape, tablet, laptop, dan monitor
+     memenuhi 100vw x 100vh tanpa sisa warna abu-abu/hitam di samping (Letterbox DIHAPUS)
+   ============================================= */
+
+.ow-root {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Background murni assets/openworld/cemoro_pos1.webp memenuhi layar penuh (100% 100%) */
+  background-image: url('/openworld/cemoro_pos1.webp');
+  background-size: 100% 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: #0b1a0e;
+  user-select: none;
+}
+
+/* Layer Vignette Ambient Halus */
+.ow-vignette {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.45) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ========================================================
+   FRAME RINTANGAN BERWARNA (COLLISION OBSTACLES)
+   Zona yang tidak bisa dilewati pemain (pohon, tebing, batu, dsb.)
+   Persentase X (%) dan Y (%) menempel pas pada background
+   ======================================================== */
+.ow-collision-zone {
+  position: absolute;
+  border-radius: 1vh;
+  pointer-events: none;
+  z-index: 4;
+  box-sizing: border-box;
+  transition: opacity 0.3s ease, border-color 0.3s ease;
+}
+
+/* Saat mode visualizer / debug aktif */
+.ow-collision-visible {
+  background: rgba(239, 68, 68, 0.35);
+  border: 0.25vh solid #ef4444;
+  box-shadow: 0 0 1vh rgba(239, 68, 68, 0.5), inset 0 0 0.8vh rgba(239, 68, 68, 0.3);
+}
+
+.ow-collision-visible::after {
+  content: attr(data-label);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-jakarta-sans), sans-serif;
+  font-size: 1.1vh;
+  font-weight: 700;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 0.2vh 0.6vh;
+  border-radius: 0.5vh;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* Saat mode visualizer non-aktif (transparan tetap memblokir pergerakan) */
+.ow-collision-hidden {
+  opacity: 0;
+  background: transparent;
+  border: none;
+}
+
+/* Rintangan Terkunci / Gelap Menutup Akses Jalur Pos 1 */
+.ow-collision-closed-dark {
+  background: rgba(10, 15, 10, 0.78);
+  border: 0.25vh solid rgba(40, 20, 10, 0.85);
+  box-shadow: inset 0 0 3vh rgba(0, 0, 0, 0.9), 0 0 2vh rgba(0, 0, 0, 0.7);
+  backdrop-filter: brightness(0.4) blur(1.5px);
+  -webkit-backdrop-filter: brightness(0.4) blur(1.5px);
+  opacity: 1;
+  display: block;
+}
+
+.ow-collision-closed-dark::after {
+  content: "⛔ " attr(data-label);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-jakarta-sans), sans-serif;
+  font-size: 1.3vh;
+  font-weight: 800;
+  color: #fca5a5;
+  background: rgba(17, 10, 10, 0.88);
+  border: 0.15vh solid #ef4444;
+  padding: 0.4vh 1vh;
+  border-radius: 0.7vh;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 0.4vh 1vh rgba(0, 0, 0, 0.7);
+  letter-spacing: 0.05vw;
+}
+
+/* Area Karakter Bergerak di Layar Penuh */
+.ow-character-stage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 6;
+  pointer-events: none;
+}
+
+/* Entity Karakter */
+.ow-character-entity {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  pointer-events: auto;
+  cursor: pointer;
+  filter: drop-shadow(0 0.5vh 1vh rgba(0, 0, 0, 0.55));
+  transition: filter 0.2s ease;
+}
+
+.ow-character-entity:hover {
+  filter: drop-shadow(0 0.7vh 1.4vh rgba(255, 215, 0, 0.45));
+}
+
+/* Label Nama Karakter / Pemain */
+.ow-character-nametag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3vw;
+  background: rgba(30, 18, 10, 0.85);
+  border: 0.15vh solid #d4a574;
+  border-radius: 0.8vh;
+  padding: 0.2vh 0.8vh;
+  margin-bottom: 0.4vh;
+  box-shadow: 0 0.2vh 0.6vh rgba(0, 0, 0, 0.5), inset 0 0.1vh 0.15vh rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  white-space: nowrap;
+}
+
+.ow-nametag-icon {
+  width: 1.2vh;
+  height: 1.2vh;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 0.1vh solid #ffe8b3;
+}
+
+.ow-nametag-text {
+  font-family: var(--font-rubik-one), sans-serif;
+  font-size: 0.95vh;
+  color: #fff9ea;
+  text-shadow: 0 0.1vh 0.2vh rgba(0, 0, 0, 0.8);
+  letter-spacing: 0.03vw;
+}
+
+/* Sprite Gambar Karakter (Dikecilkan 50% terkunci proporsional) */
+.ow-character-sprite-wrap {
+  position: relative;
+  width: 8vh;
+  height: 12vh;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.ow-character-sprite {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Bayangan Tanah Karakter */
+.ow-character-shadow {
+  position: absolute;
+  bottom: -0.2vh;
+  width: 5.5vh;
+  height: 1.2vh;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 70%);
+  border-radius: 50%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Dot Bounding Box / Kaki Karakter (untuk cek visual rintangan) */
+.ow-character-hitbox {
+  position: absolute;
+  bottom: 0;
+  width: 1.8vw;
+  height: 1.6vh;
+  border-radius: 50%;
+  background: rgba(34, 197, 94, 0.45);
+  border: 0.15vh dashed #22c55e;
+  pointer-events: none;
+  display: none;
+}
+
+.ow-show-hitboxes .ow-character-hitbox {
+  display: block;
+}
+
+/* Banner Informasi Petunjuk (Papan Kayu Elegan) */
+.ow-guide-banner {
+  position: absolute;
+  bottom: 3vh;
+  left: 4vw;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 1.2vw;
+  background: rgba(43, 29, 23, 0.88);
+  border: 0.3vh solid #d4a574;
+  border-radius: 2vh;
+  padding: 1vh 2vw;
+  box-shadow: 0 1vh 2.5vh rgba(0, 0, 0, 0.65), inset 0 0.15vh 0.3vh rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  pointer-events: auto;
+  animation: owFadeSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.ow-guide-badge {
+  font-family: var(--font-rubik-one), sans-serif;
+  font-size: 1.3vh;
+  color: #2b1d17;
+  background: linear-gradient(135deg, #ffd700 0%, #d4a574 100%);
+  padding: 0.5vh 1.2vh;
+  border-radius: 1vh;
+  text-shadow: 0 0.1vh 0.2vh rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0.3vh 0.8vh rgba(0, 0, 0, 0.3);
+  letter-spacing: 0.05vw;
+  white-space: nowrap;
+}
+
+.ow-guide-text {
+  font-family: var(--font-jakarta-sans), sans-serif;
+  font-size: 1.6vh;
+  font-weight: 600;
+  color: #fff8e1;
+  text-shadow: 0 0.15vh 0.3vh rgba(0, 0, 0, 0.8);
+  letter-spacing: 0.02vw;
+  white-space: nowrap;
+}
+
+.ow-guide-btn-action {
+  font-family: var(--font-rubik-one), sans-serif;
+  font-size: 1.4vh;
+  color: #382109;
+  background: linear-gradient(180deg, #ffea88 0%, #f3ba2f 50%, #c88812 100%);
+  border: 0.25vh solid #ffe599;
+  border-radius: 1.4vh;
+  padding: 0.8vh 2vh;
+  cursor: pointer;
+  box-shadow: 0 0.5vh 1.2vh rgba(0, 0, 0, 0.4), inset 0 0.2vh 0.3vh rgba(255, 255, 255, 0.7);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+}
+
+.ow-guide-btn-action:hover {
+  transform: translateY(-0.2vh) scale(1.04);
+  box-shadow: 0 0.8vh 1.8vh rgba(255, 215, 0, 0.4), inset 0 0.2vh 0.3vh rgba(255, 255, 255, 0.9);
+}
+
+.ow-guide-btn-action:active {
+  transform: translateY(0.1vh) scale(0.97);
+}
+
+/* Tombol Toggle Inspeksi Frame Rintangan (Atas Kanan di bawah TopBar) */
+.ow-collision-toggle-btn {
+  position: absolute;
+  top: 9vh;
+  right: 2vw;
+  z-index: 45;
+  background: rgba(30, 18, 10, 0.85);
+  border: 0.2vh solid #d4a574;
+  color: #ffe8b3;
+  font-family: var(--font-rubik-one), sans-serif;
+  font-size: 1.2vh;
+  padding: 0.6vh 1.2vh;
+  border-radius: 1vh;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.6vh;
+  box-shadow: 0 0.4vh 1vh rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  transition: all 0.2s;
+}
+
+.ow-collision-toggle-btn:hover {
+  background: rgba(60, 35, 20, 0.95);
+  border-color: #ffd700;
+  transform: scale(1.03);
+}
+
+.ow-toggle-indicator {
+  width: 1.2vh;
+  height: 1.2vh;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.ow-toggle-indicator-on {
+  background: #22c55e;
+  box-shadow: 0 0 0.6vh #22c55e;
+}
+
+.ow-toggle-indicator-off {
+  background: #ef4444;
+}
+
+/* Animasi */
+@keyframes owFadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(2vh);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsif Mobile Landscape / Layar Sentuh */
+@media (max-width: 1024px) and (orientation: landscape) and (pointer: coarse) {
+  .ow-character-sprite-wrap {
+    width: 8vh;
+    height: 12vh;
+  }
+
+  .ow-guide-banner {
+    bottom: 2vh;
+    left: 2.5vw;
+    padding: 0.8vh 1.6vw;
+    gap: 0.8vw;
+  }
+
+  .ow-guide-text {
+    font-size: 1.3vh;
+  }
+
+  .ow-guide-badge {
+    font-size: 1.1vh;
+  }
+
+  .ow-guide-btn-action {
+    font-size: 1.2vh;
+    padding: 0.6vh 1.4vh;
+  }
+}
+
+/* ========================================================
+   GAMEPLAY UI & INTERAKSI (Bintang, Kacamata, Progres, Dialog)
+   ======================================================== */
+
+/* 1. Tombol Interaksi (Sisi Kiri Analog Joystick - Locked Responsif) */
+.ow-interact-btn {
+  position: absolute;
+  bottom: 7.5vh;
+  right: calc(4vw + 20vh + 2vw);
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3vh;
+  width: 10vh;
+  height: 10vh;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #ffd54f 0%, #f57f17 60%, #e65100 100%);
+  border: 0.35vh solid #fff9c4;
+  box-shadow:
+    0 1vh 2.5vh rgba(0, 0, 0, 0.65),
+    0 0 1.8vh rgba(255, 215, 0, 0.8),
+    inset 0 0.3vh 0.6vh rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  animation: owInteractBounce 1.4s ease-in-out infinite alternate;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.ow-interact-btn:hover {
+  transform: scale(1.08);
+  box-shadow:
+    0 1.2vh 2.5vh rgba(0, 0, 0, 0.7),
+    0 0 2.2vh rgba(255, 235, 59, 0.9),
+    inset 0 0.4vh 0.8vh rgba(255, 255, 255, 0.9);
+}
+
+.ow-interact-btn:active {
+  transform: scale(0.94);
+}
+
+.ow-interact-icon {
+  font-size: 2.2vh;
+  line-height: 1;
+  filter: drop-shadow(0 0.2vh 0.3vh rgba(0, 0, 0, 0.5));
+}
+
+.ow-interact-text {
+  font-family: var(--font-rubik-one), sans-serif;
+  font-size: 1vh;
+  color: #fffde7;
+  text-shadow: 0 0.15vh 0.3vh rgba(0, 0, 0, 0.8);
+  letter-spacing: 0.04vw;
+  text-transform: uppercase;
+}
+
+@keyframes owInteractBounce {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+
+  100% {
+    transform: translateY(-0.8vh) scale(1.04);
+  }
+}
+
+/* 2. Frame Progress Petualangan di Pojok Bawah Kiri */
+.ow-progress-board {
+  position: absolute;
+  bottom: 3vh;
+  left: 2.5vw;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6vh;
+  background: rgba(35, 22, 14, 0.92);
+  border: 0.25vh solid #d4a574;
+  border-radius: 1.4vh;
+  padding: 1vh 1.4vw;
+  box-shadow:
+    0 1vh 2.5vh rgba(0, 0, 0, 0.7),
+    inset 0 0.15vh 0.4vh rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  pointer-events: auto;
+  user-select: none;
+  min-width: 14vw;
+}
+
+.ow-progress-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8vw;
+}
+
+.ow-progress-title {
+  font-family: var(--font-rubik-one), sans-serif;
+  font-size: 1.1vh;
+  color: #ffe082;
+  text-shadow: 0 0.1vh 0.2vh rgba(0, 0, 0, 0.8);
+  letter-spacing: 0.03vw;
+}
+
+.ow-progress-percent {
+  font-family: var(--font-rubik-one), sans-serif;
+  font-size: 1.2vh;
+  color: #a7f3d0;
+  background: rgba(6, 78, 59, 0.8);
+  border: 0.1vh solid #34d399;
+  padding: 0.15vh 0.6vh;
+  border-radius: 0.6vh;
+}
+
+.ow-progress-bar-bg {
+  width: 100%;
+  height: 0.7vh;
+  background: rgba(0, 0, 0, 0.6);
+  border: 0.1vh solid rgba(212, 165, 116, 0.4);
+  border-radius: 0.5vh;
+  overflow: hidden;
+}
+
+.ow-progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #f59e0b 0%, #10b981 100%);
+  border-radius: 0.4vh;
+  transition: width 0.4s ease;
+  box-shadow: 0 0 0.8vh rgba(16, 185, 129, 0.6);
+}
+
+.ow-progress-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4vh;
+  margin-top: 0.2vh;
+}
+
+.ow-progress-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-jakarta-sans), sans-serif;
+  font-size: 1.15vh;
+  font-weight: 700;
+  color: #fff9ea;
+}
+
+.ow-progress-row-left {
+  display: flex;
+  align-items: center;
+  gap: 0.4vw;
+}
+
+.ow-progress-star-icon {
+  width: 1.5vh;
+  height: 1.5vh;
+  object-fit: contain;
+}
+
+.ow-progress-val {
+  color: #ffd54f;
+}
+
+.ow-progress-val.completed {
+  color: #4ade80;
+}
+
+/* 3. Item Bintang Tersebar di Jalan */
+.ow-star-entity {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.ow-star-img {
+  width: 4vh;
+  height: 4vh;
+  object-fit: contain;
+  filter: drop-shadow(0 0 0.8vh rgba(255, 235, 59, 0.95)) drop-shadow(0 0.5vh 0.6vh rgba(0, 0, 0, 0.6));
+  animation: owStarFloat 1.8s ease-in-out infinite alternate;
+}
+
+.ow-star-trigger-zone {
+  position: absolute;
+  width: 4.8vw;
+  height: 4vh;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.25) 0%, transparent 70%);
+  border: 0.15vh dashed rgba(255, 215, 0, 0.6);
+  pointer-events: none;
+  animation: owStarZonePulse 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes owStarFloat {
+  0% {
+    transform: translateY(0) rotate(-6deg) scale(0.95);
+  }
+
+  100% {
+    transform: translateY(-0.8vh) rotate(8deg) scale(1.08);
+  }
+}
+
+@keyframes owStarZonePulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.6;
+  }
+
+  100% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+/* 4. Kacamata Bayu yang Hilang */
+.ow-kacamata-entity {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.ow-kacamata-img {
+  width: 4.6vh;
+  height: 4vh;
+  object-fit: contain;
+  filter: drop-shadow(0 0 1vh #000000) drop-shadow(0 0 1.8vh #ffea00);
+  animation: owKacamataGlow 1.2s ease-in-out infinite alternate;
+}
+
+.ow-kacamata-trigger-zone {
+  position: absolute;
+  width: 5.5vw;
+  height: 4.5vh;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgb(123, 123, 123) 0%, transparent 70%);
+  border: 1vh dashed #f90000;
+  box-shadow: 0 0 3vh rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  animation: owStarZonePulse 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes owKacamataGlow {
+  0% {
+    transform: scale(0.96) rotate(-4deg);
+    filter: drop-shadow(0 0 0.8vh #00e5ff) drop-shadow(0 0 1.2vh #ffea00);
+  }
+
+  100% {
+    transform: scale(1.1) rotate(4deg);
+    filter: drop-shadow(0 0 1.8vh #00e5ff) drop-shadow(0 0 2.5vh #fff700);
+  }
+}
+
+/* 5. Zona Lingkaran Kuning Transisi Pos 1 (Kontras Tinggi Tanpa Teks) */
+.ow-pos1-yellow-zone {
+  position: absolute;
+  left: 92%;
+  top: 34%;
+  transform: translate(-50%, -50%);
+  width: 14vh;
+  height: 14vh;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 235, 59, 0.257) 0%, rgba(245, 158, 11, 0.2) 60%, transparent 100%);
+  border: 0.4vh dashed #ffd700;
+  box-shadow:
+    0 0 3vh rgba(255, 217, 0, 0.474),
+    inset 0 0 2.5vh rgba(255, 235, 59, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 5;
+  animation: owYellowZonePulse 1.4s ease-in-out infinite alternate;
+}
+
+.ow-pos1-yellow-inner-circle {
+  width: 5vh;
+  height: 5vh;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff67 0%, #ffeb3b67 60%, #f59e0b 100%);
+  box-shadow: 0 0 1.8vh #fff7006a, 0 0 3vh #ffd700;
+  animation: owYellowCorePulse 1.4s ease-in-out infinite alternate;
+}
+
+@keyframes owYellowZonePulse {
+  0% {
+    transform: translate(-50%, -50%) scale(0.95);
+    opacity: 0.85;
+    border-color: #ffd700;
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(1.12);
+    opacity: 1;
+    border-color: #ffffff;
+    box-shadow:
+      0 0 4vh rgba(255, 235, 59, 1),
+      inset 0 0 3vh rgba(255, 255, 255, 0.7);
+  }
+}
+
+@keyframes owYellowCorePulse {
+  0% {
+    transform: scale(0.9);
+    filter: brightness(1);
+  }
+
+  100% {
+    transform: scale(1.15);
+    filter: brightness(1.3);
+  }
+}
+
+/* 6. Closing Curtain Overlay (Gamecover turun dari atas, diam sebentar, lalu turun ke bawah menghilang) */
+.ow-curtain-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  pointer-events: all;
+  background-image: url('/cover/gamecover.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Fase 1: Cover turun dari atas menutup penuh layar */
+.ow-curtain-overlay.ow-curtain-closing {
+  animation: owCurtainSlideDown 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Fase 2: Setelah delay diam, cover meluncur ke bawah menghilang */
+.ow-curtain-overlay.ow-curtain-opening {
+  animation: owCurtainSlideOutDown 0.8s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards;
+}
+
+@keyframes owCurtainSlideDown {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes owCurtainSlideOutDown {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+/* 7. Dialog Badge Pos 1 Reward Modal di dalam Pop Up */
+.ow-badge-reward-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6vh;
+  margin-top: 1vh;
+  padding: 0.8vh;
+  background: rgba(30, 20, 10, 0.7);
+  border: 0.15vh solid #d4a574;
+  border-radius: 1vh;
+}
+
+.ow-badge-reward-img {
+  width: 6.5vh;
+  height: 6.5vh;
+  object-fit: contain;
+  filter: drop-shadow(0 0 1vh rgba(255, 215, 0, 0.8));
+  animation: owStarFloat 1.8s ease-in-out infinite alternate;
+}
+
+.ow-badge-reward-label {
+  font-family: var(--font-rubik-one), sans-serif;
+  font-size: 1vh;
+  color: #ffd700;
+  letter-spacing: 0.04vw;
+}

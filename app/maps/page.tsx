@@ -1,15 +1,38 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import React, { useState, useEffect, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import HomeButton from "../components/HomeButton/HomeButton";
 import FogWind from "../components/FogWind/FogWind";
 import MapsMainComponent from "../components/MapsMainComponent/MapsMainComponent";
 import "./maps.css";
 
-export default function MapsPage() {
+function MapsContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const fromOpenworld = searchParams.get("from") === "openworld";
+
   const [avatar, setAvatar] = useState<string>("avatar1.webp");
+  // Fase cover penutup jika datang dari openworld: "closed" -> jeda 1.5 detik -> "opening" -> "hidden"
+  const [coverPhase, setCoverPhase] = useState<"closed" | "opening" | "hidden">(
+    fromOpenworld ? "closed" : "hidden"
+  );
+
+  useEffect(() => {
+    if (fromOpenworld) {
+      // Berikan delay 1.5 detik di mana halaman maps sudah ada di belakang,
+      // lalu cover meluncur ke bawah keluar layar dan halaman maps langsung terlihat
+      const timer = setTimeout(() => {
+        setCoverPhase("opening");
+        const hideTimer = setTimeout(() => {
+          setCoverPhase("hidden");
+        }, 850);
+        return () => clearTimeout(hideTimer);
+      }, 1500);
+
+      return () => clearTimeout(timer);
+    }
+  }, [fromOpenworld]);
 
   useEffect(() => {
     try {
@@ -80,6 +103,19 @@ export default function MapsPage() {
           draggable={false}
         />
       </aside>
+
+      {/* Cover Overlay Transisi: Diam 1.5 detik menutup layar lalu meluncur turun ke bawah membuka peta */}
+      {coverPhase !== "hidden" && (
+        <div className={`maps-curtain-overlay maps-curtain-${coverPhase}`} />
+      )}
     </main>
+  );
+}
+
+export default function MapsPage() {
+  return (
+    <Suspense fallback={<div className="maps-curtain-overlay maps-curtain-closed" />}>
+      <MapsContent />
+    </Suspense>
   );
 }

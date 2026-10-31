@@ -48,5 +48,15 @@
     "passcode": null,
     "image": "/assets/inventory/money.png",
     "description": "Dhuwit kuna nominal 50 kanggo blanja lan transaksi karo bakul ing warung ngaso pos 3."
+  },
+  {
+    "id": "badge1",
+    "name": "Lencana Pos 1 (Bayu)",
+    "type": "badge",
+    "targetLevel": null,
+    "unlockLevelNumber": null,
+    "passcode": null,
+    "image": "/badge/badge1.webp",
+    "description": "Iki minangka lencana pakurmatan saka Bayu, Bayu matur nuwun sanget marang panjenengan amarga wis nemokake kacamatane."
   }
 ]

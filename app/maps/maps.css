@@ -282,3 +282,41 @@
 
   }
 }
+
+/* =============================================
+   CURTAIN TRANSITION (Gamecover buka ke bawah setelah delay 1.5 detik)
+   ============================================= */
+.maps-curtain-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 99999;
+  pointer-events: all;
+  background-image: url('/cover/gamecover.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  will-change: transform;
+}
+
+/* Fase 1: Diam menutup layar penuh (delay 1.5 detik) */
+.maps-curtain-overlay.maps-curtain-closed {
+  transform: translateY(0%);
+}
+
+/* Fase 2: Meluncur ke bawah keluar layar dengan mulus menampakkan halaman maps */
+.maps-curtain-overlay.maps-curtain-opening {
+  animation: mapsCurtainSlideOutDown 0.85s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes mapsCurtainSlideOutDown {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}

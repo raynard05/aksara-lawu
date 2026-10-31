@@ -214,33 +214,35 @@ export default function InventoryBoard() {
                 <div className="invb-desc-text-inner">
                   <p className="invb-item-desc">{selectedItem.description}</p>
                   
-                  {/* Tombol Gunakake ditaruh di bawah deskripsi */}
-                  <div className="invb-desc-btn-wrap">
-                    <button
-                      type="button"
-                      id="btn-inv-gunakake"
-                      className={`invb-btn-gunakake ${
-                        isSelectedUsed ? "invb-btn-gunakake-disabled" : ""
-                      }`}
-                      onClick={handleGunakake}
-                      disabled={isSelectedUsed}
-                      aria-disabled={isSelectedUsed}
-                      aria-label={
-                        isSelectedUsed
-                          ? `${selectedItem.name} wis tau digunakake`
-                          : "Gunakake Item"
-                      }
-                      title={
-                        isSelectedUsed
-                          ? "Item iki wis kasil digunakake lan gemboke wis kabuka!"
-                          : "Pencet kanggo nggunakake item iki"
-                      }
-                    >
-                      <span className="invb-btn-gunakake-text">
-                        {isSelectedUsed ? "Wis Digunakake" : "Gunakake"}
-                      </span>
-                    </button>
-                  </div>
+                  {/* Tombol Gunakake ditaruh di bawah deskripsi (Kecuali badge/hiasan tidak perlu tombol gunakake) */}
+                  {selectedItem.type !== "badge" && (
+                    <div className="invb-desc-btn-wrap">
+                      <button
+                        type="button"
+                        id="btn-inv-gunakake"
+                        className={`invb-btn-gunakake ${
+                          isSelectedUsed ? "invb-btn-gunakake-disabled" : ""
+                        }`}
+                        onClick={handleGunakake}
+                        disabled={isSelectedUsed}
+                        aria-disabled={isSelectedUsed}
+                        aria-label={
+                          isSelectedUsed
+                            ? `${selectedItem.name} wis tau digunakake`
+                            : "Gunakake Item"
+                        }
+                        title={
+                          isSelectedUsed
+                            ? "Item iki wis kasil digunakake lan gemboke wis kabuka!"
+                            : "Pencet kanggo nggunakake item iki"
+                        }
+                      >
+                        <span className="invb-btn-gunakake-text">
+                          {isSelectedUsed ? "Wis Digunakake" : "Gunakake"}
+                        </span>
+                      </button>
+                    </div>
+                  )}
                 </div>
               ) : (
                 <div className="invb-desc-text-inner">
