@@ -126,18 +126,28 @@
   filter: drop-shadow(0 0 1vh rgba(255, 215, 0, 0.7));
 }
 
-/* Responsif Mobile & Layar Sentuh */
-@media (max-width: 900px) and (orientation: landscape) {
+/* Responsif Mobile & Layar Sentuh (Perbesar 25%: Base 22vh -> 27.5vh, Knob 9.5vh -> 11.8vh) */
+@media (max-width: 900px) and (orientation: landscape),
+       (pointer: coarse) and (orientation: landscape) {
   .vjoy-container {
-    bottom: 3vh;
-    right: 3vw;
+    bottom: 3.5vh;
+    right: 3.5vw;
   }
   .vjoy-base {
-    width: 22vh;
-    height: 22vh;
+    width: 27.5vh;
+    height: 27.5vh;
+    border-width: 0.45vh;
   }
   .vjoy-knob {
-    width: 9.5vh;
-    height: 9.5vh;
+    width: 11.8vh;
+    height: 11.8vh;
+    border-width: 0.35vh;
+  }
+  .vjoy-knob-core {
+    width: 4.8vh;
+    height: 4.8vh;
+  }
+  .vjoy-dir-arrow {
+    font-size: 1.65vh;
   }
 }

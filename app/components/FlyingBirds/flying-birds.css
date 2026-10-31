@@ -1,0 +1,52 @@
+/* ============================================================
+   FLYING BIRDS COMPONENT — flying-birds.css
+   - Burung terbang secara acak alami di area layar
+   - Menggunakan satuan vh & vw (AIrule.txt)
+   - GPU-accelerated translate3d agar super ringan di mobile
+   ============================================================ */
+
+.ow-birds-sky-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 12; /* Di atas latar & pepohonan, di bawah UI kontrol */
+  user-select: none;
+}
+
+/* Entity burung yang bergerak dengan akselerasi GPU 3D */
+.ow-bird-entity {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+}
+
+/* Sprite burung (diperbesar 20%: 6.6vh) */
+.ow-bird-sprite {
+  width: 6.6vh;
+  height: 6.6vh;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 0.4vh 0.6vh rgba(0, 0, 0, 0.3));
+  transition: transform 0.25s ease-out;
+}
+
+/* Responsive Mobile: Perbesar burung 25% (6.6vh -> 8.25vh) dan optimasi rendering */
+@media (max-width: 900px) and (orientation: landscape) and (pointer: coarse),
+(max-height: 500px) and (orientation: landscape) {
+  .ow-bird-sprite {
+    width: 8.25vh !important;
+    height: 8.25vh !important;
+    filter: none;
+  }
+}

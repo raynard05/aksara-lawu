@@ -9,6 +9,7 @@ import VirtualJoystick, {
 } from "../components/VirtualJoystick/VirtualJoystick";
 import ConfuseCharacter from "../components/ConfuseCharacter/ConfuseCharacter";
 import DialogPopup, { DialogItem } from "../components/DialogPopup/DialogPopup";
+import FlyingBirds from "../components/FlyingBirds/FlyingBirds";
 import {
   getSavedInventoryItems,
   saveInventoryItems,
@@ -807,6 +808,9 @@ export default function OpenWorldPage() {
       {/* 3. Efek Guguran Daun Ringan Dioptimasi (Hanya 5 daun lembut agar GPU mobile super ringan) */}
       <FallenLeaves variant="all" countLimit={5} />
 
+      {/* 4. Burung Terbang Sudut Pandang Datar (Side View POV) Transparan */}
+      <FlyingBirds />
+
       {/* 4. Frame Berwarna Rintangan (Collision Zones: Pohon, Batu, Jurang) */}
       {DEFAULT_OBSTACLES.map((obs) => {
         // Hilangkan rintangan pohon-kanan-atas sepenuhnya setelah tantangan selesai
@@ -835,7 +839,21 @@ export default function OpenWorldPage() {
               opacity: showClosedDark ? undefined : 0,
             }}
             aria-hidden={!showObstacles && !showClosedDark}
-          />
+          >
+            {showClosedDark && (
+              <div className="ow-closed-badge-container">
+                <span className="ow-closed-badge-text">
+                  ⛔ {obs.name}
+                </span>
+                <img
+                  src="/maps/gembok.webp"
+                  alt="Gembok Rintangan Tertutup"
+                  className="ow-closed-gembok-img"
+                  draggable={false}
+                />
+              </div>
+            )}
+          </div>
         );
       })}
 
