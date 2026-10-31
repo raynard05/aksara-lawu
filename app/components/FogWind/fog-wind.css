@@ -344,11 +344,17 @@
 
 /* =============================================
    RESPONSIVE — Mobile Landscape (Khusus Layar Sentuh HP)
+   Optimasi GPU: kurangi blur berat & sembunyikan layer berlebih agar 60 FPS stabil
    ============================================= */
 @media (max-width: 900px) and (orientation: landscape) and (pointer: coarse),
        (max-height: 500px) and (orientation: landscape) {
   .fog-wind-layer {
-    width: 155vw;
+    width: 140vw;
+    filter: blur(1vw); /* Turunkan dari 3.8vw ke 1vw agar GPU mobile super ringan */
+  }
+  .fog-wind-layer-3,
+  .fog-wind-layer-4 {
+    display: none; /* Matikan 2 layer kabut ekstra di HP untuk hemat rendering */
   }
   .fog-wind-stream-1 {
     width: 72vw;
@@ -359,7 +365,6 @@
     height: 16vh;
   }
   .fog-wind-stream-3 {
-    width: 68vw;
-    height: 13vh;
+    display: none; /* Cukup 2 streamline angin di mobile */
   }
 }

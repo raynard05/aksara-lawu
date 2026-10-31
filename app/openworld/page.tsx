@@ -475,7 +475,7 @@ export default function OpenWorldPage() {
       if (!walkCycleTimerRef.current) {
         walkCycleTimerRef.current = setInterval(() => {
           setFrameIndex((prev) => prev + 1);
-        }, 135);
+        }, 105);
       }
     } else {
       if (walkCycleTimerRef.current) {
@@ -502,14 +502,14 @@ export default function OpenWorldPage() {
       let dx = 0;
       let dy = 0;
 
-      // 1. Input Analog Mobile Legends (Kecepatan diperlambat agar kontrol lebih stabil & rileks)
+      // 1. Input Analog Mobile Legends (Kecepatan dipercepat agar responsif & lincah)
       if (joy.active) {
-        const speed = 0.12;
+        const speed = 0.24;
         dx = joy.x * speed;
         dy = joy.y * speed;
       } else {
         // 2. Input Keyboard WASD & Panah
-        const keySpeed = 0.12;
+        const keySpeed = 0.24;
         if (keys["ArrowUp"] || keys["KeyW"]) dy -= keySpeed;
         if (keys["ArrowDown"] || keys["KeyS"]) dy += keySpeed;
         if (keys["ArrowLeft"] || keys["KeyA"]) dx -= keySpeed;
@@ -804,9 +804,8 @@ export default function OpenWorldPage() {
       {/* 2. Komponen FogWind (efek kabut angin perlahan di atas background) */}
       <FogWind />
 
-      {/* 3. Efek Guguran Daun Khas Gunung Lawu (Panel Kiri & Panel Kanan) */}
-      <FallenLeaves variant="left" />
-      <FallenLeaves variant="right" />
+      {/* 3. Efek Guguran Daun Ringan Dioptimasi (Hanya 5 daun lembut agar GPU mobile super ringan) */}
+      <FallenLeaves variant="all" countLimit={5} />
 
       {/* 4. Frame Berwarna Rintangan (Collision Zones: Pohon, Batu, Jurang) */}
       {DEFAULT_OBSTACLES.map((obs) => {

@@ -105,9 +105,11 @@
   }
 }
 
-/* Media query mobile landscape */
-@media (max-width: 900px) and (orientation: landscape) and (pointer: coarse) {
+/* Media query mobile landscape: optimasi GPU mobile tanpa drop-shadow berlebih */
+@media (max-width: 900px) and (orientation: landscape) and (pointer: coarse),
+(max-height: 500px) and (orientation: landscape) {
   .fallen-leaf-image {
-    filter: drop-shadow(0 0.3vh 0.4vh rgba(0, 0, 0, 0.3));
+    filter: none;
+    animation: none; /* Matikan animasi 3D flutter berulang di HP agar 60fps lancar */
   }
 }

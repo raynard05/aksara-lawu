@@ -400,11 +400,13 @@ const RIGHT_PANEL_LEAVES: LeafConfig[] = [
 interface FallenLeavesProps {
   className?: string;
   variant?: "left" | "center" | "right" | "all";
+  countLimit?: number;
 }
 
 export default function FallenLeaves({
   className = "",
   variant = "left",
+  countLimit,
 }: FallenLeavesProps) {
   let leaves: LeafConfig[];
   let variantClass: string;
@@ -421,6 +423,10 @@ export default function FallenLeaves({
   } else {
     leaves = LEFT_PANEL_LEAVES;
     variantClass = "fallen-leaves-left";
+  }
+
+  if (typeof countLimit === "number" && countLimit > 0) {
+    leaves = leaves.slice(0, countLimit);
   }
 
   return (
