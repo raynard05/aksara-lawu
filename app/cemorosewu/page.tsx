@@ -55,8 +55,8 @@ export default function CemoroSewuPage() {
       // ignore
     }
 
-    // Beranjak ke halaman berikutnya (/maps)
-    router.push("/maps");
+    // Beranjak ke halaman petualangan Open World (/openworld)
+    router.push("/openworld");
   };
 
   return (
