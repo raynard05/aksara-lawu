@@ -81,7 +81,7 @@ export default function HomeButton({
               Pèngetan!
             </h2>
             <p className="home-modal-text">
-              Apa kowé yakin arep metu saka game? Sesi dolananmu bakal di-reset yen kowé metu saka game iki.
+              Apa kowe yakin arep metu saka game? Sesi dolananmu bakal di-reset yen kowe metu saka game iki.
             </p>
 
             {/* Tombol Aksi: Batal & Ya Metu */}

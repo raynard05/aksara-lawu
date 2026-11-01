@@ -46,7 +46,7 @@ const INTRO_DIALOGS = [
   {
     id: 8,
     type: "text" as const,
-    text: "Mengko kowé bisa ngeklik tombol-tombol iki trep karo wangsulan sing bener:",
+    text: "Mengko kowe bisa ngeklik tombol-tombol iki trep karo wangsulan sing bener:",
     showSymbols: true,
   },
   {

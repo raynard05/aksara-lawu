@@ -617,7 +617,7 @@ export default function OpenWorldPage() {
     };
   }, []);
 
-  // Handler Interaksi saat tombol 'Interaksi' (Gawé Hubungan / Cecaturan) ditekan
+  // Handler Interaksi saat tombol 'Interaksi' (Gawe Hubungan / Cecaturan) ditekan
   const handleTriggerInteraction = () => {
     // 1. Interaksi dengan Kacamata yang Hilang
     if (isNearKacamata) {
@@ -644,22 +644,22 @@ export default function OpenWorldPage() {
         const dialogIntro: DialogItem[] = [
           {
             id: 1,
-            speakerName: "Pendaki Bingung (Bayu)",
-            text: "Halo kanca! Aku Bayu. Matur nuwun sanget panjenengan sampun kersa nyelaki lan paring kawigatosan.",
+            speakerName: "Bayu",
+            text: "Halo bro! Jenengku Bayu. Suwun banget kowe wis gelem nyedhak mrene.",
             character: "confusecharacter/confusedcharacterfullbody.webp",
             characterSide: "left",
           },
           {
             id: 2,
-            speakerName: "Pendaki Bingung (Bayu)",
-            text: "Sakjroning atiku saiki lagi bingung banget... Kacamataku ilang lan aku ora bisa ndeleng dalan kanthi cetha.",
+            speakerName: "Bayu",
+            text: "Aku lagi bingung banget iki... Kacamataku ilang, dadi pandelenganku kabur lan ora bisa ndelok dalan kanthi cetha.",
             character: "confusecharacter/confusedcharacterfullbody.webp",
             characterSide: "left",
           },
           {
             id: 3,
-            speakerName: "Pendaki Bingung (Bayu)",
-            text: "Apa panjenengan bisa mbantu aku nggoleki kacamata kasebut? Koyo-koyone keri ing sacedhake toko piranti pendaki nalika aku lagi blanja.",
+            speakerName: "Bayu",
+            text: "Kowe apa bisa ngrewangi aku nggoleki kacamataku? Kayane keri ing cedhak warung perlengkapan sisih kiwa ngisor pas aku blanja mau.",
             character: "confusecharacter/confusedcharacterfullbody.webp",
             characterSide: "left",
           },
@@ -672,8 +672,8 @@ export default function OpenWorldPage() {
         const dialogSearching: DialogItem[] = [
           {
             id: 1,
-            speakerName: "Pendaki Bingung (Bayu)",
-            text: "Mangga tulung dipun priksani ing sacedhake toko piranti pendaki sisih kiwa ngisor, mugi-mugi kacamataku ketemu...",
+            speakerName: "Bayu",
+            text: "Tulung deloken ing cedhak warung perlengkapan sisih kiwa ngisor ya, muga-muga kacamataku ndang ketemu...",
             character: "confusecharacter/confusedcharacterfullbody.webp",
             characterSide: "left",
           },
@@ -686,15 +686,15 @@ export default function OpenWorldPage() {
         const dialogReward: DialogItem[] = [
           {
             id: 1,
-            speakerName: "Pendaki Bingung (Bayu)",
-            text: "Wah, matur nuwun sanget panjenengan sampun manggihaken kacamata kula! Saiki pandelenganku wis padhang maneh.",
+            speakerName: "Bayu",
+            text: "Wah, suwun banget kowe wis nemokake kacamataku! Saiki mripatku wis padhang lan cetha maneh.",
             character: "confusecharacter/confusedcharacterfullbody.webp",
             characterSide: "left",
           },
           {
             id: 2,
-            speakerName: "Pendaki Bingung (Bayu)",
-            text: "Minangka piwales lan pakurmatan, panjenengan kepareng mlebu menyang Pos 1 lan gawanen Lencana Pos 1 iki!",
+            speakerName: "Bayu",
+            text: "Kanggo tanda matur suwun, kowe saiki oleh munggah menyang Pos 1. Nampanana Lencana Pos 1 iki ya!",
             character: "confusecharacter/confusedcharacterfullbody.webp",
             characterSide: "left",
             rewardItem: {
@@ -704,8 +704,8 @@ export default function OpenWorldPage() {
           },
           {
             id: 3,
-            speakerName: "Pendaki Bingung (Bayu)",
-            text: "Kanggo nerusake lelampahan sabanjure, panjenengan bisa mlaku nuju titik kuning ing gapura Pos 1 sisih ndhuwur.",
+            speakerName: "Bayu",
+            text: "Kanggo nerusake lakumu, mlakua nuju titik kuning ing gapura Pos 1 sisih ndhuwur kae.",
             character: "confusecharacter/confusedcharacterfullbody.webp",
             characterSide: "left",
           },
@@ -719,7 +719,7 @@ export default function OpenWorldPage() {
           {
             id: 1,
             speakerName: "Bayu",
-            text: "Matur nuwun sanget sedulur! Dalan nuju Pos 1 wis binuka, sugeng nglajengaken petualangan ing Gunung Lawu!",
+            text: "Matur suwun banget kancaku! Dalan menyang Pos 1 wis mbukak, sugeng nerusake petualanganmu ing Gunung Lawu!",
             character: "confusecharacter/confusedcharacterfullbody.webp",
             characterSide: "left",
           },

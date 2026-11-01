@@ -478,7 +478,7 @@ export default function Level1GamePage() {
         {showVictoryPopup && (
           <div className="l1g-focus-overlay" role="dialog" aria-modal="true">
             <div className="l1g-victory-box">
-              <h2 className="l1g-victory-title">Sugeng, Kowé Kasil!</h2>
+              <h2 className="l1g-victory-title">Mangayubagya, Kowe Kasil!</h2>
               <div className="l1g-card-wrapper">
                 <img
                   src="/assets/inventory/cardlevel2.png"
@@ -488,7 +488,7 @@ export default function Level1GamePage() {
                 />
               </div>
               <p className="l1g-victory-desc">
-                Cek panyimpenan kanggo éntuk informasi luwih jangkep babagan Pos 2!
+                Cek panyimpenan kanggo entuk informasi luwih jangkep babagan Pos 2!
               </p>
               <button
                 type="button"
