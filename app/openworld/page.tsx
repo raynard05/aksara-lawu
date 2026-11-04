@@ -443,6 +443,21 @@ export default function OpenWorldPage() {
     const nearB = Math.hypot(initX - 64, initY - 75) <= 13.5;
     nearBayuRef.current = nearB;
     setIsNearBayu(nearB);
+
+    // 3. Pastikan tombol Maps dan Bag di TopBar dinonaktifkan saat di Open World
+    window.dispatchEvent(
+      new CustomEvent("aksara-lawu-topbar-toggle", {
+        detail: { disableInGame: true },
+      })
+    );
+
+    return () => {
+      window.dispatchEvent(
+        new CustomEvent("aksara-lawu-topbar-toggle", {
+          detail: { disableInGame: false },
+        })
+      );
+    };
   }, []);
 
   // Cek apakah posisi koordinat (targetX, targetY) bertabrakan dengan salah satu rintangan

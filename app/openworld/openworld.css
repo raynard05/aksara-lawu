@@ -328,11 +328,11 @@
   transform: translateY(0.1vh) scale(0.97);
 }
 
-/* Tombol Toggle Inspeksi Frame Rintangan (Atas Kanan di bawah TopBar) */
+/* Tombol Toggle Inspeksi Frame Rintangan (Atas Kanan di bawah TopBar, digeser masuk agar tidak menempel di pojok) */
 .ow-collision-toggle-btn {
   position: absolute;
-  top: 9vh;
-  right: 2vw;
+  top: 11vh;
+  right: 4vw;
   z-index: 45;
   background: rgba(30, 18, 10, 0.85);
   border: 0.2vh solid #d4a574;
@@ -420,8 +420,8 @@
 /* 1. Tombol Interaksi (Sisi Kiri Analog Joystick - Locked Responsif) */
 .ow-interact-btn {
   position: absolute;
-  bottom: 7.5vh;
-  right: calc(4vw + 20vh + 2vw);
+  bottom: 8.5vh;
+  right: calc(5.5vw + 20vh + 2.5vw);
   z-index: 60;
   display: flex;
   flex-direction: column;
@@ -876,12 +876,12 @@
     gap: 1vh;
   }
 
-  /* 5. Tombol Interaksi di Sisi Kiri Analog (+25%: 10vh -> 12.5vh) */
+  /* 5. Tombol Interaksi di Sisi Kiri Analog (+25%: 10vh -> 12.5vh, digeser ergonomis sesuai analog baru) */
   .ow-interact-btn {
     width: 12.5vh;
     height: 12.5vh;
-    bottom: 8.5vh;
-    right: calc(3.5vw + 27.5vh + 2.5vw); /* Disesuaikan dengan analog baru 27.5vh */
+    bottom: 10vh;
+    right: calc(6.5vw + 27.5vh + 2.5vw); /* Disesuaikan dengan analog baru 27.5vh dan posisi 6.5vw */
     border-width: 0.45vh;
   }
 
@@ -893,8 +893,10 @@
     font-size: 1.25vh; /* 1vh * 1.25 */
   }
 
-  /* Tombol Toggle Rintangan di pojok kanan atas (+25%) */
+  /* Tombol Toggle Rintangan di pojok kanan atas (+25%, digeser masuk dari pojok layar) */
   .ow-collision-toggle-btn {
+    top: 13vh;
+    right: 4.5vw;
     font-size: 1.38vh;
     padding: 0.75vh 1.75vh;
     border-radius: 1.5vh;

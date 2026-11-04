@@ -55,8 +55,8 @@ export default function TopBar() {
   }, []);
 
   useEffect(() => {
-    // Jika rute adalah /level1_game, defaultnya inGameDisabled = true
-    if (pathname.includes("level1_game")) {
+    // Jika rute adalah /level1_game atau /openworld, defaultnya inGameDisabled = true
+    if (pathname.includes("level1_game") || pathname.includes("openworld")) {
       setInGameDisabled(true);
     } else {
       setInGameDisabled(false);
@@ -80,13 +80,14 @@ export default function TopBar() {
     return null;
   }
 
-  // Cek apakah halaman saat ini adalah cemorosewu untuk men-disable tombol bag dan maps
+  // Cek apakah halaman saat ini adalah cemorosewu atau openworld untuk men-disable tombol bag dan maps
   const isCemoroSewu = pathname === "/cemorosewu" || pathname.startsWith("/cemorosewu/");
+  const isOpenWorld = pathname === "/openworld" || pathname.startsWith("/openworld/");
   // Cek apakah halaman saat ini adalah inventory untuk men-disable tombol bag
   const isInventory = pathname === "/inventory" || pathname.startsWith("/inventory/");
 
-  const isMapsDisabled = isCemoroSewu || inGameDisabled;
-  const isBagDisabled = isCemoroSewu || isInventory || inGameDisabled;
+  const isMapsDisabled = isCemoroSewu || isOpenWorld || inGameDisabled;
+  const isBagDisabled = isCemoroSewu || isOpenWorld || isInventory || inGameDisabled;
 
   // Aksi tombol peta / maps -> buka halaman peta
   const handleMaps = () => {

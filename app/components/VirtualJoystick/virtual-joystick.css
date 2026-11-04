@@ -8,8 +8,8 @@
 
 .vjoy-container {
   position: absolute;
-  bottom: 4vh;
-  right: 4vw;
+  bottom: 5.5vh;
+  right: 5.5vw;
   z-index: 50;
   user-select: none;
   touch-action: none;
@@ -126,12 +126,12 @@
   filter: drop-shadow(0 0 1vh rgba(255, 215, 0, 0.7));
 }
 
-/* Responsif Mobile & Layar Sentuh (Perbesar 25%: Base 22vh -> 27.5vh, Knob 9.5vh -> 11.8vh) */
+/* Responsif Mobile & Layar Sentuh (Perbesar 25%: Base 22vh -> 27.5vh, Knob 9.5vh -> 11.8vh, geser ke dalam agar ergonomis) */
 @media (max-width: 900px) and (orientation: landscape),
        (pointer: coarse) and (orientation: landscape) {
   .vjoy-container {
-    bottom: 3.5vh;
-    right: 3.5vw;
+    bottom: 7vh;
+    right: 6.5vw;
   }
   .vjoy-base {
     width: 27.5vh;

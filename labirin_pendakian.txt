@@ -1,0 +1,26 @@
+rules :  hanya lakukan task yang sudah ditambahkan , jangan menambahkan teks atau apapun selin intruksi
+
+semua asset ada di \public\labirin_pendakian
+
+buatkan halaman cloning atau refactorkan dari intro_level1 untuk halaman baru bernama intro_level2, jadi cuman ganti  banner sesuaikan dengan 
+\public\maps\level2.webp dan avatar sesuaikan dengan sesi . bg nya pake  \public\labirin_pendakian\intro.webp
+
+- ganti dialog nya dengan ini : 
+
+
+
+POS 2: LABIRIN PENDAKIAN
+
+Apik! Kowe wis kasil ngrampungake tantangan ing Pos 1. Saiki, perjalananmu diterusake kanggo njelajah warisan budaya
+ing sakiwa-tengene Gunung Lawu.
+Ing ngarep, ana labirin sing kudu kok liwati. Sajrone perjalanan, kowe bakal nemokake manek
+a warna petunjuk babagan warisan budaya lokal. Wacanen saben petunjuk nganggo Aksara Jawa kanthi
+tliti, banjur pilih salah siji saka rong jawaban kanggo nemtokake dalan sing bener.
+Rampungna tantangan iki kanggo entuk kode rahasia sing bakal mbukak Pos 3.
+-tambahan dialog "untuk menjawab semua soal pencet tombol kanan kiri atas dibawah ini " render asset kanaan, kiri atas .webp (dengan animasi yang sama seperti asset tombol dari intro_level1) translatekan dalam bahasa jawa ngoko  
+Wis siyap nerusake petualangan? Jaga energimu lan goleka dalan sing bener!
+tambahan dialog "jika sudah siap semua, pencet tombol dibawah ini , (tombol "miwiti level 2")"  dialog nya sama dengan intro_level1 cuman teks tombol nya ganti ke level 2 
+------------------------------------------------------------------------------
+
+- pisah dialog nya serapi mungkin menjadi beberapa slide   
+ 
