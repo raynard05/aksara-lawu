@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState, useEffect, useCallback } from "react";
+import React, { useRef, useState, useEffect, useCallback, memo } from "react";
 import "./virtual-joystick.css";
 
 export interface JoystickMoveEvent {
@@ -17,13 +17,13 @@ interface VirtualJoystickProps {
   className?: string;
 }
 
-export default function VirtualJoystick({
+function VirtualJoystick({
   onMove,
   onEnd,
   className = "",
 }: VirtualJoystickProps) {
   const baseRef = useRef<HTMLDivElement>(null);
-  const [knobPos, setKnobPos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const knobRef = useRef<HTMLDivElement>(null);
   const [isActive, setIsActive] = useState<boolean>(false);
   const pointerIdRef = useRef<number | null>(null);
 
@@ -57,7 +57,10 @@ export default function VirtualJoystick({
         clampedDy = (rawDy / dist) * maxRadius;
       }
 
-      setKnobPos({ x: clampedDx, y: clampedDy });
+      // Update knob transform langsung di GPU tanpa me-render ulang React di setiap sentuhan
+      if (knobRef.current) {
+        knobRef.current.style.transform = `translate(calc(-50% + ${clampedDx}px), calc(-50% + ${clampedDy}px))`;
+      }
 
       const normalizedDist = Math.min(1, dist / maxRadius);
       const angle = Math.atan2(clampedDy, clampedDx);
@@ -80,7 +83,9 @@ export default function VirtualJoystick({
       if (pointerIdRef.current === e.pointerId) {
         pointerIdRef.current = null;
         setIsActive(false);
-        setKnobPos({ x: 0, y: 0 });
+        if (knobRef.current) {
+          knobRef.current.style.transform = "translate(-50%, -50%)";
+        }
         onEnd();
       }
     },
@@ -124,11 +129,12 @@ export default function VirtualJoystick({
         {/* Ring Luar Bersinar */}
         <div className="vjoy-ring-inner" />
 
-        {/* Knob / Tuas Analog Tengah yang Mengikuti Sentuhan */}
+        {/* Knob / Tuas Analog Tengah yang Mengikuti Sentuhan (Direct DOM Transform) */}
         <div
+          ref={knobRef}
           className="vjoy-knob"
           style={{
-            transform: `translate(calc(-50% + ${knobPos.x}px), calc(-50% + ${knobPos.y}px))`,
+            transform: "translate(-50%, -50%)",
           }}
         >
           <div className="vjoy-knob-core" />
@@ -137,3 +143,5 @@ export default function VirtualJoystick({
     </div>
   );
 }
+
+export default memo(VirtualJoystick);

@@ -270,23 +270,29 @@ const DEFAULT_OBSTACLES: ObstacleBox[] = [
 // Flag untuk reset sesi otomatis saat refresh halaman (bisa diubah true / false sesuai kebutuhan testing)
 const IS_REFRESHABLE: boolean = true;
 
+// Pilih sprite webp yang sesuai dengan arah dan frame
+const getSpriteSrc = (dir: Direction, frameIdx: number) => {
+  const list = WEBP_WALK_FRAMES[dir] || WEBP_WALK_FRAMES.down;
+  if (!list || list.length === 0) return WEBP_WALK_FRAMES.down[0];
+  const safeIdx = frameIdx % list.length;
+  return list[safeIdx] || list[0];
+};
+
 export default function OpenWorldPage() {
   const router = useRouter();
 
-  // Posisi karakter dalam persentase (%) layar (Spawn di jalan setapak depan gapura gerbang)
-  const [posX, setPosX] = useState<number>(18);
-  const [posY, setPosY] = useState<number>(46);
-  const [direction, setDirection] = useState<Direction>("down");
-  const [isMoving, setIsMoving] = useState<boolean>(false);
-  const [frameIndex, setFrameIndex] = useState<number>(0);
-  const [selectedAvatar, setSelectedAvatar] = useState<string>("avatar1.webp");
-
-  // State untuk melihat frame berwarna daerah rintangan (Toggle Mode Debug/Atur UI)
-  const [showObstacles, setShowObstacles] = useState<boolean>(true);
-
-  // Gunakan ref untuk state dinamis agar game loop requestAnimationFrame selalu presisi tanpa closure delay
+  // Posisi dan animasi karakter dikelola langsung melalui Ref & GPU translate3d (Zero React State Thrashing di 60 FPS)
+  const characterRef = useRef<HTMLDivElement>(null);
+  const spriteImgRef = useRef<HTMLImageElement>(null);
   const posRef = useRef<{ x: number; y: number }>({ x: 18, y: 46 });
   const directionRef = useRef<Direction>("down");
+  const frameIndexRef = useRef<number>(0);
+  const isMovingRef = useRef<boolean>(false);
+
+  const [selectedAvatar, setSelectedAvatar] = useState<string>("avatar1.webp");
+
+  // State untuk melihat frame berwarna daerah rintangan (Default FALSE agar super ringan di HP mobile)
+  const [showObstacles, setShowObstacles] = useState<boolean>(false);
 
   // Vektor joystick analog (x: -1 s/d 1, y: -1 s/d 1)
   const joystickVectorRef = useRef<{ x: number; y: number; active: boolean }>({
@@ -298,6 +304,15 @@ export default function OpenWorldPage() {
   const keysPressedRef = useRef<{ [key: string]: boolean }>({});
   const animationFrameRef = useRef<number | null>(null);
   const walkCycleTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Status Proksimitas Interaksi (Hanya re-render saat masuk/keluar zona pemicu)
+  const [isNearBayu, setIsNearBayu] = useState<boolean>(false);
+  const [isNearKacamata, setIsNearKacamata] = useState<boolean>(false);
+  const [isNearPos1Transition, setIsNearPos1Transition] = useState<boolean>(false);
+
+  const nearBayuRef = useRef<boolean>(false);
+  const nearKacamataRef = useRef<boolean>(false);
+  const nearPos1Ref = useRef<boolean>(false);
 
   // Progress & Quest States (Pendaki Bingung & Bintang)
   const [collectedStarIds, setCollectedStarIds] = useState<number[]>([]);
@@ -366,11 +381,24 @@ export default function OpenWorldPage() {
     }
   }, []);
 
+  const questStepRef = useRef<"not_started" | "searching" | "found" | "completed">("not_started");
+  const collectedStarIdsRef = useRef<number[]>([]);
+
+  useEffect(() => {
+    questStepRef.current = questStep;
+  }, [questStep]);
+
+  useEffect(() => {
+    collectedStarIdsRef.current = collectedStarIds;
+  }, [collectedStarIds]);
+
   // Simpan progress bintang
   const collectStar = (id: number) => {
+    if (collectedStarIdsRef.current.includes(id)) return;
+    const next = [...collectedStarIdsRef.current, id];
+    collectedStarIdsRef.current = next;
     setCollectedStarIds((prev) => {
       if (prev.includes(id)) return prev;
-      const next = [...prev, id];
       try {
         sessionStorage.setItem("aksara_lawu_ow_stars", JSON.stringify(next));
         localStorage.setItem("aksara_lawu_ow_stars", JSON.stringify(next));
@@ -385,6 +413,7 @@ export default function OpenWorldPage() {
   const updateQuestStep = (
     step: "not_started" | "searching" | "found" | "completed"
   ) => {
+    questStepRef.current = step;
     setQuestStep(step);
     try {
       sessionStorage.setItem("aksara_lawu_ow_quest", step);
@@ -394,67 +423,55 @@ export default function OpenWorldPage() {
     }
   };
 
-  // Hitung kedekatan karakter dengan NPC Bayu (x: 64, y: 75)
-  // Sesuai lingkaran merah trigger visual (18vw x 18vh), berikan range deteksi yang luas (radius ~12-14%)
-  const isNearBayu = Math.hypot(posX - 64, posY - 75) <= 13.5;
-
-  // Hitung kedekatan dengan Kacamata Bayu (jika questStep === "searching")
-  const isNearKacamata =
-    questStep === "searching" &&
-    Math.hypot(posX - KACAMATA_DATA.x, posY - KACAMATA_DATA.y) <= 9.0;
-
-  // Hitung kedekatan dengan Zona Kuning Pos 1 (jika questStep === "completed")
-  // Area Titik Kuning Pos 1 di CSS: x: 92%, y: 34%
-  const isNearPos1Transition =
-    questStep === "completed" && Math.hypot(posX - 92, posY - 34) <= 12.0;
-
-  // Sinkronisasi posisi awal
+  // Preload 21 WebP frame animasi jalan & inisialisasi proksimitas awal
   useEffect(() => {
-    posRef.current = { x: posX, y: posY };
+    // 1. Preload 21 WebP frames agar tidak ada jank decode saat mulai jalan di HP
+    const allFrames = [
+      ...WEBP_WALK_FRAMES.down,
+      ...WEBP_WALK_FRAMES.up,
+      ...WEBP_WALK_FRAMES.right,
+      ...WEBP_WALK_FRAMES.left,
+    ];
+    allFrames.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
 
-    // Otomatis kumpulkan bintang jika pemain menginjak trigger zone bintang (radius 3.8%)
-    for (const star of STARS_DATA) {
-      if (!collectedStarIds.includes(star.id)) {
-        const dist = Math.hypot(posX - star.x, posY - star.y);
-        if (dist <= 3.8) {
-          collectStar(star.id);
-        }
-      }
-    }
-  }, [posX, posY, collectedStarIds]);
+    // 2. Inisialisasi status proksimitas awal
+    const initX = posRef.current.x;
+    const initY = posRef.current.y;
+    const nearB = Math.hypot(initX - 64, initY - 75) <= 13.5;
+    nearBayuRef.current = nearB;
+    setIsNearBayu(nearB);
+  }, []);
 
   // Cek apakah posisi koordinat (targetX, targetY) bertabrakan dengan salah satu rintangan
-  const checkCollision = useCallback(
-    (targetX: number, targetY: number) => {
-      // Ukuran bounding box kaki karakter (disesuaikan dengan ukuran karakter 50%)
-      const charRadiusX = 1.1;
-      const charRadiusY = 0.9;
+  const checkCollision = useCallback((targetX: number, targetY: number) => {
+    const charRadiusX = 1.1;
+    const charRadiusY = 0.9;
 
-      for (const obs of DEFAULT_OBSTACLES) {
-        // Jika tantangan Bayu sudah selesai, rute pohon-kanan-atas terbuka (bisa dilewati)
-        if (obs.id === "pohon-kanan-atas" && questStep === "completed") {
-          continue;
-        }
-
-        const obsLeft = obs.x;
-        const obsRight = obs.x + obs.w;
-        const obsTop = obs.y;
-        const obsBottom = obs.y + obs.h;
-
-        // Cek overlap bounding box
-        const overlapX =
-          targetX + charRadiusX >= obsLeft && targetX - charRadiusX <= obsRight;
-        const overlapY =
-          targetY + charRadiusY >= obsTop && targetY - charRadiusY <= obsBottom;
-
-        if (overlapX && overlapY) {
-          return true; // Tabrakan terdeteksi
-        }
+    for (let i = 0; i < DEFAULT_OBSTACLES.length; i++) {
+      const obs = DEFAULT_OBSTACLES[i];
+      if (obs.id === "pohon-kanan-atas" && questStepRef.current === "completed") {
+        continue;
       }
-      return false;
-    },
-    [questStep]
-  );
+
+      const obsLeft = obs.x;
+      const obsRight = obs.x + obs.w;
+      const obsTop = obs.y;
+      const obsBottom = obs.y + obs.h;
+
+      const overlapX =
+        targetX + charRadiusX >= obsLeft && targetX - charRadiusX <= obsRight;
+      const overlapY =
+        targetY + charRadiusY >= obsTop && targetY - charRadiusY <= obsBottom;
+
+      if (overlapX && overlapY) {
+        return true;
+      }
+    }
+    return false;
+  }, []);
 
   // Ambil avatar tersimpan dari sesi Cemoro Sewu
   useEffect(() => {
@@ -470,31 +487,33 @@ export default function OpenWorldPage() {
     }
   }, []);
 
-  // Animasi frame pergantian kaki saat berjalan
-  useEffect(() => {
-    if (isMoving) {
-      if (!walkCycleTimerRef.current) {
-        walkCycleTimerRef.current = setInterval(() => {
-          setFrameIndex((prev) => prev + 1);
-        }, 105);
-      }
-    } else {
-      if (walkCycleTimerRef.current) {
-        clearInterval(walkCycleTimerRef.current);
-        walkCycleTimerRef.current = null;
-      }
-      setFrameIndex(0); // Kembali ke pose diam awal
+  // Kontrol siklus pergantian frame kaki karakter secara direct DOM (Zero React Re-render)
+  const startWalkCycle = useCallback(() => {
+    if (!walkCycleTimerRef.current) {
+      walkCycleTimerRef.current = setInterval(() => {
+        frameIndexRef.current += 1;
+        if (spriteImgRef.current) {
+          spriteImgRef.current.src = getSpriteSrc(
+            directionRef.current,
+            frameIndexRef.current
+          );
+        }
+      }, 105);
     }
+  }, []);
 
-    return () => {
-      if (walkCycleTimerRef.current) {
-        clearInterval(walkCycleTimerRef.current);
-        walkCycleTimerRef.current = null;
-      }
-    };
-  }, [isMoving]);
+  const stopWalkCycle = useCallback(() => {
+    if (walkCycleTimerRef.current) {
+      clearInterval(walkCycleTimerRef.current);
+      walkCycleTimerRef.current = null;
+    }
+    frameIndexRef.current = 0;
+    if (spriteImgRef.current) {
+      spriteImgRef.current.src = getSpriteSrc(directionRef.current, 0);
+    }
+  }, []);
 
-  // Game Loop Pergerakan Karakter (Mendukung Keyboard & Analog Mobile Legends)
+  // Game Loop Pergerakan Karakter — 60 FPS Direct GPU Translate3d (Zero State Thrashing)
   useEffect(() => {
     const loop = () => {
       const keys = keysPressedRef.current;
@@ -517,14 +536,18 @@ export default function OpenWorldPage() {
         if (keys["ArrowRight"] || keys["KeyD"]) dx += keySpeed;
       }
 
-      // Gunakan threshold rendah (0.01) agar input analog lambat tetap terdeteksi berjalan
       const currentlyMoving = Math.abs(dx) > 0.01 || Math.abs(dy) > 0.01;
-      setIsMoving(currentlyMoving);
+
+      if (currentlyMoving !== isMovingRef.current) {
+        isMovingRef.current = currentlyMoving;
+        if (currentlyMoving) {
+          startWalkCycle();
+        } else {
+          stopWalkCycle();
+        }
+      }
 
       if (currentlyMoving) {
-        // Tentukan arah hadap animasi berdasarkan perbandingan vektor dx dan dy
-        // Sumbu X dominan: Kanan (dx > 0) atau Kiri (dx < 0)
-        // Sumbu Y dominan: Bawah/Depan (dy > 0) atau Atas/Belakang (dy < 0)
         let newDir: Direction = directionRef.current;
         if (Math.abs(dx) >= Math.abs(dy)) {
           newDir = dx > 0 ? "right" : "left";
@@ -534,10 +557,14 @@ export default function OpenWorldPage() {
 
         if (newDir !== directionRef.current) {
           directionRef.current = newDir;
-          setDirection(newDir);
+          if (spriteImgRef.current) {
+            spriteImgRef.current.src = getSpriteSrc(
+              newDir,
+              frameIndexRef.current
+            );
+          }
         }
 
-        // Hitung posisi baru dengan deteksi collision
         const currentPos = posRef.current;
         let nextX = currentPos.x;
         let nextY = currentPos.y;
@@ -547,9 +574,7 @@ export default function OpenWorldPage() {
           nextX = candidateX;
         }
 
-        // Batas bawah (94%) dan batas atas.
-        // Jika berada di jalur kanan arah Pos 1 (x >= 65) saat tantangan selesai, batas atas dibuka sampai 16%
-        const minY = questStep === "completed" && nextX >= 65 ? 16 : 40;
+        const minY = questStepRef.current === "completed" && nextX >= 65 ? 16 : 40;
         const candidateY = Math.max(minY, Math.min(94, currentPos.y + dy));
         if (!checkCollision(nextX, candidateY)) {
           nextY = candidateY;
@@ -557,8 +582,47 @@ export default function OpenWorldPage() {
 
         if (nextX !== currentPos.x || nextY !== currentPos.y) {
           posRef.current = { x: nextX, y: nextY };
-          setPosX(nextX);
-          setPosY(nextY);
+
+          // Update posisi visual karakter langsung ke GPU tanpa memicu re-render React
+          if (characterRef.current) {
+            characterRef.current.style.transform = `translate3d(calc(${nextX}vw - 50%), calc(${nextY}vh - 100%), 0)`;
+          }
+
+          // Cek kedekatan dengan Bayu (Hanya set state jika status berubah)
+          const nearB = Math.hypot(nextX - 64, nextY - 75) <= 13.5;
+          if (nearB !== nearBayuRef.current) {
+            nearBayuRef.current = nearB;
+            setIsNearBayu(nearB);
+          }
+
+          // Cek kedekatan dengan Kacamata Bayu
+          const nearK =
+            questStepRef.current === "searching" &&
+            Math.hypot(nextX - KACAMATA_DATA.x, nextY - KACAMATA_DATA.y) <= 9.0;
+          if (nearK !== nearKacamataRef.current) {
+            nearKacamataRef.current = nearK;
+            setIsNearKacamata(nearK);
+          }
+
+          // Cek kedekatan dengan Titik Kuning Pos 1
+          const nearP1 =
+            questStepRef.current === "completed" &&
+            Math.hypot(nextX - 92, nextY - 34) <= 12.0;
+          if (nearP1 !== nearPos1Ref.current) {
+            nearPos1Ref.current = nearP1;
+            setIsNearPos1Transition(nearP1);
+          }
+
+          // Otomatis kumpulkan bintang jika pemain menginjak trigger zone bintang (radius 3.8%)
+          for (let s = 0; s < STARS_DATA.length; s++) {
+            const star = STARS_DATA[s];
+            if (!collectedStarIdsRef.current.includes(star.id)) {
+              const dist = Math.hypot(nextX - star.x, nextY - star.y);
+              if (dist <= 3.8) {
+                collectStar(star.id);
+              }
+            }
+          }
         }
       }
 
@@ -571,8 +635,12 @@ export default function OpenWorldPage() {
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
+      if (walkCycleTimerRef.current) {
+        clearInterval(walkCycleTimerRef.current);
+        walkCycleTimerRef.current = null;
+      }
     };
-  }, [checkCollision]);
+  }, [checkCollision, startWalkCycle, stopWalkCycle]);
 
   // Listener keyboard W A S D & Arrow Keys
   useEffect(() => {
@@ -772,14 +840,6 @@ export default function OpenWorldPage() {
     }, 850);
   };
 
-  // Pilih sprite webp yang sesuai dengan arah dan frame
-  const getSpriteSrc = () => {
-    const list = WEBP_WALK_FRAMES[direction] || WEBP_WALK_FRAMES.down;
-    if (!list || list.length === 0) return WEBP_WALK_FRAMES.down[0];
-    const safeIdx = frameIndex % list.length;
-    return list[safeIdx] || list[0];
-  };
-
   // Jika aset gambar kiri sudah menghadap ke kiri secara tersendiri, gunakan scaleX(1)
   // Tidak perlu lagi di-flip secara CSS
   const spriteTransform = "scaleX(1)";
@@ -935,10 +995,10 @@ export default function OpenWorldPage() {
         />
 
         <div
+          ref={characterRef}
           className="ow-character-entity"
           style={{
-            left: `${posX}%`,
-            top: `${posY}%`,
+            transform: `translate3d(calc(${posRef.current.x}vw - 50%), calc(${posRef.current.y}vh - 100%), 0)`,
           }}
         >
           {/* Label Nama Pemain & Ikon Avatar */}
@@ -952,10 +1012,11 @@ export default function OpenWorldPage() {
             <span className="ow-nametag-text">Pendaki Lawu</span>
           </div>
 
-          {/* Sprite Karakter Bergerak dengan 21 File WebP Lengkap */}
+          {/* Sprite Karakter Bergerak dengan 21 File WebP Lengkap (Direct GPU DOM) */}
           <div className="ow-character-sprite-wrap">
             <img
-              src={getSpriteSrc()}
+              ref={spriteImgRef}
+              src={getSpriteSrc("down", 0)}
               alt="Karakter Pendaki Lawu"
               className="ow-character-sprite"
               style={{ transform: spriteTransform }}

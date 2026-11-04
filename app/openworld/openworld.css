@@ -145,11 +145,11 @@
 @keyframes owGembokPulse {
   0% {
     transform: translateY(0) scale(0.95);
-    filter: drop-shadow(0 0.4vh 0.8vh rgba(0, 0, 0, 0.75)) drop-shadow(0 0 0.8vh rgba(239, 68, 68, 0.4));
+    opacity: 0.85;
   }
   100% {
     transform: translateY(-0.4vh) scale(1.05);
-    filter: drop-shadow(0 0.6vh 1.2vh rgba(0, 0, 0, 0.85)) drop-shadow(0 0 1.6vh rgba(239, 68, 68, 0.8));
+    opacity: 1;
   }
 }
 
@@ -167,8 +167,9 @@
 /* Entity Karakter (dioptimasi akselerasi GPU 3D agar ringan di mobile) */
 .ow-character-entity {
   position: absolute;
-  transform: translate3d(-50%, -100%, 0);
-  will-change: left, top;
+  top: 0;
+  left: 0;
+  will-change: transform;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -649,8 +650,8 @@
   width: 4.6vh;
   height: 4vh;
   object-fit: contain;
-  filter: drop-shadow(0 0 1vh #000000) drop-shadow(0 0 1.8vh #ffea00);
-  animation: owKacamataGlow 1.2s ease-in-out infinite alternate;
+  filter: drop-shadow(0 0 1.2vh #ffea00) drop-shadow(0 0.4vh 0.6vh rgba(0, 0, 0, 0.6));
+  animation: owKacamataGlow 1.4s ease-in-out infinite alternate;
 }
 
 .ow-kacamata-trigger-zone {
@@ -667,13 +668,13 @@
 
 @keyframes owKacamataGlow {
   0% {
-    transform: scale(0.96) rotate(-4deg);
-    filter: drop-shadow(0 0 0.8vh #00e5ff) drop-shadow(0 0 1.2vh #ffea00);
+    transform: scale(0.95) rotate(-4deg);
+    opacity: 0.88;
   }
 
   100% {
     transform: scale(1.1) rotate(4deg);
-    filter: drop-shadow(0 0 1.8vh #00e5ff) drop-shadow(0 0 2.5vh #fff700);
+    opacity: 1;
   }
 }
 
@@ -712,28 +713,23 @@
   0% {
     transform: translate(-50%, -50%) scale(0.95);
     opacity: 0.85;
-    border-color: #ffd700;
   }
 
   100% {
-    transform: translate(-50%, -50%) scale(1.12);
+    transform: translate(-50%, -50%) scale(1.1);
     opacity: 1;
-    border-color: #ffffff;
-    box-shadow:
-      0 0 4vh rgba(255, 235, 59, 1),
-      inset 0 0 3vh rgba(255, 255, 255, 0.7);
   }
 }
 
 @keyframes owYellowCorePulse {
   0% {
     transform: scale(0.9);
-    filter: brightness(1);
+    opacity: 0.85;
   }
 
   100% {
-    transform: scale(1.15);
-    filter: brightness(1.3);
+    transform: scale(1.12);
+    opacity: 1;
   }
 }
 
@@ -902,5 +898,31 @@
     font-size: 1.38vh;
     padding: 0.75vh 1.75vh;
     border-radius: 1.5vh;
+  }
+
+  /* 6. Optimasi Performa GPU Mobile: Matikan backdrop-filter blur berat */
+  .ow-progress-board,
+  .ow-collision-closed-dark,
+  .ow-collision-toggle-btn,
+  .ow-guide-banner {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .ow-progress-board {
+    background: rgba(28, 17, 10, 0.96) !important;
+  }
+
+  .ow-collision-closed-dark {
+    background: rgba(10, 15, 10, 0.92) !important;
+  }
+
+  .ow-collision-toggle-btn {
+    background: rgba(30, 18, 10, 0.95) !important;
+  }
+
+  /* Kurangi shadow berlebih di mobile GPU */
+  .ow-star-img {
+    filter: drop-shadow(0 0 0.6vh rgba(255, 235, 59, 0.9)) drop-shadow(0 0.3vh 0.4vh rgba(0, 0, 0, 0.5)) !important;
   }
 }

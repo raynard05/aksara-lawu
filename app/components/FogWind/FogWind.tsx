@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { memo } from "react";
 import "./fog-wind.css";
 
 interface FogWindProps {
@@ -8,7 +8,7 @@ interface FogWindProps {
   opacity?: number;
 }
 
-export default function FogWind({ className = "", opacity = 1 }: FogWindProps) {
+function FogWind({ className = "", opacity = 1 }: FogWindProps) {
   return (
     <aside
       className={`fog-wind-container ${className}`.trim()}
@@ -122,3 +122,5 @@ export default function FogWind({ className = "", opacity = 1 }: FogWindProps) {
     </aside>
   );
 }
+
+export default memo(FogWind);

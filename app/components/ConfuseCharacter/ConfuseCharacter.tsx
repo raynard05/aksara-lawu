@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import "./confuse-character.css";
 
 interface ConfuseCharacterProps {
@@ -19,7 +19,7 @@ const CONFUSE_FRAMES = [
   "/character/confusecharacter/3.png",
 ];
 
-export default function ConfuseCharacter({
+function ConfuseCharacter({
   x = 60,
   y = 48,
   name = "Pendaki Bingung",
@@ -77,3 +77,5 @@ export default function ConfuseCharacter({
     </div>
   );
 }
+
+export default memo(ConfuseCharacter);

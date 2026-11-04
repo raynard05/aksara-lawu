@@ -1,0 +1,133 @@
+================================================================================
+RENCANA OPTIMASI PERFORMA OPEN WORLD (MOBILE RAM 4GB - 6GB)
+Target: app/openworld/page.tsx, openworld.css, & Komponen Pendukung
+================================================================================
+
+--------------------------------------------------------------------------------
+POIN 1: Pergerakan Karakter Tanpa Re-Render React 60 FPS (Direct DOM Transform)
+--------------------------------------------------------------------------------
+penjelasan :
+Saat ini di app/openworld/page.tsx, game loop requestAnimationFrame (RAF) memanggil
+setPosX(nextX) dan setPosY(nextY) di setiap frame (60 kali per detik). Hal ini 
+memaksa seluruh komponen OpenWorldPage me-render ulang VDOM dari atas ke bawah 
+setiap frame, termasuk 16 div rintangan, bintang-bintang, dan komponen anak. Ini
+adalah penyebab terbesar CPU ponsel 4GB-6GB panas dan FPS drop ke 20-30.
+
+eksekusi :
+1. Buat characterRef (HTMLDivElement) untuk elemen .ow-character-entity.
+2. Di dalam game loop RAF, ubah posisi karakter secara langsung menggunakan 
+   hardware-accelerated CSS transform:
+   characterRef.current.style.transform = `translate3d(${nextX}vw, ${nextY}vh, 0)`
+   (menggantikan style inline left: % dan top: %).
+3. Pengecekan bintang dan tombol interaksi (isNearBayu, isNearKacamata, isNearPos1)
+   dihitung langsung di dalam game loop, dan state React hanya dipanggil ketika
+   status tombol berubah (boolean true/false) atau saat bintang terambil, bukan
+   setiap frame pergerakan koordinat.
+
+efek :
+Beban CPU berkurang drastis hingga 70-80% saat karakter berjalan. React tidak lagi
+melakukan rekonsiliasi VDOM 60x/detik. Pergerakan karakter menjadi 60 FPS mulus 
+karena memanfaatkan compositor thread GPU mobile (translate3d) tanpa memicu 
+layout/reflow browser.
+
+--------------------------------------------------------------------------------
+POIN 2: Menghilangkan Render Loop Permanen 60 FPS pada FlyingBirds
+--------------------------------------------------------------------------------
+penjelasan :
+Komponen FlyingBirds.tsx memiliki game loop RAF independen yang memanggil 
+setBirds(updated) setiap frame (60 FPS) terus-menerus, bahkan saat pemain diam.
+Setiap frame dibuat objek array baru yang memicu siklus Garbage Collection (GC) 
+berulang di memori RAM HP dan menyebabkan micro-stuttering (patah-patah berkala).
+
+eksekusi :
+1. Hapus pemanggilan state React setBirds(updated) dari dalam loop tick().
+2. Gunakan array birdRefs (HTMLDivElement) untuk langsung menggeser elemen burung 
+   melalui style.transform = `translate3d(${nextX}vw, ${nextY}vh, 0)` dan 
+   scaleX (arah hadap kiri/kanan).
+3. Bungkus komponen FlyingBirds dengan React.memo agar tidak ikut di-render oleh parent.
+
+efek :
+Menghilangkan 100% overhead re-render React dari komponen burung. Memori RAM HP 
+bebas dari lonjakan Garbage Collection (GC Pause), sehingga animasi burung terbang 
+tetap organik dan halus tanpa membebani thread utama.
+
+--------------------------------------------------------------------------------
+POIN 3: Optimasi Analog Touch Joystick (VirtualJoystick)
+--------------------------------------------------------------------------------
+penjelasan :
+Di VirtualJoystick.tsx, fungsi handlePointerMove memanggil setKnobPos(...) di setiap
+event sentuhan. Pada layar sentuh mobile dengan touch sampling rate 120Hz-240Hz,
+hal ini memicu puluhan hingga ratusan kali re-render joystick per detik saat jari
+menggerakkan analog.
+
+eksekusi :
+1. Buat knobRef untuk elemen tuas .vjoy-knob.
+2. Update posisi knob secara langsung via knobRef.current.style.transform = 
+   `translate(calc(-50% + ${clampedDx}px), calc(-50% + ${clampedDy}px))` di event pointer.
+3. Hapus state knobPos, hanya pertahankan state isActive jika analog disentuh.
+4. Bungkus VirtualJoystick dengan React.memo.
+
+efek :
+Touch input analog menjadi sangat instan, responsif, zero-latency (tanpa delay input),
+dan menghilangkan re-render beruntun pada layar sentuh HP.
+
+--------------------------------------------------------------------------------
+POIN 4: Preloading 21 Frame WebP Sprite Animasi Jalan Karakter
+--------------------------------------------------------------------------------
+penjelasan :
+Karakter menggunakan 21 file WebP (/character/characterwalk1/characterwalk (1).webp 
+s/d (21).webp) yang berganti setiap 105ms saat berjalan. Karena gambar-gambar ini 
+belum di-cache ke memori saat halaman pertama kali dibuka, browser mobile harus 
+men-decode WebP baru on-the-fly di Main Thread setiap kali kaki melangkah, memicu 
+jank (patah-patah).
+
+eksekusi :
+Tambahkan fungsi preload ringan di useEffect awal OpenWorldPage:
+Membuat new Image().src untuk ke-21 file WebP secara paralel di background saat 
+halaman dimuat, sehingga seluruh frame sudah ter-cache penuh di memori browser.
+
+efek :
+Saat pemain menekan joystick untuk berjalan pertama kali, pergantian pose kaki 
+langsung mulus seketika tanpa ada freeze/hiccup decode gambar.
+
+--------------------------------------------------------------------------------
+POIN 5: Pangkas Animasi CSS Berat (drop-shadow, box-shadow, & backdrop-filter)
+--------------------------------------------------------------------------------
+penjelasan :
+Di openworld.css, keyframe CSS seperti owKacamataGlow, owStarFloat, owGembokPulse, 
+dan owYellowZonePulse terus-menerus mengubah nilai filter: drop-shadow(...) dan 
+box-shadow. Pada GPU mobile (Mali/Adreno), animating filter drop-shadow memaksa GPU 
+melakukan re-rasterization shader setiap frame (sangat boros daya GPU). Selain itu, 
+backdrop-filter: blur() pada papan progres, rintangan tertutup, dan nametag memicu 
+framebuffer readback yang sangat membebani fill-rate GPU mobile.
+
+eksekusi :
+1. Ganti animasi CSS drop-shadow dinamis dengan drop-shadow statis satu kali; efek 
+   denyut/pulse digantikan dengan transform: scale() dan opacity murni yang 100% 
+   dieksekusi hardware GPU tanpa rasterisasi ulang.
+2. Di openworld.css untuk media query mobile (layar sentuh / max-width 900px), 
+   nonaktifkan backdrop-filter: blur(...) dan ganti dengan warna background solid 
+   semi-transparan elegan (misal: rgba(30, 18, 10, 0.95)).
+3. Ubah default state showObstacles di page.tsx menjadi false (default production), 
+   sehingga 16 kotak rintangan debug berbayang merah tidak membebani GPU saat game berjalan normal.
+
+efek :
+Beban kerja GPU GPU fill-rate berkurang drastis, suhu HP tetap dingin, dan frame rate 
+(FPS) stabil di 60 FPS pada layar HP dengan RAM 4GB - 6GB.
+
+--------------------------------------------------------------------------------
+POIN 6: Memoize Seluruh Komponen Anak Statis (React.memo)
+--------------------------------------------------------------------------------
+penjelasan :
+FogWind, FallenLeaves, ConfuseCharacter, dan VirtualJoystick saat ini tidak di-memoize.
+Jika ada state dialog atau event game lain yang berubah di OpenWorldPage, semua 
+komponen dekorasi ini ikut ter-render ulang secara sia-sia.
+
+eksekusi :
+Bungkus export komponen FogWind, FallenLeaves, ConfuseCharacter, dan VirtualJoystick 
+menggunakan React.memo(Component).
+
+efek :
+Isolasi render yang ketat: komponen efek cuaca dan karakter lain hanya di-mount 
+sekali dan tidak akan pernah ter-render ulang oleh perubahan state di halaman utama.
+================================================================================

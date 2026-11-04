@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import "./fallen-leaves.css";
 
 interface LeafConfig {
@@ -403,7 +403,7 @@ interface FallenLeavesProps {
   countLimit?: number;
 }
 
-export default function FallenLeaves({
+function FallenLeaves({
   className = "",
   variant = "left",
   countLimit,
@@ -464,3 +464,5 @@ export default function FallenLeaves({
     </div>
   );
 }
+
+export default memo(FallenLeaves);

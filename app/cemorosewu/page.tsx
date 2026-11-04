@@ -12,24 +12,11 @@ export default function CemoroSewuPage() {
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(true);
   const [dialogMountKey, setDialogMountKey] = useState<number>(1);
 
-  // Jika sesi cemorosewu sudah selesai (sudah pilih avatar & mulai petualangan),
-  // cegah kembali ke halaman ini dan otomatis alihkan ke /maps
+  // Pastikan dialog selalu terbuka saat halaman Cemoro Sewu dimuat
   useEffect(() => {
-    try {
-      const isCompleted =
-        sessionStorage.getItem("aksara_lawu_cemorosewu_completed") ||
-        localStorage.getItem("aksara_lawu_cemorosewu_completed");
-      if (isCompleted === "true") {
-        router.replace("/maps");
-        return;
-      }
-    } catch {
-      // ignore
-    }
-
     setIsDialogOpen(true);
     setDialogMountKey((prev) => prev + 1);
-  }, [router]);
+  }, []);
 
   const handleDialogComplete = (selectedAvatar?: string) => {
     setIsDialogOpen(false);
