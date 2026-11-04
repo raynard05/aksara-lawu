@@ -28,7 +28,7 @@ const INTRO_DIALOGS = [
   },
   {
     id: 6,
-    text: "Kanggo mangsuli kabeh pitakon, pencet tombol kiwa, ndhuwur, utawa tengen ing ngisor iki:",
+    text: "Kanggo mangsuli kabeh pitakon, pencet tombol kiwa, lurus, utawa tengen ing ngisor iki:",
     showControls: true,
   },
   {
@@ -42,7 +42,7 @@ const INTRO_DIALOGS = [
   },
 ];
 
-// 3 Tombol Arah Navigasi Labirin: Kiwa (Kiri), Ndhuwur (Lurus/Atas), Tengen (Kanan)
+// 3 Tombol Arah Navigasi Labirin: Kiwa (Kiri), Lurus (Maju/Lurus), Tengen (Kanan)
 const LABIRIN_CONTROLS = [
   {
     id: "kiri",
@@ -53,8 +53,8 @@ const LABIRIN_CONTROLS = [
   {
     id: "lurus",
     src: "/labirin_pendakian/lurus.png",
-    alt: "Tombol Ndhuwur (Atas / Lurus)",
-    label: "Ndhuwur",
+    alt: "Tombol Lurus",
+    label: "Lurus",
   },
   {
     id: "kanan",
@@ -285,7 +285,7 @@ export default function IntroLevel2Page() {
               ))}
             </p>
 
-            {/* Render 3 Tombol Arah (Kiwa, Ndhuwur, Tengen) */}
+            {/* Render 3 Tombol Arah (Kiwa, Lurus, Tengen) */}
             {currentDialog?.showControls && !isTyping && (
               <div
                 className="il2-controls-wrapper"
