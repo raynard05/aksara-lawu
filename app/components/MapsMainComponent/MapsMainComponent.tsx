@@ -3,7 +3,12 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import FlyingEagle from "../FlyingEagle/FlyingEagle";
-import { getUnlockedLevels, getCompletedLevels } from "../../lib/inventoryStorage";
+import {
+  getUnlockedLevels,
+  getCompletedLevels,
+  getUsedItems,
+  UNLOCKED_LEVELS_KEY,
+} from "../../lib/inventoryStorage";
 import "./maps-main-component.css";
 
 export interface Waypoint {
@@ -101,6 +106,9 @@ export default function MapsMainComponent({
   // State daftar level/pos yang sudah selesai dituntaskan & dikunjungi
   const [completedLevels, setCompletedLevels] = useState<number[]>([]);
 
+  // State daftar ID item yang sudah pernah digunakake pemain (misal: "cardlevel2", "cardlevel3")
+  const [usedItemIds, setUsedItemIds] = useState<string[]>([]);
+
   // State titik aktif / posisi avatar saat ini di peta
   // Default otomatis di titik ke-2 (Level 1) sesuai instruksi prompt
   const [currentWaypointId, setCurrentWaypointId] = useState<number>(initialWaypointId);
@@ -131,8 +139,27 @@ export default function MapsMainComponent({
       // ignore
     }
 
-    // Ambil initial unlocked levels & completed levels
-    const lvls = getUnlockedLevels();
+    // Ambil initial used items & unlocked levels & completed levels
+    const used = getUsedItems();
+    setUsedItemIds(used);
+
+    let lvls = getUnlockedLevels();
+    // Sanitasi: jika level 3 ada di unlockedLevels tapi cardlevel3 belum pernah digunakake, bersihkan dari unlockedLevels
+    if (lvls.includes(3) && !used.includes("cardlevel3")) {
+      lvls = lvls.filter((l) => l !== 3);
+      try {
+        sessionStorage.setItem(UNLOCKED_LEVELS_KEY, JSON.stringify(lvls));
+        localStorage.setItem(UNLOCKED_LEVELS_KEY, JSON.stringify(lvls));
+      } catch {}
+    }
+    // Sanitasi: jika level 2 ada di unlockedLevels tapi cardlevel2 belum pernah digunakake
+    if (lvls.includes(2) && !used.includes("cardlevel2")) {
+      lvls = lvls.filter((l) => l !== 2);
+      try {
+        sessionStorage.setItem(UNLOCKED_LEVELS_KEY, JSON.stringify(lvls));
+        localStorage.setItem(UNLOCKED_LEVELS_KEY, JSON.stringify(lvls));
+      } catch {}
+    }
     setUnlockedLevels(lvls);
 
     const doneLvls = getCompletedLevels();
@@ -152,19 +179,50 @@ export default function MapsMainComponent({
       }
     };
 
+    const handleUsedItemsChange = (e: Event) => {
+      const customEvent = e as CustomEvent<{ usedItems: string[] }>;
+      if (customEvent.detail && Array.isArray(customEvent.detail.usedItems)) {
+        setUsedItemIds(customEvent.detail.usedItems);
+      }
+    };
+
     window.addEventListener("aksara-lawu-levels-change", handleLevelChange);
     window.addEventListener("aksara-lawu-completed-levels-change", handleCompletedLevelChange);
+    window.addEventListener("aksara-lawu-used-items-change", handleUsedItemsChange);
     return () => {
       window.removeEventListener("aksara-lawu-levels-change", handleLevelChange);
       window.removeEventListener("aksara-lawu-completed-levels-change", handleCompletedLevelChange);
+      window.removeEventListener("aksara-lawu-used-items-change", handleUsedItemsChange);
     };
   }, []);
 
-  // Hitung status waypoints dinamis sesuai unlockedLevels
+  // Hitung status waypoints dinamis sesuai unlockedLevels dan item yang telah digunakake di Inventory
   const activeWaypoints: Waypoint[] = DEFAULT_WAYPOINTS.map((wp) => {
+    // Titik 1 (Cemoro Sewu) dan Titik 2 (Level 1) selalu terbuka
     if (wp.levelNumber === 0 || wp.levelNumber === 1) {
       return { ...wp, isLocked: false };
     }
+    // Titik 3 (Level 2 - Pos 2: Labirin Pendakian): Dibuka jika kartu cardlevel2 sudah digunakake
+    if (wp.levelNumber === 2) {
+      const isUnlocked = unlockedLevels.includes(2) && usedItemIds.includes("cardlevel2");
+      return { ...wp, isLocked: !isUnlocked };
+    }
+    // Titik 4 (Level 3 - Pos 3: Warung Ngaso): Dibuka HANYA jika kartu cardlevel3 sudah digunakake di Inventory
+    if (wp.levelNumber === 3) {
+      const isUnlocked = unlockedLevels.includes(3) && usedItemIds.includes("cardlevel3");
+      return { ...wp, isLocked: !isUnlocked };
+    }
+    // Titik 5 (Level 4 - Pos 4: Nata Aksara Jawa): Dibuka jika kartu cardlevel4 sudah digunakake
+    if (wp.levelNumber === 4) {
+      const isUnlocked = unlockedLevels.includes(4) && usedItemIds.includes("cardlevel4");
+      return { ...wp, isLocked: !isUnlocked };
+    }
+    // Titik 6 (Ending - Puncak Gunung Lawu): Dibuka jika kartu cardpeak sudah digunakake
+    if (wp.levelNumber === 5) {
+      const isUnlocked = unlockedLevels.includes(5) && usedItemIds.includes("cardpeak");
+      return { ...wp, isLocked: !isUnlocked };
+    }
+
     const isUnlocked = unlockedLevels.includes(wp.levelNumber);
     return { ...wp, isLocked: !isUnlocked };
   });

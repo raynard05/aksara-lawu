@@ -506,12 +506,13 @@ export default function Level2GamePage() {
         setShowStarCelebration(false);
         setStarFlying(false);
 
-        // Simpan Kartu Level 3 ke Inventory & Buka Gembok Level 3
+        // Simpan Kartu Level 3 ke Inventory & tandai Pos 2 rampung
+        // Catatan: Gembok Level 3 (Warung Ngaso) TIDAK dibuka langsung di sini.
+        // Pemain harus membuka Inventaris dan menekan 'Gunakake' pada Kartu Level 3.
         const currentItems = getSavedInventoryItems();
         if (!currentItems.includes("cardlevel3")) {
           saveInventoryItems([...currentItems, "cardlevel3"]);
         }
-        unlockLevel(3);
         markLevelCompleted(2);
 
         // Munculkan popup kartu Level 3
@@ -531,8 +532,11 @@ export default function Level2GamePage() {
     setShowPemanduEnding(true);
   };
 
-  // Kembali ke halaman peta dari ending
+  // Kembali ke halaman peta dari ending (posisikan avatar di titik 3 / Level 2 yang baru selesai)
   const handleReturnToMaps = () => {
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem("aksara_lawu_current_waypoint", "3");
+    }
     router.push("/maps");
   };
 

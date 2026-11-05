@@ -65,17 +65,17 @@
 
 /* Scene 1: Papan di tengah pas */
 .l2g-target-scene-1 {
-  left: 50.2vw;
+  left: 52vw;
   top: 49.5vh;
-  width: 14.5vw;
-  height: 28vh;
+  width: 23vw;
+  height: 30vh;
 }
 
 /* Scene 2: Papan bergeser pas pada kompas */
 .l2g-target-scene-2 {
-  left: 48.8vw;
+  left: 48.5vw;
   top: 50vh;
-  width: 14vw;
+  width: 23vw;
   height: 28vh;
 }
 
@@ -160,7 +160,7 @@
 .l2g-nav-slot-lurus {
   position: absolute;
   left: 50vw;
-  top: 87.9vh;
+  top: 90vh;
   transform: translate(-50%, -50%);
   z-index: 15;
   pointer-events: auto;
