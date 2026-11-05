@@ -1,0 +1,762 @@
+/* =========================================================================
+   LEVEL 2 GAME CSS - LABIRIN PENDAKIAN
+   Mengikuti AIrule.txt:
+   - File css dan tsx dipisah
+   - Satuan vh / vw untuk responsif, px hanya untuk bg
+   - Landscape-first
+   - Font Rubik One (var(--font-rubik-one)) & Plus Jakarta Sans
+   - Class prefix unik: l2g-
+   - Responsif Mobile, Laptop Sedang, Laptop Besar / Monitor
+   ========================================================================= */
+
+.l2g-root {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  background-color: #0b1509;
+  z-index: 1;
+}
+
+.l2g-viewport {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* =========================================================================
+   1. BACKGROUND LAYER
+   ========================================================================= */
+.l2g-bg-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 2;
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* =========================================================================
+   2. TARGET PAPAN INTERAKTIF DI SCENE (scene1, scene2, scene3)
+   Presisi disesuaikan per scene sesuai posisi papan di background
+   ========================================================================= */
+.l2g-target-board-area {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 15;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30vw;
+  outline: none;
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+/* Scene 1: Papan di tengah pas */
+.l2g-target-scene-1 {
+  left: 50.2vw;
+  top: 49.5vh;
+  width: 14.5vw;
+  height: 28vh;
+}
+
+/* Scene 2: Papan bergeser pas pada kompas */
+.l2g-target-scene-2 {
+  left: 48.8vw;
+  top: 50vh;
+  width: 14vw;
+  height: 28vh;
+}
+
+/* Scene 3: Papan berada di sisi kanan (sebelah kanan tugu batu) */
+.l2g-target-scene-3 {
+  left: 61.5vw;
+  top: 49.5vh;
+  width: 14vw;
+  height: 28vh;
+}
+
+/* Kotak garis putus-putus kuning glow melingkari area papan */
+.l2g-target-dashed-box {
+  position: absolute;
+  inset: 0;
+  border: 0.25vw dashed #ffe600;
+  border-radius: 3vw;
+  box-shadow: 0 0 1.2vw rgba(255, 230, 0, 0.6), inset 0 0 1vw rgba(255, 230, 0, 0.3);
+  animation: l2gDashedPulse 1.8s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes l2gDashedPulse {
+  0% {
+    border-color: #ffe600;
+    box-shadow: 0 0 0.8vw rgba(255, 230, 0, 0.4), inset 0 0 0.6vw rgba(255, 230, 0, 0.2);
+    transform: scale(0.98);
+  }
+
+  100% {
+    border-color: #fffb8f;
+    box-shadow: 0 0 1.8vw rgba(255, 240, 50, 0.9), inset 0 0 1.2vw rgba(255, 240, 50, 0.4);
+    transform: scale(1.02);
+  }
+}
+
+/* Icon segitiga terbalik target.png lompat kecil di atas papan */
+.l2g-target-icon {
+  position: absolute;
+  top: -12vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3.8vw;
+  height: auto;
+  filter: drop-shadow(0 0.4vh 0.8vh rgba(0, 0, 0, 0.7)) drop-shadow(0 0 0.6vw #ffe600);
+  animation: l2gTargetHop 1s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes l2gTargetHop {
+  0% {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  100% {
+    transform: translateX(-50%) translateY(-1.5vh);
+  }
+}
+
+/* =========================================================================
+   3. TOMBOL NAVIGASI & JAWABAN (Kiri, Lurus, Kanan / Pesan Ending)
+   Ditempatkan presisi di slot perkamen Kiri, Kanan, dan Bawah sesuai Desain Figma
+   ========================================================================= */
+.l2g-nav-slot-kiri {
+  position: absolute;
+  left: 6.6vw;
+  top: 48vh;
+  transform: translate(-50%, -50%);
+  z-index: 15;
+  pointer-events: auto;
+}
+
+.l2g-nav-slot-kanan {
+  position: absolute;
+  left: 93.3vw;
+  top: 48vh;
+  transform: translate(-50%, -50%);
+  z-index: 15;
+  pointer-events: auto;
+}
+
+.l2g-nav-slot-lurus {
+  position: absolute;
+  left: 50vw;
+  top: 87.9vh;
+  transform: translate(-50%, -50%);
+  z-index: 15;
+  pointer-events: auto;
+}
+
+.l2g-nav-slot-pesan {
+  position: absolute;
+  left: 50vw;
+  top: 89vh;
+  transform: translate(-50%, -50%);
+  z-index: 15;
+  pointer-events: auto;
+}
+
+.l2g-nav-button-card {
+  position: relative;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease;
+}
+
+.l2g-nav-btn-img {
+  width: 7.2vw;
+  height: auto;
+  max-height: 13vh;
+  object-fit: contain;
+  filter: drop-shadow(0 0.5vh 0.8vh rgba(0, 0, 0, 0.65));
+}
+
+.l2g-nav-button-card:hover:not(:disabled) {
+  transform: scale(1.12);
+}
+
+.l2g-nav-button-card:active:not(:disabled) {
+  transform: scale(0.94);
+}
+
+.l2g-nav-button-card:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  filter: grayscale(0.7);
+}
+
+/* Animasi shake untuk tombol yang terpilih / aktif di scene ending atau question */
+.l2g-btn-shake {
+  animation: l2gButtonShake 1.2s ease-in-out infinite;
+  filter: drop-shadow(0 0 1vw #ffe600) !important;
+}
+
+@keyframes l2gButtonShake {
+
+  0%,
+  100% {
+    transform: translateX(0) scale(1.05);
+  }
+
+  20%,
+  60% {
+    transform: translateX(-0.3vw) rotate(-2deg) scale(1.08);
+  }
+
+  40%,
+  80% {
+    transform: translateX(0.3vw) rotate(2deg) scale(1.08);
+  }
+}
+
+/* =========================================================================
+   4. COVER TRANSISI GAME COVER (ASSET /cover/gamecover.webp)
+   Delay 1.5 detik lalu cover mengangkat ke atas perlahan-lahan
+   ========================================================================= */
+.l2g-curtain-cover {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  background-image: url('/cover/gamecover.webp');
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 10000;
+  pointer-events: all;
+  will-change: transform;
+}
+
+.l2g-curtain-closing {
+  animation: l2gCurtainDown 0.45s ease-out forwards;
+}
+
+.l2g-curtain-opening {
+  animation: l2gCurtainUp 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes l2gCurtainDown {
+  from {
+    transform: translateY(-100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes l2gCurtainUp {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+/* =========================================================================
+   5. POPUP PEMANDU (SCENE 1 & ENDING)
+   Desain kayu/perkamen tematik game Lawu
+   ========================================================================= */
+.l2g-popup-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 18, 8, 0.72);
+  backdrop-filter: blur(0.2vw);
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2vh 3vw;
+}
+
+.l2g-pemandu-box {
+  position: relative;
+  width: 52vw;
+  background: linear-gradient(135deg, #fcedd8 0%, #ecd0a6 100%);
+  border: 0.35vw solid #5c3516;
+  border-radius: 2vh;
+  box-shadow: 0 1.2vh 3.5vh rgba(0, 0, 0, 0.6), inset 0 0.2vh 0.5vh rgba(255, 255, 255, 0.8);
+  padding: 3.5vh 3.5vw 3vh 3.5vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  animation: l2gPopupScaleIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes l2gPopupScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.85) translateY(2vh);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.l2g-pemandu-title {
+  font-family: var(--font-rubik-one), "Rubik One", sans-serif;
+  font-size: 2.2vw;
+  color: #4a270d;
+  margin: 0 0 1.8vh 0;
+  text-shadow: 0 0.15vh 0.2vh rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.04vw;
+}
+
+.l2g-pemandu-text {
+  font-family: var(--font-jakarta-sans), "Plus Jakarta Sans", sans-serif;
+  font-size: 1.55vw;
+  font-weight: 700;
+  line-height: 1.55;
+  color: #3b220c;
+  margin: 0 0 3vh 0;
+}
+
+.l2g-pemandu-btn {
+  font-family: var(--font-rubik-one), "Rubik One", sans-serif;
+  font-size: 1.45vw;
+  color: #ffffff;
+  background: linear-gradient(180deg, #308f2e 0%, #1c5e1b 100%);
+  border: 0.2vw solid #5be356;
+  border-radius: 1.5vh;
+  padding: 1.4vh 3vw;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0 0.5vh 1.2vh rgba(0, 0, 0, 0.4), inset 0 0.15vh 0.3vh rgba(255, 255, 255, 0.5);
+  transition: transform 0.18s ease, filter 0.18s ease;
+  letter-spacing: 0.05vw;
+}
+
+.l2g-pemandu-btn:hover {
+  transform: scale(1.06);
+  filter: brightness(1.1);
+}
+
+.l2g-pemandu-btn:active {
+  transform: scale(0.95);
+}
+
+/* =========================================================================
+   6. HALAMAN SOAL (QUESTION BOARD)
+   ========================================================================= */
+.l2g-question-stage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Papan Soal Tengah (Pas di dalam frame question_bg.webp) */
+.l2g-question-board-content {
+  position: absolute;
+  top: 24vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 63vw;
+  height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1vh 2vw;
+  box-sizing: border-box;
+  z-index: 12;
+}
+
+/* Layout Soal Gambar + Teks */
+.l2g-q-layout-with-image {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3vw;
+}
+
+.l2g-q-text-column {
+  flex: 1.15;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.l2g-q-image-column {
+  flex: 0.95;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.l2g-q-image-frame {
+  width: 20vw;
+  height: 26.5vh;
+  border-radius: 1.4vh;
+  border: 0.25vw solid #5c3516;
+  overflow: hidden;
+  box-shadow: 0 1vh 2.4vh rgba(0, 0, 0, 0.55);
+  background: #2a1506;
+}
+
+.l2g-q-candi-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Layout Soal Teks Saja */
+.l2g-q-layout-text-only {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.l2g-q-prompt-text {
+  font-family: var(--font-javanese), "Noto Sans Javanese", serif;
+  font-size: 2.6vw;
+  font-weight: 700;
+  color: #3b1d06;
+  line-height: 1.85;
+  margin: 0 0 2vh 0;
+  text-shadow: 0 0.1vh 0.25vh rgba(255, 255, 255, 0.7);
+  word-break: normal;
+  white-space: normal;
+}
+
+/* Area Opsi Jawaban di Papan (Tersusun Vertikal di Kiri, Rapi Tanpa Tertutup Gambar) */
+.l2g-q-options-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8vh;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-top: 1.2vh;
+}
+
+.l2g-q-layout-text-only .l2g-q-options-container {
+  width: fit-content;
+  margin: 1.2vh auto 0 auto;
+  align-items: flex-start;
+}
+
+.l2g-q-option-pill {
+  display: flex;
+  align-items: center;
+  gap: 1.2vw;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+}
+
+.l2g-q-option-btn-icon {
+  width: 4.2vw;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0.4vh 0.8vh rgba(0, 0, 0, 0.45));
+}
+
+.l2g-q-option-text {
+  font-family: var(--font-javanese), "Noto Sans Javanese", serif;
+  font-size: 2.2vw;
+  font-weight: 700;
+  color: #381c04;
+  line-height: 1.75;
+  text-shadow: 0 0.1vh 0.2vh rgba(255, 255, 255, 0.8);
+  white-space: nowrap;
+}
+
+/* =========================================================================
+   7. STAR CELEBRATION & POPUP KEMENANGAN KARTU LEVEL 3
+   ========================================================================= */
+.l2g-star-celebration-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.l2g-star-element {
+  width: 14vw;
+  height: 14vw;
+  object-fit: contain;
+  filter: drop-shadow(0 0 2vw #ffe600) drop-shadow(0 0 4vw #ffaa00);
+  animation: l2gStarPulse 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes l2gStarPulse {
+  0% {
+    transform: scale(0.9) rotate(-8deg);
+  }
+
+  100% {
+    transform: scale(1.15) rotate(8deg);
+  }
+}
+
+.l2g-star-fly {
+  position: fixed;
+  animation: l2gStarFlyToBag 1.3s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards !important;
+}
+
+@keyframes l2gStarFlyToBag {
+  0% {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.15) rotate(0deg);
+    opacity: 1;
+  }
+
+  70% {
+    top: 5.5vh;
+    left: 88vw;
+    transform: translate(-50%, -50%) scale(0.4) rotate(720deg);
+    opacity: 0.9;
+  }
+
+  100% {
+    top: 5.5vh;
+    left: 88vw;
+    transform: translate(-50%, -50%) scale(0) rotate(1080deg);
+    opacity: 0;
+  }
+}
+
+/* =========================================================================
+   8. POPUP KEMENANGAN KARTU LEVEL 3 (Mirip Desain & Styling Game Level 1)
+   ========================================================================= */
+.l2g-focus-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 840;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 8, 3, 0.65);
+  backdrop-filter: blur(0.3vh);
+  pointer-events: auto;
+  user-select: none;
+}
+
+.l2g-victory-box {
+  position: relative;
+  width: 40vw;
+  max-height: 75vh;
+  margin-top: 13vh;
+  background: #3e2211;
+  background-image: linear-gradient(180deg, #532e17 0%, #3a1f0f 70%, #261307 100%);
+  border: 0.5vh solid #946036;
+  border-radius: 3vh;
+  padding: 2vh 2.5vw 2.2vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: none;
+  animation: l2gShineGlow 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes l2gShineGlow {
+  0% {
+    border-color: #946036;
+  }
+
+  50% {
+    border-color: #f39c12;
+  }
+
+  100% {
+    border-color: #ffd700;
+  }
+}
+
+.l2g-victory-title {
+  font-family: var(--font-rubik-one), sans-serif;
+  font-size: 2.8vh;
+  color: #ffd875;
+  text-shadow: 0 0.3vh 0.6vh rgba(0, 0, 0, 0.8), 0 0 1.2vh rgba(243, 156, 18, 0.6);
+  margin-top: 0;
+  margin-bottom: 3vh;
+  letter-spacing: 0.08vw;
+}
+
+.l2g-card-wrapper {
+  position: relative;
+  width: 15vw;
+  height: 31vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.2vh;
+  filter: drop-shadow(0 0.8vh 1.6vh rgba(0, 0, 0, 0.65));
+}
+
+.l2g-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 1.2vh;
+  animation: l2gCardFloat 3s ease-in-out infinite alternate;
+}
+
+@keyframes l2gCardFloat {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+
+  100% {
+    transform: translateY(-0.6vh) scale(1.02);
+  }
+}
+
+.l2g-victory-desc {
+  font-family: var(--font-jakarta-sans), sans-serif;
+  font-size: 1.8vh;
+  font-weight: 700;
+  color: #fff1c4;
+  line-height: 1.35;
+  margin-top: 1.5vh;
+  margin-bottom: 3vh;
+  max-width: 38vw;
+}
+
+.l2g-btn-next-scene {
+  background: #27ae60;
+  background-image: linear-gradient(180deg, #2ecc71 0%, #27ae60 60%, #1e824c 100%);
+  border: 0.35vh solid #52be80;
+  border-radius: 1.5vh;
+  padding: 1vh 3vw;
+  font-family: var(--font-rubik-one), sans-serif;
+  font-size: 2vh;
+  color: #ffffff;
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.15s ease, filter 0.15s ease;
+  filter: drop-shadow(0 0.5vh 0.8vh rgba(0, 0, 0, 0.4));
+}
+
+.l2g-btn-next-scene:hover {
+  transform: scale(1.06) translateY(-0.3vh);
+  filter: drop-shadow(0 0.8vh 1.4vh rgba(0, 0, 0, 0.5)) brightness(1.1);
+}
+
+.l2g-btn-next-scene:active {
+  transform: scale(0.95);
+}
+
+/* =========================================================================
+   10. MEDIA QUERIES (AIrule.txt)
+   Mobile landscape (pointer coarse) & Tablet / Laptop
+   ========================================================================= */
+@media screen and (max-width: 900px) and (orientation: landscape),
+screen and (max-height: 520px) and (orientation: landscape) {
+  .l2g-target-board-area {
+    width: 15vw;
+    height: 32vh;
+  }
+
+  .l2g-target-icon {
+    width: 4.5vw;
+    top: -7.5vh;
+  }
+
+  .l2g-nav-btn-img {
+    width: 7.5vw;
+  }
+
+  .l2g-victory-box {
+    width: 35vw;
+    padding: 1.5vh 2vw;
+  }
+
+  .l2g-victory-title {
+    font-size: 2.5vh;
+    margin-bottom: 1.5vh;
+  }
+
+  .l2g-card-wrapper {
+    width: 12vw;
+    height: 25vh;
+  }
+
+  .l2g-victory-desc {
+    font-size: 1.6vh;
+    margin-bottom: 1.8vh;
+  }
+
+  .l2g-btn-next-scene {
+    font-size: 1.8vh;
+    padding: 0.8vh 2.5vw;
+  }
+
+  .l2g-question-board-content {
+    top: 22vh;
+    width: 68vw;
+    height: 52vh;
+  }
+
+  .l2g-q-prompt-text {
+    font-size: 2.4vw;
+  }
+
+  .l2g-q-option-text {
+    font-size: 1.7vw;
+  }
+
+  .l2g-q-image-frame {
+    width: 22vw;
+    height: 27.5vh;
+  }
+
+  .l2g-q-options-container {
+    gap: 1.5vh;
+  }
+}

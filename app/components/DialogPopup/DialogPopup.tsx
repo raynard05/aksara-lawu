@@ -29,6 +29,10 @@ interface DialogPopupProps {
   dialogs?: DialogItem[];
   onComplete?: (selectedAvatar?: string) => void;
   isOpen?: boolean;
+  initialDelayMs?: number;
+  lastButtonText?: string;
+  instantText?: boolean;
+  focusBackdrop?: boolean;
 }
 
 export default function DialogPopup({
@@ -36,6 +40,10 @@ export default function DialogPopup({
   dialogs,
   onComplete,
   isOpen = true,
+  initialDelayMs = 3000,
+  lastButtonText,
+  instantText = false,
+  focusBackdrop = false,
 }: DialogPopupProps) {
   // Ambil dialogs dari props atau otomatis ambil berdasarkan pageKey dari dialog.json
   const activeDialogs: DialogItem[] =
@@ -75,27 +83,37 @@ export default function DialogPopup({
     if (!isOpen) return;
 
     clearAllTimers();
-    setIsInitialDelayPassed(false);
+    setIsInitialDelayPassed(initialDelayMs <= 0);
     setCurrentIndex(0);
     setVisibleWordsCount(0);
     setIsTyping(true);
     setIsWaitingDelay(false);
     setDelayRemaining(7.0);
 
-    initialDelayTimeoutRef.current = setTimeout(() => {
-      setIsInitialDelayPassed(true);
-    }, 3000);
+    if (initialDelayMs > 0) {
+      initialDelayTimeoutRef.current = setTimeout(() => {
+        setIsInitialDelayPassed(true);
+      }, initialDelayMs);
+    }
 
     return () => {
       if (initialDelayTimeoutRef.current) clearTimeout(initialDelayTimeoutRef.current);
     };
-  }, [pageKey, isOpen]);
+  }, [pageKey, isOpen, initialDelayMs]);
 
   // Efek animasi kata per kata (word-by-word, delay 0.10s) setelah initial delay 3 detik selesai
   useEffect(() => {
     if (!isOpen || !isInitialDelayPassed) return;
 
     clearAllTimers();
+
+    if (instantText) {
+      setVisibleWordsCount(words.length);
+      setIsTyping(false);
+      setIsWaitingDelay(false);
+      return;
+    }
+
     setVisibleWordsCount(0);
     setIsTyping(true);
     setIsWaitingDelay(false);
@@ -139,7 +157,7 @@ export default function DialogPopup({
     return () => {
       clearAllTimers();
     };
-  }, [currentIndex, isOpen, isInitialDelayPassed, activeDialogs.length]);
+  }, [currentIndex, isOpen, isInitialDelayPassed, activeDialogs.length, instantText, words.length]);
 
   // Handler ke paragraf sebelumnya (Previous)
   const handlePrev = () => {
@@ -204,7 +222,14 @@ export default function DialogPopup({
   const charSide = currentItem.characterSide || "left";
 
   return (
-    <div className="dialog-popup-overlay" role="dialog" aria-modal="true" aria-label="Dialog Pop Up Game">
+    <div
+      className={`dialog-popup-overlay ${
+        focusBackdrop ? "dialog-popup-overlay-focused" : ""
+      }`}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Dialog Pop Up Game"
+    >
       <div className="dialog-popup-container">
         {/* Frame Box Pop Up Dialog: Warna Solid Coklat Kayu & Border Tebal Konstan */}
         <section className="dialog-popup-frame">
@@ -330,7 +355,7 @@ export default function DialogPopup({
               )}
 
               {/* Render Badge Reward jika dialog menghadiahkan item (misal: badge1.webp) */}
-              {currentItem.rewardItem && !isTyping && (
+              {currentItem.rewardItem && (!isTyping || instantText) && (
                 <div className="dialog-reward-box">
                   <img
                     src={currentItem.rewardItem.image}
@@ -382,7 +407,7 @@ export default function DialogPopup({
                 onClick={() => handleNext(true)}
                 className="dialog-btn-action dialog-btn-next"
               >
-                {isLastParagraph ? "Miwiti Petualangan ➔" : "Sabanjure ➔"}
+                {isLastParagraph ? (lastButtonText || "Miwiti Petualangan ➔") : "Sabanjure ➔"}
               </button>
             </div>
           </footer>

@@ -1,0 +1,141 @@
+rules :  hanya lakukan task yang sudah ditambahkan , jangan menambahkan teks atau apapun selian intruksi, simpan semua sesi dalam game , analisa bug setelah membuat 
+
+asset semua ada di D:\aksara_lawu\public\labirin_pendakian
+
+
+detailed task prompt : 
+- render topbar di setiap scene 
+-render falling leaves  nya hanya untuk scene 1 -scene ending tanpa fog
+- disable maps dan bag untuk top bar 
+-render scene1,scene2,scene3,ending_rev urut sebagai background
+- render kiri,kanan,lurus (tidak perlu render pesan.webp kecuali ending_rev hanya perlu pesan.webp) sesuai dengan screenshot  yang disediakan desainer 
+- buatkan komponen target jadi nanti di bg kan sudah ada gambar papan beri garis putus putus kotak  gitu rapi melingkari area papan dan efek konsep kuning gitu
+ diatas nya ada target.webp beranimasi kayak lompat kecil gitu  karna itu kayak segitiga kebalik icon nya jadi kayak target
+- setelah klik papan itu , muncul pop up pemandu yang berkata dalam bahasa ngoko "halo (sebut nama user pendeknya saja cukup maksimal 12 huruf) , anda sudah sampai di pertigaan , jawab beberapa pertanyaan berikut untuk mendapatkan informasi agar tidak tersesat "
+- untuk scene yang lain  scene2 , scene 3 tanpa pop up karena dimunculkan di scene 1 saja  
+- setelah dialog scene 1 arahkan ke halaman soal yaitu dengan bg question_bg , nah disini tempat merender soal dan jawaban . selain scene 1 . yakni  scene 2 dan scene 3 setelah pencet papan langsung saja ke halaman question
+- sebelum merender halaman  question beri animasi cover yang menutupi halaman dulu dengan delay 1,5 detik baru membuka halaman question secara langsung animasi covernya mengangkat keatas perlahan lahan 
+- render fog dan daun pula untuk question
+- nah render asset kiri kanan atas sesuai peletakan ss dari desainer  di halaman queestion, ini juga untuk menjawab soal nya 
+-  setiap setelah berhasil  menjawab soal berikan dialog dalam bahasa jawa ngoko "selamat anda berhasil menjawab, arah yang benar adalah 
+(berikan salah satu dari text(system random) kanan,kiri,lurus dan juga render asset nya juga) , pencet tombol nya untuk mendapatkan arah yang benar ! anda akan dialihkan ke halaman labirin dalam waktu 5 detik(betikan timer disamping teks nya )" 
+- lalu jika waktu habis render  animasi cover yang menutupi halaman dulu dengan delay 1,5 detik baru membuka halaman scene sebelumnya secara langsung animasi covernya mengangkat keatas perlahan lahan 
+- disable  semua kiri kanan atas kecuali jawabannya memang itu dari halaman question contoh jawabannya kiri jadi kiri saja yang enable lainnya disable, dan animasikan shake untuk tombol yang enable suapaya tinggal dipencet baru render ke scene berikutnya 
+
+
+
+- jawaban arah yang benar 
+scene 1  = kiri
+scene 2  = lurus 
+scene 3 = kanan 
+
+- setelah memencet arah yang benar di scene  3 ada animasi bintang berputasr ke tombol bag sana konsepnya seperti game level 1  , dan juga munculkan kartu   level 3  dan berikan connfetti
+
+
+
+
+
+
+soal ada dua jenis . soal berdasarkan gambar+text  dan juga soal text saja 
+
+
+peletakan jika ada soal dan gambar  text dikiri dan gambar dikanan, dan jawavban dibawah
+jika text aja cukup text nya ditengah dan jawaban dibawah 
+opsi jawabannya  dalam bentuk asset  kiri , kanan , atas webp . dikarenakan jawaban cuman dua buatkan random kombinasi saja 
+atur serapi mungkin 
+
+
+
+soal :
+
+1 ꦕꦤ꧀ꦝꦶꦲꦥꦲꦶꦏꦶ?
+a	ꦕꦤ꧀ꦝꦶꦕꦼꦛꦺꦴ
+b 	ꦕꦤ꧀ꦝꦶꦱꦢꦺꦴꦤ꧀
+
+jawaban =  a 
+task render gambar candi cetho
+
+2.  Kunci: B
+ꦕꦤ꧀ꦝꦶꦲꦥꦲꦶꦏꦶ?
+•	ꦕꦤ꧀ꦝꦶꦏꦼꦛꦺꦏ꧀
+•	ꦕꦤ꧀ꦝꦶꦱꦸꦏꦸꦃ
+teks render gambar candi sukuh 
+
+3.Kunci: A
+ꦕꦤ꧀ꦝꦶꦲꦥꦲꦶꦏꦶ
+•	ꦕꦤ꧀ꦝꦶꦏꦼꦛꦺꦏ꧀
+•	ꦕꦤ꧀ꦝꦶꦕꦼꦛꦺꦴ
+teks render gambar candi kethek
+
+4. Kunci: B
+ꦕꦤ꧀ꦝꦶꦲꦥꦲꦶꦏꦶ
+•	ꦕꦤ꧀ꦝꦶꦱꦸꦏꦸꦃ
+•	ꦕꦤ꧀ꦝꦶꦱꦢꦺꦴꦤ꧀
+teks render gambar candi sadon
+
+5. ꧋ꦕꦤ꧀ꦝꦶꦱꦸꦏꦸꦃꦢꦸꦩꦸꦤꦸꦁꦲꦶꦁꦏꦮꦱꦤ꧀ꦒꦸꦤꦸꦁꦲꦥ?
+ꦒꦸꦤꦸꦁꦭꦮꦸ
+ꦧ꧀꧈ꦒꦸꦤꦸꦁꦏꦼꦭꦸꦢ꧀
+
+JAWABAN = A 
+
+6. ꦕꦤ꧀ꦝꦶꦏꦼꦛꦺꦏ꧀ꦢꦸꦩꦸꦤꦸꦁꦲꦶꦁꦏꦧꦸꦥꦠꦺꦤ꧀ꦲꦼꦤ꧀ꦢꦶ?
+ꦔꦮꦶ
+ꦏꦫꦔꦚꦂ
+jawaban =  b 
+
+7. ꦕꦤ꧀ꦝꦶꦱꦢꦺꦴꦤ꧀ꦢꦸꦩꦸꦤꦸꦁꦲꦶꦁꦏꦮꦱꦤ꧀ꦒꦸꦤꦸꦁꦲꦥ?
+ꦩꦒꦺꦠꦤ꧀
+ꦏꦫꦔꦚꦂ
+jawaban  =  a
+
+8. ꧋ꦕꦤ꧀ꦝꦶꦲꦥꦱꦶꦁꦢꦶꦏꦼꦤꦭ꧀ꦏꦤ꧀ꦛꦶꦮꦔꦸꦤ꧀ꦮꦔꦸꦤꦤ꧀ꦏꦪꦥꦶꦫꦩꦶꦣꦲꦸꦤ꧀ꦝꦏ꧀ꦲꦸꦤ꧀ꦝꦏꦤ꧀?
+•	ꦕꦤ꧀ꦝꦶꦱꦸꦏꦸꦃ
+•	ꦕꦤ꧀ꦝꦶꦱꦢꦺꦴꦤ꧀
+jawabaan = a 
+
+-------------------------------------
+scene 1 = 3 soal
+scene 2 = 3 soal 
+scene 3 = 2 soal 
+
+
+mekanisme menjawab : 
+
+- kesempatan menjawab setiap soalnya adalah 1 kesempatan
+- jika salah jawaban dalam menjawab soal dengan kkesempatan 2 kali dan digantikan soalnya dengan soal yang belum terjawab  dan tetap salah maka akan dikembalikan ke halaman intro level 2
+- render pop up  dari  D:\aksara_lawu\assets\gamepopup untuk merender setiap pop up salah benar dan game over  (konsep pop up nya sama dengan game level 1 ya )
+-samakan juga konsepnya  dengan  game level 1 ketika salah berikan sekitar sisi background itu merah dan jika benar beri confetti , ini adalah efek tambahan 
+
+
+--------------------------------------
+KHUSUS UNTUK HALAMAN ENDING  LEVEL 2 
+
+ini adalah halaman ending setelah scene 3 .
+-render top bar namun disable maps dan bag 
+- letakkan pesan.webp dibawah sesuai ss dari desainer  , dan animasikan shake2 sedikit  agar meng trigger usernya dalam memencet  
+- kemudian setelah dipencet ada pop up  dari pemandu dalam bahasa jawa ngoko "selamat anda di jalan keluar labirin pendakian , siapkan tenagamu untuk ke warung ngaso" ada tombol untuk ke mbali ke maps 
+kemudian render ke halaman maps kembali 
+
+
+
+bug : 
+- tambahkan dialog pemandu dalam bahasa jawa ngoko " ayo pencet papan untuk mencari informasi lebih lanjut" hanya saat pada mengunjungi pertama kali scene1
+-seharusnya animasi cover pakai  asset dari sini D:\aksara_lawu\public\cover BUKAN BIKIN CSS LAGI
+- kemudian mekanisme menjawab soal : 
+scene 1 = 3 soal 
+scene 2 = 3 soal 
+scene 3 = 2 soal 
+setiap soal yang berbeda dan belum terjawab akan dimunculkan 
+jika soal salah maka akan dimunculkan soal berikutnya 
+cuman ada kesempatan 2x soal berbeda setelah kesalahan menjawab 
+jika melakukan kesalahan kasih pop up gameover , seperti game level 1 pop up nya dipencet 
+- pop up benar yang terakhir ada bug kayak ngefreeze lama seharusnya pop up salah dan benar muncul 1,5 detik
+- kamu menambahkan css styling baru untuk ucapan ini :   setiap setelah berhasil  menjawab soal berikan dialog dalam bahasa jawa ngoko "selamat anda berhasil menjawab, arah yang benar adalah 
+(berikan salah satu dari text(system random) kanan,kiri,lurus dan juga render asset nya juga) , pencet tombol nya untuk mendapatkan arah yang benar ! anda akan dialihkan ke halaman labirin dalam waktu 5 detik(betikan timer disamping teks nya )" 
+cukup berikan dialog character saja seperti cemoro sewu 
+- lebih rapikan tampilan soal dan jawaban , tidak perlu frame putih untuk jawabannya 
+
+
+
+

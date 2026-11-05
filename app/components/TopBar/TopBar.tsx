@@ -30,6 +30,8 @@ export default function TopBar() {
   const [showHomeConfirm, setShowHomeConfirm] = useState<boolean>(false);
   // State override untuk disable maps dan bag selama in-game (misal level1_game)
   const [inGameDisabled, setInGameDisabled] = useState<boolean>(false);
+  // State untuk menyembunyikan TopBar sepenuhnya (misal saat halaman soal question di level 2)
+  const [isTopBarHidden, setIsTopBarHidden] = useState<boolean>(false);
 
   useEffect(() => {
     try {
@@ -55,6 +57,7 @@ export default function TopBar() {
   }, []);
 
   useEffect(() => {
+    setIsTopBarHidden(false);
     // Jika rute adalah /level1_game atau /openworld, defaultnya inGameDisabled = true
     if (pathname.includes("level1_game") || pathname.includes("openworld")) {
       setInGameDisabled(true);
@@ -63,9 +66,15 @@ export default function TopBar() {
     }
 
     const handleTopBarToggle = (event: Event) => {
-      const customEvent = event as CustomEvent<{ disableInGame?: boolean }>;
+      const customEvent = event as CustomEvent<{
+        disableInGame?: boolean;
+        hidden?: boolean;
+      }>;
       if (customEvent.detail && typeof customEvent.detail.disableInGame === "boolean") {
         setInGameDisabled(customEvent.detail.disableInGame);
+      }
+      if (customEvent.detail && typeof customEvent.detail.hidden === "boolean") {
+        setIsTopBarHidden(customEvent.detail.hidden);
       }
     };
 
@@ -75,19 +84,20 @@ export default function TopBar() {
     };
   }, [pathname]);
 
-  // Jika berada di login, register, menu, atau menu_game, jangan render TopBar
-  if (EXCLUDED_ROUTES.includes(pathname)) {
+  // Jika berada di login, register, menu, menu_game, atau disembunyikan secara dinamis, jangan render TopBar
+  if (EXCLUDED_ROUTES.includes(pathname) || isTopBarHidden) {
     return null;
   }
 
-  // Cek apakah halaman saat ini adalah cemorosewu atau openworld untuk men-disable tombol bag dan maps
+  // Cek apakah halaman saat ini adalah cemorosewu, openworld, atau level2_game untuk men-disable tombol bag dan maps
   const isCemoroSewu = pathname === "/cemorosewu" || pathname.startsWith("/cemorosewu/");
   const isOpenWorld = pathname === "/openworld" || pathname.startsWith("/openworld/");
+  const isLevel2Game = pathname === "/level2_game" || pathname.startsWith("/level2_game/");
   // Cek apakah halaman saat ini adalah inventory untuk men-disable tombol bag
   const isInventory = pathname === "/inventory" || pathname.startsWith("/inventory/");
 
-  const isMapsDisabled = isCemoroSewu || isOpenWorld || inGameDisabled;
-  const isBagDisabled = isCemoroSewu || isOpenWorld || isInventory || inGameDisabled;
+  const isMapsDisabled = isCemoroSewu || isOpenWorld || isLevel2Game || inGameDisabled;
+  const isBagDisabled = isCemoroSewu || isOpenWorld || isLevel2Game || isInventory || inGameDisabled;
 
   // Aksi tombol peta / maps -> buka halaman peta
   const handleMaps = () => {
