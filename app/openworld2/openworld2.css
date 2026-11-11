@@ -1,0 +1,836 @@
+/* ==========================================================================
+   OPENWORLD 2 PAGE STYLES — openworld2.css
+   Mengikuti AIrule.txt & OPTIMASI_OPENWORLD.txt:
+   - File CSS & TSX dipisah (rule 1 & 11)
+   - Satuan vh & vw untuk responsif (rule 4 & 6)
+   - Layout landscape-first (rule 5 & 16)
+   - Prefix unik: ow2- (rule 12)
+   - Font Rubik One (rule 9)
+   - Bebas emoji (rule 21)
+   - Background murni /openworld2/bg.webp (rule 14 & 17)
+   ========================================================================== */
+
+.ow2-root {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Background murni Open World 2 */
+  background-image: url('/openworld2/bg.webp');
+  background-size: 100% 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: #1a3311;
+
+  user-select: none;
+  -webkit-user-select: none;
+  font-family: var(--font-rubik-one), 'Rubik One', sans-serif;
+}
+
+/* --------------------------------------------------------------------------
+   LAYER BAYANGAN GELAP VIGNETTE AMBIENT PADA BACKGROUND (AGAR FOKUS)
+   -------------------------------------------------------------------------- */
+.ow2-vignette {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    rgba(0, 0, 0, 0.04) 30%,
+    rgba(0, 0, 0, 0.36) 70%,
+    rgba(0, 0, 0, 0.72) 100%
+  );
+  box-shadow: inset 0 0 12vw rgba(0, 0, 0, 0.65);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   STAGE ENTITAS & KARAKTER UTAMA
+   -------------------------------------------------------------------------- */
+.ow2-character-stage {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 80;
+}
+
+.ow2-character-entity {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  will-change: transform;
+  z-index: 85;
+}
+
+/* Nametag Pemain */
+.ow2-character-nametag {
+  position: absolute;
+  top: -3.4vh;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(30, 18, 10, 0.9);
+  border: 0.15vw solid #d4a574;
+  border-radius: 0.6vw;
+  padding: 0.2vh 0.8vw;
+  display: flex;
+  align-items: center;
+  gap: 0.4vw;
+  white-space: nowrap;
+  box-shadow: 0 0.4vh 0.8vh rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.ow2-nametag-icon {
+  width: 1.2vw;
+  height: 1.2vw;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 0.1vw solid #fce8a6;
+}
+
+.ow2-nametag-text {
+  font-family: var(--font-rubik-one), 'Rubik One', sans-serif;
+  font-size: 0.75vw;
+  color: #fff9e6;
+  text-shadow: 0 0.1vh 0.2vh #000;
+  letter-spacing: 0.04vw;
+}
+
+/* Sprite Container Karakter Pemain */
+.ow2-character-sprite-wrap {
+  position: relative;
+  width: 6.8vw;
+  height: 13.5vh;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.ow2-character-sprite {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  filter: drop-shadow(0 0.4vh 0.8vh rgba(0, 0, 0, 0.5));
+}
+
+.ow2-character-shadow {
+  position: absolute;
+  bottom: 0.2vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4.2vw;
+  height: 1.6vh;
+  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.55) 0%, transparent 75%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* --------------------------------------------------------------------------
+   RINTANGAN (OBSTACLES)
+   Secara default transparan sepenuhnya (opacity 0) agar tidak terlihat.
+   Hanya tampil ketika tombol visualizer / debug diaktifkan.
+   -------------------------------------------------------------------------- */
+.ow2-obstacle-box {
+  position: absolute;
+  pointer-events: none;
+  z-index: 40;
+  box-sizing: border-box;
+  transition: opacity 0.3s ease;
+  background: transparent;
+  border: none;
+  opacity: 0;
+}
+
+/* Mode visualizer / debug aktif */
+.ow2-obstacle-box.ow2-obstacle-visible {
+  background: rgba(239, 68, 68, 0.35);
+  border: 0.2vw solid rgba(239, 68, 68, 0.95);
+  border-radius: 0.4vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-family: monospace;
+  font-size: 0.7vw;
+  font-weight: 700;
+  text-shadow: 0 0.1vh 0.2vh #000;
+  padding: 0.2vh 0.4vw;
+  text-align: center;
+  opacity: 1;
+}
+
+/* Mode normal: sembunyikan sepenuhnya (kecuali rintangan gerbang ow-collision-closed-dark atau ow2-obstacle-unlocked-red) */
+.ow2-obstacle-box.ow2-obstacle-hidden:not(.ow-collision-closed-dark):not(.ow2-obstacle-unlocked-red) {
+  opacity: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  display: none !important;
+}
+
+.ow2-obstacle-id {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 0.1vh 0.4vw;
+  border-radius: 0.3vw;
+  margin-bottom: 0.2vh;
+}
+
+.ow2-obstacle-coords {
+  font-size: 0.6vw;
+  color: #fef08a;
+}
+
+/* --------------------------------------------------------------------------
+   5 BINTANG KOLEKSI (COLLECTIBLE STARS) — PERSIS OPENWORLD 1
+   -------------------------------------------------------------------------- */
+.ow2-star-item {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 70;
+}
+
+.ow2-star-img {
+  width: 4vh;
+  height: 4vh;
+  object-fit: contain;
+  filter: drop-shadow(0 0 0.8vh rgba(255, 235, 59, 0.95)) drop-shadow(0 0.5vh 0.6vh rgba(0, 0, 0, 0.6));
+  animation: ow2StarFloat 1.8s ease-in-out infinite alternate;
+}
+
+.ow2-star-trigger-zone {
+  position: absolute;
+  width: 4.8vw;
+  height: 4vh;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.25) 0%, transparent 70%);
+  border: 0.15vh dashed rgba(255, 215, 0, 0.6);
+  pointer-events: none;
+  animation: ow2StarZonePulse 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes ow2StarFloat {
+  0% {
+    transform: translateY(0) rotate(-6deg) scale(0.95);
+  }
+  100% {
+    transform: translateY(-0.8vh) rotate(8deg) scale(1.08);
+  }
+}
+
+@keyframes ow2StarZonePulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   TIANG KAYU DI RERUNTUHAN WIT RUBUH
+   -------------------------------------------------------------------------- */
+.ow2-tiang-item {
+  position: absolute;
+  transform: translate(-50%, -85%);
+  pointer-events: none;
+  z-index: 75;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.ow2-tiang-pulse-zone {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  width: 8vw;
+  height: 4vh;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(239, 68, 68, 0.4) 0%, rgba(220, 38, 38, 0.1) 70%, transparent 100%);
+  border: 0.18vw dashed rgba(239, 68, 68, 0.85);
+  box-shadow: 0 0 1.5vw rgba(239, 68, 68, 0.6);
+  animation: ow2TiangPulse 1.8s infinite ease-in-out;
+}
+
+@keyframes ow2TiangPulse {
+  0%, 100% {
+    transform: translate(-50%, 50%) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate(-50%, 50%) scale(1.1);
+    opacity: 1;
+  }
+}
+
+.ow2-tiang-img {
+  width: 3.5vw;
+  height: 9vh;
+  object-fit: contain;
+  filter: drop-shadow(0 0.6vh 1vh rgba(0, 0, 0, 0.6)) drop-shadow(0 0 0.8vw rgba(251, 191, 36, 0.7));
+  animation: ow2TiangHover 2.2s infinite ease-in-out alternate;
+}
+
+@keyframes ow2TiangHover {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-0.8vh);
+  }
+}
+
+.ow2-tiang-label {
+  position: absolute;
+  top: -2.8vh;
+  background: rgba(30, 18, 10, 0.88);
+  border: 0.12vw solid #f87171;
+  border-radius: 0.5vw;
+  padding: 0.15vh 0.6vw;
+  font-size: 0.68vw;
+  color: #fef2f2;
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   GERBANG LABIRIN PENDAKIAN (MENUJU INTRO_LEVEL2)
+   -------------------------------------------------------------------------- */
+.ow2-gate-zone {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.ow2-gate-circle {
+  width: 9vw;
+  height: 4.5vh;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ow2-gate-locked {
+  background: radial-gradient(ellipse, rgba(239, 68, 68, 0.4) 0%, rgba(185, 28, 28, 0.1) 70%, transparent 100%);
+  border: 0.2vw dashed rgba(239, 68, 68, 0.85);
+  box-shadow: 0 0 1.5vw rgba(239, 68, 68, 0.5);
+  animation: ow2GatePulseRed 2s infinite ease-in-out;
+}
+
+.ow2-gate-unlocked {
+  background: radial-gradient(ellipse, rgba(234, 179, 8, 0.5) 0%, rgba(202, 138, 4, 0.2) 70%, transparent 100%);
+  border: 0.2vw solid #facc15;
+  box-shadow: 0 0 2vw rgba(250, 204, 21, 0.9), inset 0 0 1vw rgba(255, 255, 255, 0.5);
+  animation: ow2GatePulseGold 1.6s infinite ease-in-out;
+}
+
+@keyframes ow2GatePulseRed {
+  0%, 100% { transform: scale(1); opacity: 0.75; }
+  50% { transform: scale(1.06); opacity: 1; }
+}
+
+@keyframes ow2GatePulseGold {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.1); opacity: 1; }
+}
+
+.ow2-gate-lock-img {
+  width: 3.2vw;
+  height: 3.2vw;
+  object-fit: contain;
+  filter: drop-shadow(0 0.4vh 0.8vh rgba(0, 0, 0, 0.7));
+  margin-bottom: 1vh;
+  animation: ow2GateBounce 1.8s infinite ease-in-out;
+}
+
+@keyframes ow2GateBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-0.8vh); }
+}
+
+.ow2-gate-banner {
+  position: absolute;
+  top: -4vh;
+  background: rgba(30, 18, 10, 0.9);
+  border: 0.15vw solid #d4a574;
+  border-radius: 0.6vw;
+  padding: 0.2vh 0.8vw;
+  font-size: 0.75vw;
+  color: #fff9e6;
+  white-space: nowrap;
+  box-shadow: 0 0.4vh 0.8vh rgba(0, 0, 0, 0.6);
+}
+
+.ow2-gate-banner-unlocked {
+  border-color: #86efac;
+  color: #bbf7d0;
+  text-shadow: 0 0 0.6vw rgba(74, 222, 128, 0.8);
+}
+
+/* --------------------------------------------------------------------------
+   PAPAN PROGRES DI POJOK BAWAH KIRI
+   -------------------------------------------------------------------------- */
+.ow2-progress-board {
+  position: absolute;
+  bottom: 2vh;
+  left: 2vw;
+  z-index: 500;
+  background: rgba(30, 18, 10, 0.92);
+  border: 0.22vw solid #d4a574;
+  border-radius: 1vw;
+  padding: 1.1vh 1.4vw;
+  width: 20.5vw;
+  box-shadow: 0 1vh 2vh rgba(0, 0, 0, 0.7), inset 0 0.1vh 0.4vh rgba(255, 248, 225, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 0.7vh;
+}
+
+.ow2-progress-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2vw;
+}
+
+.ow2-progress-title {
+  font-size: 0.82vw;
+  color: #f7d070;
+  letter-spacing: 0.04vw;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.ow2-progress-percent {
+  font-size: 0.85vw;
+  color: #86efac;
+  font-weight: 900;
+  white-space: nowrap;
+  margin-left: auto;
+  padding-left: 0.6vw;
+}
+
+.ow2-progress-bar-bg {
+  width: 100%;
+  height: 0.8vh;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 0.4vh;
+  overflow: hidden;
+  border: 0.08vw solid rgba(212, 165, 116, 0.3);
+}
+
+.ow2-progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #f59e0b 0%, #10b981 100%);
+  border-radius: 0.4vh;
+  transition: width 0.4s ease-out;
+}
+
+.ow2-progress-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3vh;
+  margin-top: 0.2vh;
+}
+
+.ow2-progress-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.7vw;
+  color: #fff9e6;
+  font-weight: 700;
+}
+
+.ow2-progress-row-complete {
+  color: #86efac;
+}
+
+/* --------------------------------------------------------------------------
+   TOMBOL INTERAKSI DI SISI KIRI ANALOG (IDENTIK DENGAN OPENWORLD 1)
+   -------------------------------------------------------------------------- */
+.ow-interact-btn {
+  position: absolute;
+  bottom: 8.5vh;
+  right: calc(5.5vw + 20vh + 2.5vw);
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3vh;
+  width: 10vh;
+  height: 10vh;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #ffd54f 0%, #f57f17 60%, #e65100 100%);
+  border: 0.35vh solid #fff9c4;
+  box-shadow:
+    0 1vh 2.5vh rgba(0, 0, 0, 0.65),
+    0 0 1.8vh rgba(255, 215, 0, 0.8),
+    inset 0 0.3vh 0.6vh rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  animation: owInteractBounce 1.4s ease-in-out infinite alternate;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.ow-interact-btn:hover {
+  transform: scale(1.08);
+  box-shadow:
+    0 1.2vh 2.5vh rgba(0, 0, 0, 0.7),
+    0 0 2.2vh rgba(255, 235, 59, 0.9),
+    inset 0 0.4vh 0.8vh rgba(255, 255, 255, 0.9);
+}
+
+.ow-interact-btn:active {
+  transform: scale(0.94);
+}
+
+.ow-interact-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.8vh;
+  line-height: 1;
+  filter: drop-shadow(0 0.2vh 0.3vh rgba(0, 0, 0, 0.5));
+}
+
+.ow-interact-text {
+  font-family: var(--font-rubik-one), sans-serif;
+  font-size: 1vh;
+  color: #fffde7;
+  text-shadow: 0 0.15vh 0.3vh rgba(0, 0, 0, 0.8);
+  letter-spacing: 0.04vw;
+  text-transform: uppercase;
+}
+
+@keyframes owInteractBounce {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+
+  100% {
+    transform: translateY(-0.8vh) scale(1.04);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   TOMBOL TOGGLE RINTANGAN & RESET SESI (DEBUG / TESTING CONTROLS)
+   -------------------------------------------------------------------------- */
+.ow2-debug-controls {
+  position: absolute;
+  top: 10vh;
+  right: 2vw;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.6vw;
+}
+
+.ow2-obstacle-toggle-btn,
+.ow2-session-reset-btn {
+  background: rgba(30, 18, 10, 0.85);
+  border: 0.15vw solid #d4a574;
+  border-radius: 0.8vw;
+  padding: 0.6vh 1.2vw;
+  font-size: 0.75vw;
+  color: #fff9e6;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4vw;
+  box-shadow: 0 0.4vh 0.8vh rgba(0, 0, 0, 0.5);
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.ow2-session-reset-btn {
+  border-color: #f59e0b;
+}
+
+.ow2-obstacle-toggle-btn:hover,
+.ow2-session-reset-btn:hover {
+  background: rgba(50, 30, 15, 0.95);
+  border-color: #ffffff;
+}
+
+.ow2-session-reset-btn:active {
+  transform: scale(0.95);
+}
+
+/* --------------------------------------------------------------------------
+   CURTAIN TRANSISI KE /INTRO_LEVEL2
+   -------------------------------------------------------------------------- */
+.ow2-curtain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.ow2-curtain-top,
+.ow2-curtain-bottom {
+  width: 100%;
+  height: 50%;
+  background: #120904;
+  transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.ow2-curtain-top {
+  transform: translateY(-100%);
+}
+
+.ow2-curtain-bottom {
+  transform: translateY(100%);
+}
+
+.ow2-curtain-closing .ow2-curtain-top,
+.ow2-curtain-closing .ow2-curtain-bottom {
+  transform: translateY(0);
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE DESIGN (AIrule 3, 5, 10, 16)
+   - Landscape-first
+   - Guard pointer: coarse untuk mobile landscape
+   -------------------------------------------------------------------------- */
+@media (max-width: 1023px) and (orientation: landscape) and (pointer: coarse) {
+  .ow2-character-sprite-wrap {
+    width: 8vw;
+    height: 16vh;
+  }
+  .ow2-character-nametag {
+    top: -4vh;
+  }
+  .ow2-nametag-text {
+    font-size: 1vw;
+  }
+  .ow2-progress-board {
+    width: 24vw;
+    padding: 0.8vh 1.2vw;
+  }
+  .ow2-progress-title {
+    font-size: 1.1vw;
+  }
+  .ow2-progress-percent {
+    font-size: 1.1vw;
+  }
+  .ow2-progress-row {
+    font-size: 0.9vw;
+  }
+  /* Tombol Interaksi di Sisi Kiri Analog (+25%: 10vh -> 12.5vh) */
+  .ow-interact-btn {
+    width: 12.5vh;
+    height: 12.5vh;
+    bottom: 10vh;
+    right: calc(6.5vw + 27.5vh + 2.5vw);
+    border-width: 0.45vh;
+  }
+  .ow-interact-icon {
+    font-size: 2.75vh;
+  }
+  .ow-interact-text {
+    font-size: 1.25vh;
+  }
+  .ow2-obstacle-toggle-btn,
+  .ow2-session-reset-btn {
+    font-size: 1vw;
+    padding: 0.8vh 1.4vw;
+  }
+  /* Star / Bintang Petualangan di Jalan (+25%: 4vh -> 5vh) */
+  .ow2-star-img {
+    width: 5vh;
+    height: 5vh;
+  }
+  .ow2-star-trigger-zone {
+    width: 6vw;
+    height: 5vh;
+  }
+}
+
+/* ==========================================================================
+   RINTANGAN TERTUTUP / GELAP "ORA BISA DILEWATI" (PERSIS OPENWORLD 1)
+   ========================================================================== */
+.ow-collision-closed-dark {
+  background: rgba(10, 15, 10, 0.72) !important;
+  border: 0.35vh dashed #ef4444 !important; /* Border putus-putus merah */
+  box-shadow: inset 0 0 3vh rgba(0, 0, 0, 0.9), 0 0 2vh rgba(239, 68, 68, 0.4) !important;
+  backdrop-filter: brightness(0.4) blur(1.5px);
+  -webkit-backdrop-filter: brightness(0.4) blur(1.5px);
+  opacity: 1 !important;
+  display: block !important;
+  z-index: 55 !important;
+  pointer-events: none;
+  border-radius: 0.8vh;
+  transition: opacity 0.5s ease, border-color 0.5s ease;
+}
+
+/* Saat misi selesai, rintangan terkunci terbuka:
+   Kotak rintangan merah tetap memblokir pergerakan fisik karakter (secara UI tidak bisa dilewati),
+   namun dengan tampilan opacity sangat rendah agar tidak mengganggu visual */
+.ow2-obstacle-box.ow2-obstacle-unlocked-red {
+  display: block !important;
+  opacity: 0.05 !important;
+  background: rgba(239, 68, 68, 0.04) !important;
+  border: 0.1vw solid rgba(239, 68, 68, 0.15) !important;
+  border-radius: 0.4vw !important;
+  box-shadow: none !important;
+  pointer-events: none !important;
+  z-index: 40 !important;
+  transition: opacity 0.5s ease, border-color 0.5s ease;
+}
+
+.ow-collision-closed-dark.ow-collision-closed-opened {
+  opacity: 0.28 !important;
+  border-color: rgba(239, 68, 68, 0.45) !important;
+  box-shadow: inset 0 0 1.5vh rgba(0, 0, 0, 0.6) !important;
+  pointer-events: none !important;
+}
+
+.ow-collision-closed-dark.ow-collision-closed-opened .ow-closed-badge-container {
+  opacity: 0.35 !important;
+}
+
+.ow-collision-closed-dark::after {
+  display: none !important;
+}
+
+/* Badge container berisi Teks "Ora Bisa Dilewati" + Ikon Gembok di bawahnya */
+.ow-closed-badge-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8vh;
+  pointer-events: none;
+  z-index: 5;
+  transition: opacity 0.5s ease;
+}
+
+.ow-closed-badge-text {
+  font-family: var(--font-jakarta-sans), sans-serif;
+  font-size: 1.25vh;
+  font-weight: 800;
+  color: #fca5a5;
+  background: rgba(17, 10, 10, 0.92);
+  border: 0.18vh dashed #ef4444; /* Border putus-putus merah pada badge */
+  padding: 0.45vh 1.1vh;
+  border-radius: 0.8vh;
+  white-space: nowrap;
+  box-shadow: 0 0.4vh 1.2vh rgba(0, 0, 0, 0.8), 0 0 0.8vh rgba(239, 68, 68, 0.35);
+  letter-spacing: 0.04vw;
+}
+
+/* Ikon Gembok (/maps/gembok.webp) di bawah teks dengan efek floating halus */
+.ow-closed-gembok-img {
+  width: 5vh;
+  height: 5vh;
+  object-fit: contain;
+  filter: drop-shadow(0 0.4vh 0.8vh rgba(0, 0, 0, 0.75)) drop-shadow(0 0 1.2vh rgba(239, 68, 68, 0.6));
+  animation: owGembokPulse 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes owGembokPulse {
+  0% {
+    transform: translateY(0) scale(0.95);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateY(-0.4vh) scale(1.05);
+    opacity: 1;
+  }
+}
+
+/* ==========================================================================
+   TITIK / ZONA LINGKARAN EMAS TRANSISI GERBANG LABIRIN (PERSIS OPENWORLD 1)
+   ========================================================================== */
+.ow2-gold-zone {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 14vh;
+  height: 14vh;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 235, 59, 0.257) 0%, rgba(245, 158, 11, 0.2) 60%, transparent 100%);
+  border: 0.4vh dashed #ffd700;
+  box-shadow:
+    0 0 3vh rgba(255, 217, 0, 0.474),
+    inset 0 0 2.5vh rgba(255, 235, 59, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 56;
+  animation: owYellowZonePulse 1.4s ease-in-out infinite alternate;
+  transition: transform 0.2s ease;
+}
+
+.ow2-gold-zone:hover {
+  transform: translate(-50%, -50%) scale(1.12);
+}
+
+.ow2-gold-inner-circle {
+  width: 5vh;
+  height: 5vh;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff67 0%, #ffeb3b67 60%, #f59e0b 100%);
+  box-shadow: 0 0 1.8vh #fff7006a, 0 0 3vh #ffd700;
+  animation: owYellowCorePulse 1.4s ease-in-out infinite alternate;
+}
+
+@keyframes owYellowZonePulse {
+  0% {
+    transform: translate(-50%, -50%) scale(0.95);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 1;
+  }
+}
+
+@keyframes owYellowCorePulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.85;
+  }
+  100% {
+    transform: scale(1.12);
+    opacity: 1;
+  }
+}
+

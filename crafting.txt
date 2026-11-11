@@ -1,0 +1,16 @@
+asset ada di : \public\openworld2\crafting
+
+
+- buatkan halaman crafting seperti  konsep di minecraft dengan asset yang sudah ada .
+- tata letak sesuaikan dengan referensi desainer 
+- render komponen top bar  di halaman ini
+- render storage_craft di kiri dan crafting di kanan
+- isi dengan silang aja terhadap kotak yang kosong dengan x png
+
+jadi jika item seperti tiang tinggi webp dan tali webp dari storage craft di drag lalu di drop di asset kanan dimanapun pokok nya di drop diatas asset 
+crafting yang di kanan item akan ditampilkan di komponen crafting seperti minecraft pokoknya sistem nya
+
+semetara resep nya 
+kayu = tiang_tinggi webp
+tali =  tali webp 
+kayu + tali =  arah 1 webp

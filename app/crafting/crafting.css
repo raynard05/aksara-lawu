@@ -1,0 +1,40 @@
+/* ==========================================================================
+   CRAFTING PAGE STYLES — crafting.css
+   Mengikuti AIrule.txt:
+   - File CSS & TSX dipisah (rule 1 & 11)
+   - Layout & orientasi landscape-first (rule 5 & 7)
+   - Background murni /openworld2/crafting/bgcrafting.webp mengikuti contoh-bg.css (aturan 14 & 17)
+   - Zoom-lock & konsistensi device (rule 16)
+   - Prefix unik: crf- (rule 12)
+   ========================================================================== */
+
+.crf-page-root {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Background murni perkemahan gunung Lawu: bgcrafting.webp */
+  background-image: url('/openworld2/crafting/bgcrafting.webp');
+  background-size: 100% 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: #2b1d17;
+
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Vignette lembut di tepian layar untuk meningkatkan fokus ke meja rakitan */
+.crf-page-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0) 55%, rgba(15, 8, 3, 0.45) 100%);
+  z-index: 2;
+}
+

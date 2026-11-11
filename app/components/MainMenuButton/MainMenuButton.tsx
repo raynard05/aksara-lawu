@@ -2,12 +2,14 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
+import { resetGameProgress } from "../../lib/inventoryStorage";
 import "./menu-button.css";
 
 export default function MainMenuButton() {
   const router = useRouter();
 
   const handleMenuClick = () => {
+    resetGameProgress();
     router.push("/menu");
   };
 

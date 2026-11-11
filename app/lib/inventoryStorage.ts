@@ -186,31 +186,59 @@ export function unlockLevel(levelNumber: number) {
 }
 
 /**
- * Mereset seluruh sesi permainan:
- * - Progress gembok / level di peta (kembali ke level 1)
- * - Item di inventory (kembali kosong)
- * - Avatar terpilih & status completion cemorosewu
- * - Level yang sudah dituntaskan
+ * Mereset seluruh sesi permainan saat tombol Home diklik atau sesi diakhiri:
+ * - Menghapus seluruh sessionStorage secara total (semua progres game, quest, stars, inventory, dll.)
+ * - Menghapus seluruh data progres di localStorage kecuali kredensial akun user & pengaturan suara
+ * - Mengembalikan level gembok di peta ke kondisi awal (hanya level 1 terbuka)
+ * - Mengosongkan seluruh item inventory dan used items
+ * - Mengirimkan event broadcast agar seluruh komponen aktif otomatis tersinkronisasi
  */
 export function resetGameProgress() {
   if (typeof window === "undefined") return;
   try {
-    sessionStorage.removeItem("aksara_lawu_current_session");
-    sessionStorage.removeItem("aksara_lawu_cemorosewu_completed");
-    sessionStorage.removeItem("aksara_lawu_selected_avatar");
-    sessionStorage.removeItem(INVENTORY_STORAGE_KEY);
-    sessionStorage.removeItem(UNLOCKED_LEVELS_KEY);
-    sessionStorage.removeItem(COMPLETED_LEVELS_KEY);
-    sessionStorage.removeItem(USED_ITEMS_KEY);
+    // 1. Bersihkan seluruh sessionStorage secara total
+    sessionStorage.clear();
 
-    localStorage.removeItem("aksara_lawu_cemorosewu_completed");
-    localStorage.removeItem("aksara_lawu_selected_avatar");
-    localStorage.removeItem(INVENTORY_STORAGE_KEY);
-    localStorage.removeItem(UNLOCKED_LEVELS_KEY);
-    localStorage.removeItem(COMPLETED_LEVELS_KEY);
-    localStorage.removeItem(USED_ITEMS_KEY);
+    // 2. Simpan sementara akun user dan setting suara di localStorage agar tidak hilang
+    const preservedUser = localStorage.getItem("aksara_lawu_user");
+    const preservedSound = localStorage.getItem("aksara_lawu_sound_muted");
 
-    // Dispatch event agar seluruh listener aktif otomatis ter-reset
+    // Kumpulkan seluruh key permainan yang berawalan 'aksara_lawu_'
+    const keysToRemove: string[] = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (
+        key &&
+        key.startsWith("aksara_lawu_") &&
+        key !== "aksara_lawu_user" &&
+        key !== "aksara_lawu_sound_muted"
+      ) {
+        keysToRemove.push(key);
+      }
+    }
+    keysToRemove.forEach((key) => localStorage.removeItem(key));
+
+    // Pastikan akun user dan setting suara tetap utuh
+    if (preservedUser) {
+      localStorage.setItem("aksara_lawu_user", preservedUser);
+    }
+    if (preservedSound !== null) {
+      localStorage.setItem("aksara_lawu_sound_muted", preservedSound);
+    }
+
+    // Inisialisasi ulang level awal yang terbuka (hanya level 1)
+    localStorage.setItem(UNLOCKED_LEVELS_KEY, JSON.stringify(DEFAULT_UNLOCKED_LEVELS));
+    localStorage.setItem(INVENTORY_STORAGE_KEY, JSON.stringify([]));
+    localStorage.setItem(COMPLETED_LEVELS_KEY, JSON.stringify([]));
+    localStorage.setItem(USED_ITEMS_KEY, JSON.stringify([]));
+
+    // Sinkronkan juga ke sessionStorage
+    sessionStorage.setItem(UNLOCKED_LEVELS_KEY, JSON.stringify(DEFAULT_UNLOCKED_LEVELS));
+    sessionStorage.setItem(INVENTORY_STORAGE_KEY, JSON.stringify([]));
+    sessionStorage.setItem(COMPLETED_LEVELS_KEY, JSON.stringify([]));
+    sessionStorage.setItem(USED_ITEMS_KEY, JSON.stringify([]));
+
+    // 3. Dispatch event agar seluruh listener aktif otomatis ter-reset
     window.dispatchEvent(
       new CustomEvent("aksara-lawu-inventory-change", {
         detail: { items: [] },
@@ -231,6 +259,7 @@ export function resetGameProgress() {
         detail: { usedItems: [] },
       })
     );
+    window.dispatchEvent(new CustomEvent("aksara-lawu-game-reset"));
   } catch (err) {
     console.error("Gagal reset progress game:", err);
   }

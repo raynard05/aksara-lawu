@@ -1,0 +1,66 @@
+aku memintamu pahami alur sistem dan cerita nya dengan teliti, periksa bug terlebh dahulu jika sudah membuat halaman ini
+
+
+-buatkan halaman cloning dari halaman openworld 
+- tinggikan opacity rintangannya dikarenakan saya mau atur kembali  rintangan sesuai background openworld2
+- asset semua ada di \public\openworld2
+- hilangkan karakter pendaki bingung,konsep misi nya , kacamata dari konsep openworld dikarenakan misi openworld 2 berbeda dan juga hilangkan titik ora bisa dilewati karna berbeda spot nya untuk openworld2 
+- render penjaga pos dan pendaki profesional dan beri range untuk cecatur
+-tetap render 5 bintang
+untuk nama penjaga : pak agus (penjaga pos) mungkin translate kan dalam bahasa jawa ngoko
+animasi dari penjaga assetnya kamu bisa dapatkan di public\openworld2\penjaga
+nah di folder itu ada asset dia jalan kiri ,juga kanan , tetapi juga ada diam dan tangannya perlahan kedepan 
+nah beri animasi jalan ke kiri dan sedikit jika user klik cecaturan baru render diam dan interaksi webp
+
+munculkan pop up dialog character yang komponen nya sudah ada asset charater nya : penjagapos.webp
+dialog :  
+"selamat datang pendaki di rute pos 1 menuju labirin pendakian " , 
+"sayangnya rute papan penunjuk arah labirin pendakian rusak dikarenakan cuaca" , 
+"bisakah kamu membantu saya untuk membuat papan yang baru dan memasangkannya ke beberapa titik! " ,
+"untuk membuat papan pengarah , hanya dibutuhkan kayu dan tali",  
+"untuk kayu kamu bisa mendampatkannya di reruntuhan pohon ", 
+"dan untuk tali aku tidak memiliki nya mungkin kamu bisa mendapatkan dari pendaki lain!"
+(translate kan semua dialog dalam bahasa jawa ngoko)
+
+setelah dialog penjaga render tiang_tinggi.webp, render nya seperti kacamata di openworld 
+kayak ada border di sekelilingnya merah gitu dan juga bisa diambil
+jika sudah diambil simpan sesi dan tambahkan item kayu ke komponen spot_target 
+
+untuk nama pendaki profesional nya : rinda (mungkin translate kan dalam bahasa jawa ngoko untuk pendaki profesionalnya)
+animasi dari pendaki profesional assetnya kamu bisa dapatkan di public\openworld2\pendakiprofesional
+nah di folder itu ada asset dia jalan kiri ,juga kanan , tetapi juga ada diam dan tangannya perlahan kedepan 
+nah beri animasi jalan ke kiri dan sedikit jika user klik cecaturan baru render diam dan interaksi webp
+
+munculkan pop up dialog character yang komponen nya sudah ada asset charater nya : pendakiprofesional.webp
+dialog :  
+
+"halo, saya rinda aku adalah pendaki dari magetan",
+"aku membawa perlengkapan yang lengkap, apa yang kamu butuhkan" (render tombol "butuh tali" dalam dialog nya agar bisa dipencet user),
+"oh kamu terlihat membutuhkan tali ya untuk membuat papan pengarah, aku sangat mendukung itu!!", 
+"ini talinya ambil saja"  (render tali.webp dalam pop up dialog nya). 
+(translate kan semua dialog dalam bahasa jawa ngoko)
+simpan sesi dan tambahkan item tali ke komponen spot_target 
+-------------------------------------------------------------------
+
+- buatkan komponen spot_target 
+render komponen ini sebagai ui untuk trigger halaman crafting dan bisa di taruh pengarah arah1.webp dan juga arah2.webp
+detailnya adalah buat range kuning nya untuk interaksi dan beri icon segitiga kebalik yaitu dengan asset target.webp dari\public\labirin_pendakian dan beri animasi bounce juga 
+nah tombol yang di samping analog kan cuman cecaturan, jupuk saja kan nah khusus interaktif range ini teks di tombol yg sama adalah "perbaiki" cuman dalam bahasa jawa ngok
+nah setelah dipencet itu ke halamab crafting ketika kayu dan tali sudah ada dan bisa di craft menjadi papan pengarah arah1,arah2 webp
+maka di pop up nya ada tombol ngelanjutake petualangan saja untuk kembali ke halaman  openworld 2 nah yang semulanya komponen  spot_target hanya ada icon animasi segitiga terbalik dan rnage kuning kosong saja sekarang render arah1.arah2 webp
+dan simpan semua sesi setiap proses
+
+buatkan kompoen spot_target 2
+
+untuk arah1.webp dan arah2.webp hasilnya 
+
+--------------------------------------------------------------------
+
+nah untuk membuka spot ora bisa dilewati harus memenuhi progress , kan ada tuh status progress di pojok bawah kiri nah beri 
+5/5 bintang
+2/2 papan arah
+translatekan dalam bahasa jawa
+nah setelah terpenuhi baru bisa akses  titik range emas yang akan redirect ke halaman /intro_level2
+
+
+nah halaman ini bisa diakses melewati /maps yang level2 

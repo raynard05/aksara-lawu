@@ -1089,7 +1089,7 @@ export default function OpenWorldPage() {
       </aside>
 
       {/* 11. Tombol Interaksi (Bahasa Jawa: "Cecaturan" / "Interaksi") di Sisi Kiri Analog */}
-      {(isNearBayu || isNearKacamata) && (
+      {(isNearBayu || isNearKacamata) && !isDialogOpen && (
         <button
           type="button"
           id="btn-ow-interaksi"
@@ -1108,7 +1108,7 @@ export default function OpenWorldPage() {
       )}
 
       {/* Tombol Interaksi Titik Kuning Pos 1 */}
-      {isNearPos1Transition && (
+      {isNearPos1Transition && !isDialogOpen && (
         <button
           type="button"
           id="btn-ow-interaksi-pos1"
@@ -1133,6 +1133,11 @@ export default function OpenWorldPage() {
         <DialogPopup
           dialogs={activeDialogs}
           isOpen={isDialogOpen}
+          initialDelayMs={
+            currentDialogType === "bayu_intro" || currentDialogType === "bayu_reward"
+              ? 1800
+              : 0
+          }
           onComplete={handleDialogComplete}
         />
       )}

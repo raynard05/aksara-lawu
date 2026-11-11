@@ -1,0 +1,136 @@
+/* ==========================================================================
+   OPENWORLD2 NPC STYLES — openworld2-npc.css
+   Mengikuti AIrule.txt:
+   - Satuan vh & vw (rule 4 & 6)
+   - Landscape-first (rule 5)
+   - Prefix unik: ow2-npc- (rule 12)
+   - Font Rubik One (rule 9)
+   - Bebas emoji (rule 21)
+   ========================================================================== */
+
+.ow2-npc-entity {
+  position: absolute;
+  pointer-events: none;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  will-change: transform;
+}
+
+/* Lingkaran Zona Pemicu Interaksi */
+.ow2-npc-trigger-zone {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  width: 7vw;
+  height: 3.5vh;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(234, 179, 8, 0.35) 0%, rgba(202, 138, 4, 0.1) 70%, transparent 100%);
+  border: 0.15vw dashed rgba(250, 204, 21, 0.7);
+  box-shadow: 0 0 1vw rgba(250, 204, 21, 0.5);
+  pointer-events: none;
+  animation: ow2NpcZonePulse 2s infinite ease-in-out;
+}
+
+@keyframes ow2NpcZonePulse {
+  0%, 100% {
+    transform: translate(-50%, 50%) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate(-50%, 50%) scale(1.08);
+    opacity: 1;
+  }
+}
+
+/* Nametag Kayu NPC */
+.ow2-npc-nametag {
+  position: absolute;
+  top: -2.4vh;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(30, 18, 10, 0.9);
+  border: 0.12vw solid #d4a574;
+  border-radius: 0.5vw;
+  padding: 0.15vh 0.6vw;
+  display: flex;
+  align-items: center;
+  gap: 0.3vw;
+  white-space: nowrap;
+  box-shadow: 0 0.3vh 0.6vh rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.ow2-npc-nametag-icon {
+  width: 0.9vw;
+  height: 0.9vw;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 0.08vw solid #fce8a6;
+}
+
+.ow2-npc-nametag-text {
+  font-family: var(--font-rubik-one), 'Rubik One', sans-serif;
+  font-size: 0.6vw;
+  color: #fff9e6;
+  text-shadow: 0 0.1vh 0.2vh #000;
+  letter-spacing: 0.03vw;
+}
+
+/* Sprite Container */
+.ow2-npc-sprite-wrap {
+  position: relative;
+  width: 4.8vw;
+  height: 9.8vh;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.ow2-npc-sprite-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: auto;
+  cursor: pointer;
+  filter: drop-shadow(0 0.4vh 0.8vh rgba(0, 0, 0, 0.5));
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Bayangan Kaki NPC */
+.ow2-npc-shadow {
+  position: absolute;
+  bottom: 0.1vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3.2vw;
+  height: 1.2vh;
+  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.55) 0%, transparent 75%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Mobile Landscape Guard */
+@media (max-width: 1023px) and (orientation: landscape) and (pointer: coarse) {
+  .ow2-npc-sprite-wrap {
+    width: 6vw;
+    height: 12vh;
+  }
+  .ow2-npc-nametag {
+    top: -2.8vh;
+  }
+  .ow2-npc-nametag-text {
+    font-size: 0.75vw;
+  }
+  .ow2-npc-trigger-zone {
+    width: 9vw;
+    height: 4.5vh;
+  }
+}
+

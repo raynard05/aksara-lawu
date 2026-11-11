@@ -16,6 +16,10 @@ export interface DialogItem {
     image: string;
     name: string;
   };
+  customAction?: {
+    buttonText: string;
+    onAction?: () => void;
+  };
   systemCommand?: {
     type: "avatar_select" | string;
     avatars: string[];
@@ -62,12 +66,14 @@ export default function DialogPopup({
   const currentItem = activeDialogs[currentIndex] || activeDialogs[0] || { id: 0, text: "" };
   const words = currentItem.text ? currentItem.text.split(" ") : [];
   const isLastParagraph = currentIndex === activeDialogs.length - 1;
+  const isCustomActionPending = Boolean(currentItem.customAction);
 
   // Ref timers
   const wordTimerRef = useRef<NodeJS.Timeout | null>(null);
   const delayIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const autoNextTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const initialDelayTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const isAlreadyOpenRef = useRef<boolean>(false);
 
   // Bersihkan semua timer
   const clearAllTimers = () => {
@@ -80,17 +86,26 @@ export default function DialogPopup({
   // Rule dialog.txt:
   // "berikan delay untuk menunjukkan pop up ini diawal selama 3 detik , karena saya mau diawal detik detik pertama user bisa menikmati background setiap halaman"
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen) {
+      isAlreadyOpenRef.current = false;
+      clearAllTimers();
+      setIsInitialDelayPassed(false);
+      return;
+    }
+
+    // Hanya terapkan initialDelayMs saat dialog pertama kali dibuka dari tertutup ke terbuka
+    const shouldDelay = !isAlreadyOpenRef.current && initialDelayMs > 0;
+    isAlreadyOpenRef.current = true;
 
     clearAllTimers();
-    setIsInitialDelayPassed(initialDelayMs <= 0);
+    setIsInitialDelayPassed(!shouldDelay);
     setCurrentIndex(0);
     setVisibleWordsCount(0);
     setIsTyping(true);
     setIsWaitingDelay(false);
     setDelayRemaining(7.0);
 
-    if (initialDelayMs > 0) {
+    if (shouldDelay) {
       initialDelayTimeoutRef.current = setTimeout(() => {
         setIsInitialDelayPassed(true);
       }, initialDelayMs);
@@ -99,7 +114,7 @@ export default function DialogPopup({
     return () => {
       if (initialDelayTimeoutRef.current) clearTimeout(initialDelayTimeoutRef.current);
     };
-  }, [pageKey, isOpen, initialDelayMs]);
+  }, [pageKey, isOpen, initialDelayMs, dialogs]);
 
   // Efek animasi kata per kata (word-by-word, delay 0.10s) setelah initial delay 3 detik selesai
   useEffect(() => {
@@ -128,8 +143,12 @@ export default function DialogPopup({
         if (wordTimerRef.current) clearInterval(wordTimerRef.current);
         setIsTyping(false);
 
-        // Jika ada system command atau ini paragraf terakhir, jangan auto-next / jangan auto-close
-        if (currentItem.systemCommand || currentIndex >= activeDialogs.length - 1) {
+        // Jika ada system command, custom action (seperti "Butuh Tali"), atau ini paragraf terakhir, jangan auto-next / jangan auto-close
+        if (
+          currentItem.systemCommand ||
+          currentItem.customAction ||
+          currentIndex >= activeDialogs.length - 1
+        ) {
           setIsWaitingDelay(false);
           return;
         }
@@ -157,7 +176,7 @@ export default function DialogPopup({
     return () => {
       clearAllTimers();
     };
-  }, [currentIndex, isOpen, isInitialDelayPassed, activeDialogs.length, instantText, words.length]);
+  }, [currentIndex, isOpen, isInitialDelayPassed, currentItem.text, instantText, words.length, activeDialogs.length]);
 
   // Handler ke paragraf sebelumnya (Previous)
   const handlePrev = () => {
@@ -168,6 +187,11 @@ export default function DialogPopup({
 
   // Handler ke paragraf selanjutnya (Next)
   const handleNext = (manual = true) => {
+    // Jika tombol pilihan kustom (misal: "Butuh Tali") wajib ditekan terlebih dahulu, blokir tombol skip/next manual
+    if (manual && isCustomActionPending) {
+      return;
+    }
+
     clearAllTimers();
 
     // Jika user mengklik manual saat teks masih mengetik, tampilkan seluruh kata langsung
@@ -258,10 +282,16 @@ export default function DialogPopup({
               <button
                 type="button"
                 id="btn-dialog-header-next"
-                onClick={() => handleNext(true)}
-                disabled={currentIndex >= activeDialogs.length - 1}
-                className="dialog-nav-btn dialog-nav-btn-next"
-                title="Paragraf Sabanjure (Next)"
+                onClick={() => !isCustomActionPending && handleNext(true)}
+                disabled={currentIndex >= activeDialogs.length - 1 || isCustomActionPending}
+                className={`dialog-nav-btn dialog-nav-btn-next ${
+                  isCustomActionPending ? "dialog-nav-btn-disabled" : ""
+                }`}
+                title={
+                  isCustomActionPending
+                    ? "Pencet tombol pilihan ing dhuwur dhisik"
+                    : "Paragraf Sabanjure (Next)"
+                }
                 aria-label="Sabanjure"
               >
                 <span>Sabanjure</span>
@@ -300,18 +330,23 @@ export default function DialogPopup({
             {/* Isi Text Paragraf dengan Animasi Kata per Kata */}
             <div className="dialog-popup-body">
               <p className="dialog-popup-paragraph" aria-live="polite">
-                {words.map((word, idx) => (
-                  <span
-                    key={`${word}-${idx}`}
-                    className="dialog-word"
-                    style={{
-                      visibility: idx < visibleWordsCount ? "visible" : "hidden",
-                      opacity: idx < visibleWordsCount ? 1 : 0,
-                    }}
-                  >
-                    {word}
-                  </span>
-                ))}
+                {words.map((word, idx) => {
+                  const isVisible = idx < visibleWordsCount;
+                  return (
+                    <span
+                      key={`${currentIndex}-${idx}-${word}`}
+                      className={`dialog-word ${
+                        isVisible
+                          ? instantText
+                            ? "dialog-word-instant"
+                            : "dialog-word-visible"
+                          : "dialog-word-hidden"
+                      }`}
+                    >
+                      {word}
+                    </span>
+                  );
+                })}
               </p>
 
               {/* Perintah Sistem: Pemilihan Avatar jika ada */}
@@ -354,7 +389,25 @@ export default function DialogPopup({
                 </div>
               )}
 
-              {/* Render Badge Reward jika dialog menghadiahkan item (misal: badge1.webp) */}
+              {/* Render Tombol Aksi Kustom jika ada (misal: "Butuh Tali" dari Rinda) */}
+              {currentItem.customAction && (!isTyping || instantText) && (
+                <div className="dialog-custom-action-wrap">
+                  <button
+                    type="button"
+                    className="dialog-custom-action-btn"
+                    onClick={() => {
+                      if (currentItem.customAction?.onAction) {
+                        currentItem.customAction.onAction();
+                      }
+                      handleNext(false);
+                    }}
+                  >
+                    {currentItem.customAction.buttonText}
+                  </button>
+                </div>
+              )}
+
+              {/* Render Badge Reward jika dialog menghadiahkan item (misal: badge1.webp / tali.webp) */}
               {currentItem.rewardItem && (!isTyping || instantText) && (
                 <div className="dialog-reward-box">
                   <img
@@ -404,8 +457,16 @@ export default function DialogPopup({
               <button
                 type="button"
                 id="btn-dialog-next-action"
-                onClick={() => handleNext(true)}
-                className="dialog-btn-action dialog-btn-next"
+                onClick={() => !isCustomActionPending && handleNext(true)}
+                disabled={isCustomActionPending}
+                className={`dialog-btn-action dialog-btn-next ${
+                  isCustomActionPending ? "dialog-btn-disabled" : ""
+                }`}
+                title={
+                  isCustomActionPending
+                    ? "Pencet tombol pilihan ing dhuwur dhisik"
+                    : undefined
+                }
               >
                 {isLastParagraph ? (lastButtonText || "Miwiti Petualangan ➔") : "Sabanjure ➔"}
               </button>
