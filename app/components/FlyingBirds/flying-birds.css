@@ -14,7 +14,7 @@
   height: 100dvh;
   pointer-events: none;
   overflow: hidden;
-  z-index: 12; /* Di atas latar & pepohonan, di bawah UI kontrol */
+  z-index: 100 !important; /* Paling atas di atas karakter, panggung, dan pepohonan */
   user-select: none;
 }
 

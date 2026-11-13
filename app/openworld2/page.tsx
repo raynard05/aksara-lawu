@@ -26,7 +26,7 @@ import "./openworld2.css";
 
 // Flag untuk reset sesi otomatis saat refresh halaman (bisa diubah true / false sesuai kebutuhan testing)
 // Ketika false (unrefreshable): Seluruh progress sesi OpenWorld 2 tersimpan secara permanen dan tidak ter-reset saat refresh
-export const IS_REFRESHABLE_OW2: boolean = true;
+export const IS_REFRESHABLE_OW2: boolean = false;
 
 // =============================================================================
 // TITIK KOORDINAT PAPAN ARAH 1 & 2 (SUMBER KEBENARAN TUNGGAL / SINGLE SOURCE OF TRUTH)
@@ -36,7 +36,7 @@ export const OW2_SPOTS = {
   spot1: {
     id: 1,
     x: 63, // Persentase X (%) — Sisi tengen (jalur ngisor sangisore gazebo)
-    y: 62, // Persentase Y (%)
+    y: 64, // Persentase Y (%)
     radius: 6.5, // Radius jangkauan interaksi (vw/vh)
     label: "Papan Arah 1",
     resultImage: "/openworld2/arah1.webp",
@@ -84,7 +84,7 @@ export const OW2_STARS_DATA = [
   { id: 2, x: 68, y: 48 },
   { id: 3, x: 44, y: 46 },
   { id: 4, x: 25, y: 52 },
-  { id: 5, x: 12, y: 71 }, // Diberi space di atas papan progres agar tidak tertabrak/tertutup
+  { id: 5, x: 12, y: 80 }, // Diberi space di atas papan progres agar tidak tertabrak/tertutup
 ];
 
 // 21 Frame WebP Resmi Sprite Karakter Berjalan
@@ -235,11 +235,11 @@ export const OW2_DEFAULT_OBSTACLES: ObstacleBox[] = [
   // 10. Tembok/Pagar Labirin Sisi Kiri (Ora Bisa Dilewati)
   {
     id: "labirin-pager-kiri",
-    name: "Ora Bisa Dilewati (Tertutup)",
+    name: "Ora Bisa Dilewati",
     x: -5,
     y: 42,
     w: 22,
-    h: 27,
+    h: 32,
   },
   // 11. Hutan & Bebatuan Sisi Bawah Kiri
   {
@@ -844,8 +844,8 @@ export default function OpenWorld2Page() {
         setIsNearSpot2(isNearSpot2Now);
       }
 
-      // 6. Dekat Gerbang Labirin Pendakian / Titik Emas (x: 17, y: 56)
-      const dGate = Math.hypot(curX - 17, curY - 56);
+      // 6. Dekat Gerbang Labirin Pendakian / Titik Emas (x: 17, y: 76)
+      const dGate = Math.hypot(curX - 17, curY - 76);
       const isNearGateNow = isMissionCompleteRef.current ? dGate < 8.5 : dGate < 6.5;
       if (isNearGateNow !== nearExitGateRef.current) {
         nearExitGateRef.current = isNearGateNow;
@@ -1223,10 +1223,9 @@ export default function OpenWorld2Page() {
       {/* 0. Layer Bayangan Gelap Vignette Ambient pada Background agar Fokus */}
       <div className="ow2-vignette" />
 
-      {/* 1. Efek Cuaca Kabut & Burung Terbang (Memoized) */}
+      {/* 1. Efek Cuaca Kabut & Daun Gugur (Memoized) */}
       <FogWind />
       <FallenLeaves />
-      <FlyingBirds />
 
       {/* 2. Tombol Kontrol Debug / Pengujian (Toggle Rintangan & Reset Sesi) */}
       <div className="ow2-debug-controls">
@@ -1321,7 +1320,7 @@ export default function OpenWorld2Page() {
       {isMissionComplete && (
         <div
           className="ow2-gold-zone"
-          style={{ left: "17%", top: "56%" }}
+          style={{ left: "17%", top: "76%" }}
           aria-label="Titik Emas Gerbang Labirin"
           onClick={handleExitGateAction}
         >
@@ -1449,6 +1448,9 @@ export default function OpenWorld2Page() {
           </div>
         </div>
       </div>
+
+      {/* 11. Burung Terbang (Layer Paling Atas di Atas Seluruh Elemen World & Karakter) */}
+      <FlyingBirds />
 
       {/* 12. Papan Progres Petualangan (Pojok Bawah Kiri) */}
       <aside className="ow2-progress-board" aria-label="Progres Petualangan">
