@@ -728,11 +728,11 @@
 }
 
 /* Badge container berisi Teks "Ora Bisa Dilewati" + Ikon Gembok di bawahnya
-   Diposisikan pas di tengah sumbu gerbang visible Labirin Pendakian */
+   Diposisikan pas di tengah kotak rintangan */
 .ow-closed-badge-container {
   position: absolute;
-  top: 48%;
-  left: 72%; /* Disesuaikan agar simetris di tengah gerbang visible Labirin Pendakian (x: -5% + 22% * 0.72 ≈ 10.8% vw) */
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;

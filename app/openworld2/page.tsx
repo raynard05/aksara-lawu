@@ -844,8 +844,8 @@ export default function OpenWorld2Page() {
         setIsNearSpot2(isNearSpot2Now);
       }
 
-      // 6. Dekat Gerbang Labirin Pendakian / Titik Emas (x: 17, y: 76)
-      const dGate = Math.hypot(curX - 17, curY - 76);
+      // 6. Dekat Gerbang Labirin Pendakian / Titik Emas (x: 11.5, y: 76)
+      const dGate = Math.hypot(curX - 11.5, curY - 76);
       const isNearGateNow = isMissionCompleteRef.current ? dGate < 8.5 : dGate < 6.5;
       if (isNearGateNow !== nearExitGateRef.current) {
         nearExitGateRef.current = isNearGateNow;
@@ -1320,7 +1320,7 @@ export default function OpenWorld2Page() {
       {isMissionComplete && (
         <div
           className="ow2-gold-zone"
-          style={{ left: "17%", top: "76%" }}
+          style={{ left: "11.5%", top: "76%" }}
           aria-label="Titik Emas Gerbang Labirin"
           onClick={handleExitGateAction}
         >
