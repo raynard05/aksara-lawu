@@ -16,6 +16,11 @@ export interface DialogItem {
     image: string;
     name: string;
   };
+  foodItem?: {
+    image: string;
+    name: string;
+    tag?: string;
+  };
   customAction?: {
     buttonText: string;
     onAction?: () => void;
@@ -61,7 +66,9 @@ export default function DialogPopup({
   const [selectedAvatar, setSelectedAvatar] = useState<string>("avatar1.webp");
   const [delayRemaining, setDelayRemaining] = useState<number>(7.0);
   const [isWaitingDelay, setIsWaitingDelay] = useState<boolean>(false);
-  const [isInitialDelayPassed, setIsInitialDelayPassed] = useState<boolean>(false);
+  const [isInitialDelayPassed, setIsInitialDelayPassed] = useState<boolean>(
+    () => initialDelayMs <= 0
+  );
 
   const currentItem = activeDialogs[currentIndex] || activeDialogs[0] || { id: 0, text: "" };
   const words = currentItem.text ? currentItem.text.split(" ") : [];
@@ -73,7 +80,7 @@ export default function DialogPopup({
   const delayIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const autoNextTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const initialDelayTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const isAlreadyOpenRef = useRef<boolean>(false);
+  const prevPageKeyRef = useRef<string>(pageKey);
 
   // Bersihkan semua timer
   const clearAllTimers = () => {
@@ -87,34 +94,42 @@ export default function DialogPopup({
   // "berikan delay untuk menunjukkan pop up ini diawal selama 3 detik , karena saya mau diawal detik detik pertama user bisa menikmati background setiap halaman"
   useEffect(() => {
     if (!isOpen) {
-      isAlreadyOpenRef.current = false;
       clearAllTimers();
-      setIsInitialDelayPassed(false);
+      setIsInitialDelayPassed(initialDelayMs <= 0);
+      setCurrentIndex(0);
+      setVisibleWordsCount(0);
       return;
     }
 
-    // Hanya terapkan initialDelayMs saat dialog pertama kali dibuka dari tertutup ke terbuka
-    const shouldDelay = !isAlreadyOpenRef.current && initialDelayMs > 0;
-    isAlreadyOpenRef.current = true;
-
-    clearAllTimers();
-    setIsInitialDelayPassed(!shouldDelay);
-    setCurrentIndex(0);
-    setVisibleWordsCount(0);
-    setIsTyping(true);
-    setIsWaitingDelay(false);
-    setDelayRemaining(7.0);
-
-    if (shouldDelay) {
-      initialDelayTimeoutRef.current = setTimeout(() => {
-        setIsInitialDelayPassed(true);
-      }, initialDelayMs);
+    // Jika sudah lewat initial delay (sudah aktif), jangan reset saat parent re-render!
+    if (isInitialDelayPassed) {
+      return;
     }
+
+    if (initialDelayMs <= 0) {
+      setIsInitialDelayPassed(true);
+      return;
+    }
+
+    initialDelayTimeoutRef.current = setTimeout(() => {
+      setIsInitialDelayPassed(true);
+    }, initialDelayMs);
 
     return () => {
       if (initialDelayTimeoutRef.current) clearTimeout(initialDelayTimeoutRef.current);
     };
-  }, [pageKey, isOpen, initialDelayMs, dialogs]);
+  }, [isOpen, initialDelayMs, isInitialDelayPassed]);
+
+  // Reset dialog jika pageKey berganti
+  useEffect(() => {
+    if (prevPageKeyRef.current !== pageKey) {
+      prevPageKeyRef.current = pageKey;
+      clearAllTimers();
+      setCurrentIndex(0);
+      setVisibleWordsCount(0);
+      setIsInitialDelayPassed(initialDelayMs <= 0);
+    }
+  }, [pageKey, initialDelayMs]);
 
   // Efek animasi kata per kata (word-by-word, delay 0.10s) setelah initial delay 3 detik selesai
   useEffect(() => {
@@ -407,8 +422,30 @@ export default function DialogPopup({
                 </div>
               )}
 
+              {/* Render Food Showcase Item (Misal Makanan Khas Magetan di Warung Ngaso) */}
+              {currentItem.foodItem && (!isTyping || instantText) && (
+                <div className="dialog-food-showcase-box">
+                  <div className="dialog-food-showcase-img-wrap">
+                    <img
+                      src={currentItem.foodItem.image}
+                      alt={currentItem.foodItem.name}
+                      className="dialog-food-showcase-img"
+                      draggable={false}
+                    />
+                  </div>
+                  <div className="dialog-food-showcase-info">
+                    <span className="dialog-food-showcase-badge">
+                      {currentItem.foodItem.tag || "Panganan Khas Magetan"}
+                    </span>
+                    <span className="dialog-food-showcase-name">
+                      {currentItem.foodItem.name}
+                    </span>
+                  </div>
+                </div>
+              )}
+
               {/* Render Badge Reward jika dialog menghadiahkan item (misal: badge1.webp / tali.webp) */}
-              {currentItem.rewardItem && (!isTyping || instantText) && (
+              {!currentItem.foodItem && currentItem.rewardItem && (!isTyping || instantText) && (
                 <div className="dialog-reward-box">
                   <img
                     src={currentItem.rewardItem.image}

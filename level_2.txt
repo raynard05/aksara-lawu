@@ -53,46 +53,46 @@ a	ꦕꦤ꧀ꦝꦶꦕꦼꦛꦺꦴ
 b 	ꦕꦤ꧀ꦝꦶꦱꦢꦺꦴꦤ꧀
 
 jawaban =  a 
-task render gambar candi cetho
+task render gambar candi cetho + 
 
 2.  Kunci: B
 ꦕꦤ꧀ꦝꦶꦲꦥꦲꦶꦏꦶ?
 •	ꦕꦤ꧀ꦝꦶꦏꦼꦛꦺꦏ꧀
 •	ꦕꦤ꧀ꦝꦶꦱꦸꦏꦸꦃ
-teks render gambar candi sukuh 
+teks render gambar candi sukuh +
 
 3.Kunci: A
 ꦕꦤ꧀ꦝꦶꦲꦥꦲꦶꦏꦶ
 •	ꦕꦤ꧀ꦝꦶꦏꦼꦛꦺꦏ꧀
 •	ꦕꦤ꧀ꦝꦶꦕꦼꦛꦺꦴ
-teks render gambar candi kethek
+teks render gambar candi kethek + 
 
 4. Kunci: B
 ꦕꦤ꧀ꦝꦶꦲꦥꦲꦶꦏꦶ
 •	ꦕꦤ꧀ꦝꦶꦱꦸꦏꦸꦃ
 •	ꦕꦤ꧀ꦝꦶꦱꦢꦺꦴꦤ꧀
-teks render gambar candi sadon
+teks render gambar candi sadon +
 
 5. ꧋ꦕꦤ꧀ꦝꦶꦱꦸꦏꦸꦃꦢꦸꦩꦸꦤꦸꦁꦲꦶꦁꦏꦮꦱꦤ꧀ꦒꦸꦤꦸꦁꦲꦥ?
 ꦒꦸꦤꦸꦁꦭꦮꦸ
 ꦧ꧀꧈ꦒꦸꦤꦸꦁꦏꦼꦭꦸꦢ꧀
 
-JAWABAN = A 
+JAWABAN = A  +
 
 6. ꦕꦤ꧀ꦝꦶꦏꦼꦛꦺꦏ꧀ꦢꦸꦩꦸꦤꦸꦁꦲꦶꦁꦏꦧꦸꦥꦠꦺꦤ꧀ꦲꦼꦤ꧀ꦢꦶ?
 ꦔꦮꦶ
 ꦏꦫꦔꦚꦂ
-jawaban =  b 
+jawaban =  b +
 
 7. ꦕꦤ꧀ꦝꦶꦱꦢꦺꦴꦤ꧀ꦢꦸꦩꦸꦤꦸꦁꦲꦶꦁꦏꦮꦱꦤ꧀ꦒꦸꦤꦸꦁꦲꦥ?
 ꦩꦒꦺꦠꦤ꧀
 ꦏꦫꦔꦚꦂ
-jawaban  =  a
+jawaban  =  a +
 
 8. ꧋ꦕꦤ꧀ꦝꦶꦲꦥꦱꦶꦁꦢꦶꦏꦼꦤꦭ꧀ꦏꦤ꧀ꦛꦶꦮꦔꦸꦤ꧀ꦮꦔꦸꦤꦤ꧀ꦏꦪꦥꦶꦫꦩꦶꦣꦲꦸꦤ꧀ꦝꦏ꧀ꦲꦸꦤ꧀ꦝꦏꦤ꧀?
 •	ꦕꦤ꧀ꦝꦶꦱꦸꦏꦸꦃ
 •	ꦕꦤ꧀ꦝꦶꦱꦢꦺꦴꦤ꧀
-jawabaan = a 
+jawabaan = a  + 
 
 -------------------------------------
 scene 1 = 3 soal

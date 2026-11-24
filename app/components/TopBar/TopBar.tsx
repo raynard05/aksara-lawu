@@ -11,6 +11,7 @@ import "./topbar.css";
 // - gamemenus (/menu_game)
 // - menus (/menu)
 // - maps (/maps)
+// - pesanmakanan (/pesanmakanan)
 const EXCLUDED_ROUTES = [
   "/",
   "/login",
@@ -18,6 +19,7 @@ const EXCLUDED_ROUTES = [
   "/menu",
   "/menu_game",
   "/maps",
+  "/pesanmakanan",
 ];
 
 export default function TopBar() {
@@ -84,20 +86,38 @@ export default function TopBar() {
     };
   }, [pathname]);
 
-  // Jika berada di login, register, menu, menu_game, atau disembunyikan secara dinamis, jangan render TopBar
-  if (EXCLUDED_ROUTES.includes(pathname) || isTopBarHidden) {
+  // Jika berada di login, register, menu, menu_game, pesanmakanan, atau disembunyikan secara dinamis, jangan render TopBar
+  if (
+    EXCLUDED_ROUTES.includes(pathname) ||
+    pathname.startsWith("/pesanmakanan") ||
+    isTopBarHidden
+  ) {
     return null;
   }
 
-  // Cek apakah halaman saat ini adalah cemorosewu, openworld, atau level2_game untuk men-disable tombol bag dan maps
+  // Cek apakah halaman saat ini adalah cemorosewu, openworld, level2_game, atau semua sesi level 3 untuk men-disable tombol bag dan maps
   const isCemoroSewu = pathname === "/cemorosewu" || pathname.startsWith("/cemorosewu/");
   const isOpenWorld = pathname === "/openworld" || pathname.startsWith("/openworld/");
   const isLevel2Game = pathname === "/level2_game" || pathname.startsWith("/level2_game/");
+  const isLevel3 =
+    pathname === "/intro_level3" ||
+    pathname.startsWith("/intro_level3/") ||
+    pathname === "/level3" ||
+    pathname.startsWith("/level3/") ||
+    pathname === "/level3_game" ||
+    pathname.startsWith("/level3_game/") ||
+    pathname === "/pesanmakanan" ||
+    pathname.startsWith("/pesanmakanan/") ||
+    pathname === "/level3celebretion" ||
+    pathname.startsWith("/level3celebretion/") ||
+    pathname === "/level3celebration" ||
+    pathname.startsWith("/level3celebration/");
+
   // Cek apakah halaman saat ini adalah inventory untuk men-disable tombol bag
   const isInventory = pathname === "/inventory" || pathname.startsWith("/inventory/");
 
-  const isMapsDisabled = isCemoroSewu || isOpenWorld || isLevel2Game || inGameDisabled;
-  const isBagDisabled = isCemoroSewu || isOpenWorld || isLevel2Game || isInventory || inGameDisabled;
+  const isMapsDisabled = isCemoroSewu || isOpenWorld || isLevel2Game || isLevel3 || inGameDisabled;
+  const isBagDisabled = isCemoroSewu || isOpenWorld || isLevel2Game || isLevel3 || isInventory || inGameDisabled;
 
   // Aksi tombol peta / maps -> buka halaman peta
   const handleMaps = () => {

@@ -61,7 +61,7 @@ export const DEFAULT_WAYPOINTS: Waypoint[] = [
     levelNumber: 3,
     x: 45.7,
     y: 48.6,
-    route: "/level3",
+    route: "/intro_level3",
     bannerImg: "/maps/level3.webp",
     isLocked: true, // Lock dengan gembok.webp
   },
@@ -109,14 +109,18 @@ export default function MapsMainComponent({
   // State daftar ID item yang sudah pernah digunakake pemain (misal: "cardlevel2", "cardlevel3")
   const [usedItemIds, setUsedItemIds] = useState<string[]>([]);
 
+  // State apakah Cemoro Sewu sudah selesai dijelajahi
+  const [isCemoroSewuDone, setIsCemoroSewuDone] = useState<boolean>(false);
+
   // State titik aktif / posisi avatar saat ini di peta
-  // Default otomatis di titik ke-2 (Level 1) sesuai instruksi prompt
+  // Default otomatis di titik ke-2 (Level 1) sesuai instruksi prompt jika Cemoro Sewu selesai
   const [currentWaypointId, setCurrentWaypointId] = useState<number>(initialWaypointId);
 
   // Ambil data avatar terpilih dari sessionStorage/localStorage jika prop kosong/default
   const [selectedAvatar, setSelectedAvatar] = useState<string>(avatar);
 
   useEffect(() => {
+    let isCemoroDone = false;
     try {
       const storedAvatar =
         sessionStorage.getItem("aksara_lawu_selected_avatar") ||
@@ -125,7 +129,13 @@ export default function MapsMainComponent({
         setSelectedAvatar(storedAvatar);
       }
 
-      // Pastikan titik default diatur ke 2 (Level 1) setelah beranjak dari Cemoro Sewu
+      isCemoroDone =
+        sessionStorage.getItem("aksara_lawu_cemorosewu_completed") === "true" ||
+        localStorage.getItem("aksara_lawu_cemorosewu_completed") === "true";
+      setIsCemoroSewuDone(isCemoroDone);
+
+      // Pastikan titik default diatur: jika ada di sessionStorage gunakan itu,
+      // jika belum dan Cemoro Sewu sudah selesai default ke titik 2 (Level 1), jika belum ke titik 1 (Cemoro Sewu)
       const storedWp = sessionStorage.getItem("aksara_lawu_current_waypoint");
       if (storedWp) {
         const parsedWp = parseInt(storedWp, 10);
@@ -133,7 +143,7 @@ export default function MapsMainComponent({
           setCurrentWaypointId(parsedWp);
         }
       } else {
-        setCurrentWaypointId(2);
+        setCurrentWaypointId(isCemoroDone ? 2 : 1);
       }
     } catch {
       // ignore
@@ -164,6 +174,9 @@ export default function MapsMainComponent({
 
     const doneLvls = getCompletedLevels();
     setCompletedLevels(doneLvls);
+    if (doneLvls.includes(0)) {
+      setIsCemoroSewuDone(true);
+    }
 
     const handleLevelChange = (e: Event) => {
       const customEvent = e as CustomEvent<{ unlockedLevels: number[] }>;
@@ -176,6 +189,9 @@ export default function MapsMainComponent({
       const customEvent = e as CustomEvent<{ completedLevels: number[] }>;
       if (customEvent.detail && Array.isArray(customEvent.detail.completedLevels)) {
         setCompletedLevels(customEvent.detail.completedLevels);
+        if (customEvent.detail.completedLevels.includes(0)) {
+          setIsCemoroSewuDone(true);
+        }
       }
     };
 
@@ -232,8 +248,15 @@ export default function MapsMainComponent({
     activeWaypoints.find((wp) => wp.id === currentWaypointId) ||
     activeWaypoints[1]; // Fallback titik 2 (Level 1)
 
+  // Cek apakah waypoint saat ini adalah Cemoro Sewu (titik 1 / levelNumber 0)
+  const isCemoroPoint = currentWaypoint.id === 1 || currentWaypoint.levelNumber === 0;
+  const isCemoroCompleted = isCemoroSewuDone || completedLevels.includes(0);
+
   // Cek apakah waypoint saat ini sudah tuntas diselesaikan pemain
-  const isCurrentCompleted = completedLevels.includes(currentWaypoint.levelNumber);
+  const isCurrentCompleted = isCemoroPoint
+    ? isCemoroCompleted
+    : completedLevels.includes(currentWaypoint.levelNumber);
+
   const isButtonDisabled = isCurrentCompleted || currentWaypoint.isLocked;
 
   // Handler saat tombol Njlajahi diklik

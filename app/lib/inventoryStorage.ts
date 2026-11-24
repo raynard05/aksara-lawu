@@ -65,18 +65,25 @@ export function markItemUsed(itemId: string) {
 export function getCompletedLevels(): number[] {
   if (typeof window === "undefined") return [];
   try {
+    const isCemoroDone =
+      sessionStorage.getItem("aksara_lawu_cemorosewu_completed") === "true" ||
+      localStorage.getItem("aksara_lawu_cemorosewu_completed") === "true";
+
     const raw =
       sessionStorage.getItem(COMPLETED_LEVELS_KEY) ||
       localStorage.getItem(COMPLETED_LEVELS_KEY);
-    if (!raw) {
-      // Default: jika cemorosewu_completed = true, level 0 otomatis sudah tuntas
-      const isCemoroDone =
-        sessionStorage.getItem("aksara_lawu_cemorosewu_completed") === "true" ||
-        localStorage.getItem("aksara_lawu_cemorosewu_completed") === "true";
-      return isCemoroDone ? [0] : [];
+    let levels: number[] = [];
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) {
+        levels = parsed;
+      }
     }
-    const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : [];
+    // Jika Cemoro Sewu sudah selesai dijelajahi, level 0 selalu disertakan
+    if (isCemoroDone && !levels.includes(0)) {
+      levels = [0, ...levels];
+    }
+    return levels;
   } catch {
     return [];
   }
@@ -88,6 +95,10 @@ export function getCompletedLevels(): number[] {
 export function markLevelCompleted(levelNumber: number) {
   if (typeof window === "undefined") return;
   try {
+    if (levelNumber === 0) {
+      sessionStorage.setItem("aksara_lawu_cemorosewu_completed", "true");
+      localStorage.setItem("aksara_lawu_cemorosewu_completed", "true");
+    }
     const current = getCompletedLevels();
     if (!current.includes(levelNumber)) {
       const next = [...current, levelNumber];

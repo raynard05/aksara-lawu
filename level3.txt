@@ -1,0 +1,203 @@
+buatkan halaman intro_level3 copy dari halaman intro_level2 cuman bg , dialog , dan tag level nya diganti 
+semua asset ada di  \public\warungngaso
+bg diganti D:\aksara_lawu\public\warungngaso\bg_intro 
+
+halaman intro adalah redirect dari /maps level 3 
+dialog nya : 
+
+POS 3: WARUNG NGASO
+
+Sugeng rawuh ing Pos 3: Warung Ngaso!
+
+Sawise ngliwati lelampahan sadurunge, saiki wayahe ngaso sedhela ing warung kuliner khas Magetan. Ing warung iki, ana maneka warna panganan khas sing bisa ditemokake.
+
+Nanging, sadurunge bisa ngaso lan nikmati panganan, ana pesenan sing kudu dirampungake. Wacanen kertu pesenan sing ditulis nganggo Aksara Jawa kanthi tliti, banjur jupuken rong panganan sing cocog lan pindhahna menyang nampan.
+(dialog tambahan :  untuk melihat per pesanan tinggal klik tombol pesanan [displaykan pesanan.webp seperti tombol tombol yang ada di intro level 1 ] )
+Rampungna pesenan kanthi bener kanggo entuk Kode Warung Ngaso. Gunakna kode kasebut kanggo mbukak dalan menyang Pos 4!
+
+Ayo, wacanen pesenane lan jupuken panganan sing trep!
+
+
+
+- dialog  nya ditata secara rapi per slide 
+--------------------------------------------------------------------------------------------
+poin 2 
+buatkan halaman level 3 page 1 dengan \public\warungngaso\bgwarung
+ini adalah lanjutan dari klik tombol miwiti level 3 di intro_level 3 
+
+berikan dialog karakter yang sudah ada komponen nya dan karakternya pake asset penjagawarung.webp 
+dialognya ubah ke bahasa jawa ngoko  : 
+"selamat datang di warung ngaso , tempat beristirahat para pendaki"
+"kita menyediakan beberapa makanan khas magetan " 
+( tampilkan satu per satu dan jadikan beda slide beserta gambarnya semua asset makanan ada disini D:\aksara_lawu\public\warungngaso\makanan , nah waktu nampilkan makanannya tampilkan juga nama makanan nya , nama makanan ada di nama per asset makanannya ) ,
+
+"mari ambil makanan yang kamu inginkan sesuai kertas pesanan , ambil makanan dan taruh ke nampan"(nah ada tombol "ambil makanan" yang redirect ke halaman /pesanmakanan )
+
+-----------------------------------------------------------------------------------------------
+
+poin 3 
+
+buatkan halaman  level3 page 2 , semua asset ada di D:\aksara_lawu\public\warungngaso
+
+bg =  bg_order.webp
+
+task : 
+buatkan konsep seperti minecraft gitu jadi gini , disisi kiri render menu .webp dan sisi kanan  nampan.webp
+nah render semua makanan di dalam frame kosong di komponen  menu.webp tadi semua asset makanan ada di  D:\aksara_lawu\public\warungngaso\makanan
+kemudian sistemnya itu drag and drop ke nampan gitu , ketika asset per makanan nya di hold itu ada display nama per makanan nya tetapi dalam aksara jawa 
+
+ini adalah aksara jawa per makanan : 
+
+Tepo Tahu : ꦠꦺꦥꦺꦴꦠꦲꦸ
+Sego Rogoh : ꦱꦼꦒꦺꦴꦫꦺꦴꦒꦺꦴꦃ  
+Jenang Candi : ꦗꦼꦤꦁ ꦕꦤ꧀ꦢꦶ
+Kerupuk Lempeng : ꦏꦼꦫꦸꦥꦸꦏ꧀ ꦭꦼꦩ꧀ꦥꦼꦁ
+Bolu Magetan : ꦧꦺꦴꦭꦸꦩꦒꦼꦠꦤ꧀
+Ayam Panggang Gandu : ꦲꦪꦩ꧀ꦥꦁꦒꦁꦒꦤ꧀ꦢꦸ
+
+nah displaykan saja aksara jawa nya jangan menggunakan latin . 
+nah drop area nya nampan ya ketika makanan di drop dari menu ke nampan itu seluruh nampan ya area drop nya biar mudah buat ngedrop , dan ditata makanannya dalam nampan sesuai asset yang di drop
+makanan yang didrop ke nampan harus sesuai pesanan  
+
+-render pesanan.webp  di kotak pojok bawah kanan nah ini untuk membaca pesanan , nah ketika tombol pesanan dipencet akan merender pesananpendaki.webp 
+nah berikan dark bg transparant yang mengfokuskan pesananpendaki.webp sebagai pop up agar pesanan bisa dibaca dengan baik kemudian dibawahnya ada tombol "kembali ke menu"  tetapi dengan bahasa jawa ngoko
+
+pesanan ada 50 pesanan cuman sistem memilih 1 pesanan dibawah ini secara acak dan ditampilkan diatas asset pesanan pendaki, jika makanan yang di drop tidak sesuai nampan bergetar dan sisi sisi screen akan memerah sementara
+dan beri juga status berapa makanan yang sudah berhasil.
+
+dibawah ini adalah list 50 pesanan sistem harus memilih salah satu  dari versi aksara jawa (ini adalah latin dan translasi aksara jawanya jadi cocok per nomermnya) 
+
+latin 
+1.	Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen tepo tahu sing rasane legi, gurih, lan pedhes, uga jenang candi lan sego rogoh. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+2.	Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen sego rogoh sing disajikake nganggo kendil, uga kerupuk lempeng lan bolu Magetan. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+3.	Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen ayam panggang Gandu sing dipanggang nganggo kayu bakar, uga tepo tahu lan jenang candi. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+4.	Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen jenang candi saka Desa Candi, uga bolu Magetan lan kerupuk lempeng. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+5.	Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen bolu Magetan sing kalebu jajanan panggang, uga sego rogoh lan ayam panggang Gandu. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+6.	Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen kerupuk lempeng, uga tepo tahu lan ayam panggang Gandu. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+7.	Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen tepo tahu sing disajikake nganggo kuah, uga bolu Magetan lan kerupuk lempeng. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+8.	Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen sego rogoh saka Desa Pacalan, Plaosan, uga jenang candi lan ayam panggang Gandu. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+9.	Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen ayam panggang Gandu saka Kampung Gandu, uga bolu Magetan lan sego rogoh. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+10.	Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen jenang candi, uga tepo tahu lan kerupuk lempeng. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+11. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen bolu Magetan sing kalebu panganan panggang, uga tepo tahu lan sego rogoh. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+12. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen kerupuk lempeng sing kalebu panganan tradisional Magetan, uga jenang candi lan ayam panggang Gandu. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+13. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen tepo tahu sing nganggo kuah legi, gurih, lan pedhes, uga ayam panggang Gandu lan bolu Magetan. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+14. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen jenang candi saka Desa Candi, uga sego rogoh lan kerupuk lempeng. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+15. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen sego rogoh sing disajikake nganggo kendil, uga tepo tahu lan bolu Magetan. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+16. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen ayam panggang Gandu sing misuwur saka Kampung Gandu, uga jenang candi lan sego rogoh. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+17. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen bolu Magetan, yaiku salah siji jajanan panggang, uga kerupuk lempeng lan ayam panggang Gandu. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+18. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen tepo tahu lan sego rogoh sing kalebu panganan tradhisional, uga jenang candi. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+19. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen kerupuk lempeng lan bolu Magetan kanggo oleh-oleh, uga tepo tahu. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+20. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen ayam panggang Gandu sing dimasak kanthi cara dipanggang, uga kerupuk lempeng lan sego rogoh. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+21. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen jenang candi sing ana gandhengane karo tradhisi mantenan ing Desa Candi, uga bolu Magetan lan tepo tahu. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+22. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen sego rogoh saka Desa Pacalan, Plaosan, uga ayam panggang Gandu lan kerupuk lempeng. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+23. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen tepo tahu sing nduweni rasa legi, gurih, lan pedhes, uga bolu Magetan lan jenang candi. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+24. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen kerupuk lempeng sing dadi kuliner tradisional daerah, uga sego rogoh lan ayam panggang Gandu. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+25. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen bolu Magetan sing awujud kue panggang, uga jenang candi lan sego rogoh. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+26. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen ayam panggang Gandu saka Karangrejo, uga tepo tahu lan kerupuk lempeng. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+27. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen jenang candi lan sego rogoh, uga bolu Magetan sing kalebu jajanan panggang. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+28. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen tepo tahu, yaiku panganan kanthi kuah legi, gurih, lan pedhes, uga sego rogoh lan kerupuk lempeng. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+29. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen ayam panggang Gandu sing dipanggang nganggo kayu bakar, uga bolu Magetan lan jenang candi. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+30. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen sego rogoh sing disajikake ing kendil, uga tepo tahu lan ayam panggang Gandu. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+31. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen kerupuk lempeng, panganan tradisional Magetan, uga bolu Magetan lan jenang candi. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+32. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen bolu Magetan sing kalebu jajanan panggang, uga ayam panggang Gandu lan tepo tahu. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+33. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen jenang candi sing gegayutan karo adat mantenan, uga kerupuk lempeng lan sego rogoh. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+34. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen sego rogoh saka wilayah Plaosan, uga bolu Magetan lan tepo tahu. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+35. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen ayam panggang Gandu sing dadi kuliner saka Kampung Gandu, uga sego rogoh lan jenang candi. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+36. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen tepo tahu lan bolu Magetan, uga kerupuk lempeng sing dadi salah siji panganan tradisional Magetan. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+37. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen jenang candi saka Desa Candi, uga ayam panggang Gandu lan tepo tahu. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+38. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen sego rogoh sing disajikake nganggo kendil, uga kerupuk lempeng lan ayam panggang Gandu. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+39. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen bolu Magetan, salah siji jajanan panggang, uga jenang candi lan kerupuk lempeng. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+40. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen ayam panggang Gandu sing dipanggang nganggo kayu bakar, uga sego rogoh lan bolu Magetan. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+41. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen tepo tahu sing rasane legi, gurih, lan pedhes, uga jenang candi lan kerupuk lempeng. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+42. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen sego rogoh saka Desa Pacalan, uga bolu Magetan lan jenang candi. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+43. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen kerupuk lempeng sing kalebu kuliner tradisional Magetan, uga ayam panggang Gandu lan tepo tahu. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+44. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen jenang candi sing gegayutan karo tradhisi mantenan, uga sego rogoh lan bolu Magetan. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+45. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen ayam panggang Gandu saka Kampung Gandu, uga kerupuk lempeng lan jenang candi. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+46. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen bolu Magetan sing kalebu panganan panggang, uga tepo tahu lan ayam panggang Gandu. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+47. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen sego rogoh sing disajikake nganggo kendil, uga kerupuk lempeng lan tepo tahu. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+48. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen jenang candi saka Desa Candi, uga bolu Magetan lan ayam panggang Gandu. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+49. Dina iki warungku nyedhiyakake maneka warna panganan tradisional Magetan. Kowe arep pesen tepo tahu sing rasane legi, gurih, lan pedhes, uga sego rogoh lan ayam panggang Gandu. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+50. Dina iki warungku nyedhiyakake maneka warna panganan tradhisional Magetan. Kowe arep pesen kerupuk lempeng sing dadi salah siji kuliner tradisional Magetan, uga jenang candi lan bolu Magetan. Sawise kuwi, pilih panganan sing cocog karo pesenanmu lan selehna ing nampan.
+
+aksara jawa
+
+1.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀ꦠꦺꦥꦺꦴꦠꦲꦸꦱꦶꦁꦫꦱꦤꦺꦭꦼꦒꦶ꧈ꦒꦸꦫꦶꦃ꧈ꦭꦤ꧀ꦥꦼꦣꦼꦱ꧀‌ꦲꦸꦒꦗꦼꦤꦁꦕꦤ꧀ꦢꦶꦭꦤ꧀ꦱꦼꦒꦺꦴꦫꦺꦴꦒꦺꦴꦃ꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+2.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀ꦱꦼꦒꦺꦴꦫꦺꦴꦒꦺꦴꦃꦱꦶꦁꦢꦶꦱꦗꦶꦏꦏꦺꦔꦁꦒꦺꦴꦏꦼꦤ꧀ꦢꦶꦭ꧀ꦲꦸꦒꦏꦼꦫꦸꦥꦸꦏ꧀ꦭꦼꦩ꧀ꦥꦼꦁ ꦭꦤ꧀ꦧꦺꦴꦭꦸꦩꦒꦼꦠꦤ꧀꧈ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+3.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀ꦲꦪꦩ꧀ꦥꦁꦒꦁꦒꦤ꧀ꦢꦸꦱꦶꦁꦢꦶꦥꦁꦒꦁꦔꦁꦒꦺꦴꦏꦪꦸꦧꦏꦂ꧈ꦲꦸꦒꦠꦺꦥꦺꦴꦠꦲꦸꦭꦤ꧀ꦗꦼꦤꦁꦕꦤ꧀ꦢꦶ꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈ 
+4.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀ꦗꦼꦤꦁꦕꦤ꧀ꦢꦶꦱꦏꦢꦺꦱꦕꦤ꧀ꦢꦶ꧈ꦲꦸꦒꦧꦺꦴꦭꦸꦩꦒꦼꦠꦤ꧀ꦭꦤ꧀ꦏꦼꦫꦸꦥꦸꦏ꧀ꦭꦼꦩ꧀ꦥꦼꦁ꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+5.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀ꦧꦺꦴꦭꦸꦩꦒꦼꦠꦤ꧀ꦱꦶꦁꦏꦭꦼꦧꦸꦗꦗꦤꦤ꧀ꦥꦁꦒꦁ꧈ꦲꦸꦒꦱꦼꦒꦺꦴꦫꦺꦴꦒꦺꦴꦃ ꦭꦤ꧀ꦲꦪꦩ꧀ꦥꦁꦒꦁꦒꦤ꧀ꦢꦸ꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+6.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀ꦏꦼꦫꦸꦥꦸꦏ꧀ꦭꦼꦩ꧀ꦥꦼꦁ꧈ꦲꦸꦒꦠꦺꦥꦺꦴꦠꦲꦸꦭꦤ꧀ꦲꦪꦩ꧀ꦥꦁꦒꦁꦒꦤ꧀ꦝꦸ꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+7.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀ꦠꦺꦥꦺꦴꦠꦲꦸꦱꦶꦁꦢꦶꦱꦗꦶꦏꦏꦺꦔꦁꦒꦺꦴꦏꦸꦮꦃ꧈ꦲꦸꦒꦧꦺꦴꦭꦸꦩꦒꦺꦠꦤ꧀ꦭꦤ꧀ꦏꦼꦫꦸꦥꦸꦏ꧀ꦭꦼꦩ꧀ꦥꦼꦁ꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+8.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀ꦱꦼꦒꦺꦴꦫꦺꦴꦒꦺꦴꦃꦱꦏꦢꦺꦱꦥꦕꦭꦤ꧀ ꦲꦸꦒꦗꦼꦤꦁꦕꦤ꧀ꦢꦶꦭꦤ꧀ꦲꦪꦩ꧀ꦥꦁꦒꦁꦒꦤ꧀ꦢꦸ꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+9.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀ꦲꦪꦩ꧀ꦥꦁꦒꦁꦒꦤ꧀ꦢꦸꦱꦏꦏꦩ꧀ꦥꦸꦁꦒꦤ꧀ꦢꦸ꧈ꦲꦸꦒꦧꦺꦴꦭꦸꦩꦒꦼꦠꦤ꧀ꦭꦤ꧀ꦱꦼꦒꦺꦴꦫꦺꦴꦒꦺꦴꦃ꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+10.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀ꦗꦼꦤꦁꦕꦤ꧀ꦢꦶ꧈ꦲꦸꦒꦠꦺꦥꦺꦴꦠꦲꦸꦭꦤ꧀ꦏꦼꦫꦸꦥꦸꦏ꧀ꦭꦼꦩ꧀ꦥꦼꦁ꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+
+11.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+12.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+13.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+14.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+15.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+16.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+17.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+18.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+19.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+20.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+21.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+22.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+23.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+24.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+25.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+26.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+27.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+28.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+29.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+30.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+31.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+32.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+33.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+34.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+35.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+36.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+37.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+38.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+39.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+40.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+41.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+42.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+43.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+44.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+45.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+46.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+47.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+48.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+49.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+50.	꧋ꦢꦶꦤꦲꦶꦏꦶꦮꦫꦸꦁꦏꦸꦚꦼꦣꦶꦪꦏꦏꦺꦩꦤꦺꦏꦮꦂꦤꦥꦔꦤꦤ꧀ꦠꦿꦣꦶꦱꦶꦪꦺꦴꦤꦭ꧀ꦩꦒꦼꦠꦤ꧀꧈ꦏꦺꦴꦮꦺꦲꦫꦼꦥ꧀ꦥꦼꦱꦼꦤ꧀꧈꧉꧉꧉꧉ꦱꦮꦶꦱꦺꦏꦸꦮꦶ꧈ꦥꦶꦭꦶꦃꦥꦔꦤꦤ꧀ꦱꦶꦁꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴꦥꦼꦱꦼꦤꦤ꧀ꦩꦸꦭꦤ꧀ꦱꦺꦭꦺꦃꦤꦲꦶꦁꦤꦩ꧀ꦥꦤ꧀꧈
+
+--------------------------------------------------------------------------------------------------------------
+poin 4 
+
+ini adalah halaman scene khusus mendapatkan kartu dari berhasil nya memesan makanan di /pesanmakanan
+
+-tetap di halaman /pesanmakanan ,ketika sudah berhasil beri dialog dari karakter penjaga warung 
+dialog nya "selamat menikmati makanan nya ! , sebelum kamu melanjutkan perjalanan aku ada sesuatu buat kamu" 
+tetapi dalam bahasa jawa ngoko 
+
+kemudian setelahnya redirect ke halaman level 3 page /level3celebretion
+nah disini adalah halaman selebrasi untuk mendapatkan kartu akses ke level selanjutnya 
+nah untuk sistem alur nya : 
+
+tampilkan bgclose , bg chest , bg done webp 
+
+tetapi buatkan tombol tahan dan ada bar seperti mengisi tombol nya sinkron dengan logic hold seperti"buka lemari" untuk perpindahan bg dari bg close ke bg chest 
+kemuan ketika sudah di halaman bg chest , buatkan tombol yang sama cuman teksnya berbeda "buka peti" untuk perpindahan halaamn ke bg done.webp
+nah ketika sudah ke bg done tambpilkan pop up yang yang menampilkan kartu level berikutnya jadi pop nya bukan di setelah memesan makanan 
+
+
+berikan confetti disaat pop up muncul 
+
+diawal di halaman bg close , berikan dialog tambahan dari penjaga warung dalam bahasa jawa ngoko 
+"untuk membuka lemari dan peti klik dan tahan tombol dibawah"   
+
+
+
+

@@ -1,0 +1,910 @@
+/* =============================================
+   PESAN MAKANAN PAGE — pesanmakanan.css
+   Mengikuti AIrule.txt:
+   - File CSS & TSX dipisah (rule 1 & 11)
+   - Class selector unik ber-prefix: pm- (Pesan Makanan) (rule 12)
+   - Menggunakan satuan vh / vw untuk responsif (rule 4 & 6)
+   - Zoom-lock & konsistensi device (rule 16)
+   - Background murni asset bg_order.webp (rule 14 & 17)
+   ============================================= */
+
+/* Container Utama Halaman Pesan Makanan */
+.pm-root {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  user-select: none;
+  background-color: #120b06;
+  background-image: url('/warungngaso/bg_order.webp');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  font-family: var(--font-rubik), 'Rubik Mono One', sans-serif;
+}
+
+.pm-viewport {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Efek pencahayaan hangat khas warung malam */
+.pm-ambient-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 30%,
+      rgba(255, 200, 100, 0.12) 0%,
+      rgba(0, 0, 0, 0.45) 80%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* =============================================
+   EFEK FLASH MERAH PADA SISI LAYAR (WRONG FOOD)
+   ============================================= */
+.pm-screen-red-flash {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 90;
+  box-shadow: inset 0 0 8vw 4vh rgba(255, 0, 0, 0.85);
+  background: rgba(255, 0, 0, 0.12);
+  animation: pmRedEdgePulse 0.55s ease-in-out forwards;
+}
+
+@keyframes pmRedEdgePulse {
+  0% {
+    opacity: 0;
+    box-shadow: inset 0 0 2vw 1vh rgba(255, 0, 0, 0.2);
+  }
+
+  30% {
+    opacity: 1;
+    box-shadow: inset 0 0 10vw 5vh rgba(255, 0, 0, 0.95);
+  }
+
+  100% {
+    opacity: 0;
+    box-shadow: inset 0 0 2vw 1vh rgba(255, 0, 0, 0);
+  }
+}
+
+/* =============================================
+   HEADER BAR & STATUS PROGRESS
+   ============================================= */
+.pm-header-bar {
+  position: absolute;
+  top: 2.2vh;
+  left: 3vw;
+  right: 3vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 25;
+}
+
+.pm-header-left {
+  display: flex;
+  align-items: center;
+  gap: 1.5vw;
+}
+
+.pm-btn-back {
+  background: #3b2210;
+  background-image: linear-gradient(180deg, #4d2b14 0%, #291508 100%);
+  border: 0.25vw solid #eed28a;
+  border-radius: 1.8vh;
+  color: #eed688;
+  font-family: inherit;
+  font-size: 1.1vw;
+  font-weight: 700;
+  padding: 0.9vh 1.6vw;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5vw;
+  box-shadow:
+    inset 0 0.2vh 0.4vh rgba(255, 230, 160, 0.3),
+    0 0.6vh 1.4vh rgba(0, 0, 0, 0.6);
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.pm-btn-back:hover {
+  transform: scale(1.04);
+  filter: brightness(1.15);
+}
+
+.pm-btn-back:active {
+  transform: scale(0.96);
+}
+
+.pm-header-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.8vw;
+  padding: 0.9vh 1.8vw;
+  background: rgba(35, 18, 7, 0.88);
+  border: 0.2vw solid #7c481e;
+  border-radius: 1.8vh;
+  box-shadow: 0 0.5vh 1.2vh rgba(0, 0, 0, 0.55);
+}
+
+.pm-header-dot {
+  width: 0.9vw;
+  height: 0.9vw;
+  background: #f1b33b;
+  border-radius: 50%;
+  box-shadow: 0 0 0.8vw #f1b33b;
+  animation: pmDotPulse 2s infinite ease-in-out;
+}
+
+@keyframes pmDotPulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+
+  50% {
+    transform: scale(1.25);
+    opacity: 1;
+  }
+}
+
+.pm-header-title {
+  color: #ffd88a;
+  font-size: 1.15vw;
+  letter-spacing: 0.05vw;
+  text-shadow: 0 0.2vh 0.4vh rgba(0, 0, 0, 0.8);
+}
+
+/* Status Counter: Panganan kasil diselehake */
+.pm-progress-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.8vw;
+  padding: 0.9vh 1.6vw;
+  background: #2b170a;
+  background-image: linear-gradient(180deg, #3d200e 0%, #1e0d04 100%);
+  border: 0.25vw solid #f1b33b;
+  border-radius: 1.8vh;
+  box-shadow: 0 0.6vh 1.5vh rgba(0, 0, 0, 0.6);
+}
+
+.pm-progress-label {
+  color: #eed688;
+  font-size: 1.1vw;
+  font-weight: 700;
+}
+
+.pm-progress-dots {
+  display: flex;
+  align-items: center;
+  gap: 0.4vw;
+}
+
+.pm-progress-dot {
+  width: 1vw;
+  height: 1vw;
+  border-radius: 50%;
+  background: #4a2d16;
+  border: 0.15vw solid #7a4820;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.pm-progress-dot.pm-progress-dot-active {
+  background: #39e365;
+  border-color: #ffffff;
+  box-shadow: 0 0 0.8vw #39e365;
+  transform: scale(1.2);
+}
+
+/* =============================================
+   NOTIFIKASI / TOAST FEEDBACK
+   ============================================= */
+.pm-toast-banner {
+  position: absolute;
+  top: 10vh;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 0.8vw;
+  padding: 0.9vh 2.2vw;
+  border-radius: 1.8vh;
+  font-size: 1.1vw;
+  font-weight: 700;
+  box-shadow: 0 0.8vh 2vh rgba(0, 0, 0, 0.7);
+  animation: pmToastSlide 0.35s cubic-bezier(0.34, 1.3, 0.64, 1) forwards;
+}
+
+@keyframes pmToastSlide {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -1.5vh) scale(0.95);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
+.pm-toast-banner.pm-toast-error {
+  background: #7a1515;
+  border: 0.25vw solid #ff5555;
+  color: #ffffff;
+  text-shadow: 0 0.2vh 0.4vh rgba(0, 0, 0, 0.8);
+}
+
+.pm-toast-banner.pm-toast-success {
+  background: #145e28;
+  border: 0.25vw solid #39e365;
+  color: #ffffff;
+  text-shadow: 0 0.2vh 0.4vh rgba(0, 0, 0, 0.8);
+}
+
+/* =============================================
+   MAIN WORKBENCH: MENU (KIRI) & NAMPAN (KANAN)
+   ============================================= */
+.pm-workbench {
+  position: absolute;
+  top: 46%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4vw;
+  width: 92vw;
+  z-index: 10;
+}
+
+/* ---------------------------------------------
+   KOMPONEN SISI KIRI: MENU.WEBP DENGAN 6 FRAME
+   --------------------------------------------- */
+.pm-menu-wrapper {
+  position: relative;
+  width: 44vw;
+  height: 16.7vw;
+  /* Rasio asli 809:306 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 1.2vh 2.5vh rgba(0, 0, 0, 0.75));
+}
+
+.pm-menu-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+}
+
+/* 6 Slot Makanan di atas menu.webp */
+.pm-food-slot {
+  position: absolute;
+  top: 41.2%;
+  height: 30.4%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  outline: none;
+  border-radius: 1vh;
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 15;
+}
+
+.pm-food-slot:active {
+  cursor: grabbing;
+}
+
+/* Penempatan 6 slot sesuai koordinat pixel menu.webp */
+.pm-food-slot-0 {
+  left: 10.75%;
+  width: 12%;
+}
+
+.pm-food-slot-1 {
+  left: 24.2%;
+  width: 11.9%;
+}
+
+.pm-food-slot-2 {
+  left: 37.6%;
+  width: 11.9%;
+}
+
+.pm-food-slot-3 {
+  left: 50.7%;
+  width: 12%;
+}
+
+.pm-food-slot-4 {
+  left: 64.0%;
+  width: 12%;
+}
+
+.pm-food-slot-5 {
+  left: 77.4%;
+  width: 12%;
+}
+
+/* Gambar Makanan dalam slot */
+.pm-food-img {
+  width: 82%;
+  height: 82%;
+  object-fit: contain;
+  pointer-events: auto;
+  filter: drop-shadow(0 0.5vh 0.8vh rgba(0, 0, 0, 0.5));
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s ease;
+}
+
+.pm-food-slot:hover .pm-food-img,
+.pm-food-slot.pm-food-slot-selected .pm-food-img {
+  transform: scale(1.18);
+  filter: drop-shadow(0 0.8vh 1.4vh rgba(255, 215, 0, 0.75));
+}
+
+/* Indikator slot terpilih (Click-to-place untuk layar sentuh / kenyamanan user) */
+.pm-food-slot.pm-food-slot-selected {
+  box-shadow:
+    0 0 0 0.25vw #ffd88a,
+    0 0 1.2vw rgba(255, 216, 138, 0.85);
+  background: rgba(255, 216, 138, 0.18);
+}
+
+/* Status jika makanan sudah berada di nampan */
+.pm-food-slot.pm-food-slot-placed {
+  opacity: 0.45;
+  filter: grayscale(0.5);
+}
+
+.pm-food-slot.pm-food-slot-placed:hover .pm-food-img {
+  transform: scale(1.05);
+}
+
+/* Tooltip Teks Aksara Jawa saat Makanan di-hold / di-hover */
+.pm-food-tooltip-aksara {
+  position: absolute;
+  top: -4.8vh;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #251307;
+  border: 0.2vw solid #ffd88a;
+  border-radius: 1.2vh;
+  padding: 0.4vh 1.2vw;
+  color: #ffd88a;
+  font-family: var(--font-javanese), 'Noto Sans Javanese', sans-serif;
+  font-size: 1.45vw;
+  font-weight: 700;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 30;
+  box-shadow: 0 0.6vh 1.5vh rgba(0, 0, 0, 0.8);
+  animation: pmTooltipPop 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes pmTooltipPop {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(0.8vh) scale(0.9);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+/* ---------------------------------------------
+   KOMPONEN SISI KANAN: NAMPAN.WEBP (DROP ZONE)
+   --------------------------------------------- */
+.pm-nampan-wrapper {
+  position: relative;
+  width: 40vw;
+  height: 22.6vw;
+  /* Rasio asli 713:402 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 1.4vh 2.8vh rgba(0, 0, 0, 0.8));
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+  border-radius: 2vh;
+}
+
+.pm-nampan-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+}
+
+/* Animasi getar saat makanan salah di-drop */
+.pm-nampan-wrapper.pm-nampan-shaking {
+  animation: pmNampanShake 0.55s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes pmNampanShake {
+
+  10%,
+  90% {
+    transform: translate3d(-0.4vw, 0, 0) rotate(-1deg);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(0.6vw, 0, 0) rotate(1.5deg);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-0.6vw, 0, 0) rotate(-1.5deg);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(0.6vw, 0, 0) rotate(1deg);
+  }
+}
+
+/* Highlight saat drag over nampan */
+.pm-nampan-wrapper.pm-nampan-dragover {
+  transform: scale(1.03);
+  box-shadow:
+    0 0 0 0.35vw #39e365,
+    0 0 2vw rgba(57, 227, 101, 0.65);
+}
+
+/* Label Panduan Drag / Drop di Nampan Kosong */
+.pm-nampan-hint {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(30, 16, 7, 0.82);
+  border: 0.15vw solid #ffd88a;
+  border-radius: 1.2vh;
+  padding: 0.5vh 1.4vw;
+  color: #eed688;
+  font-size: 0.9vw;
+  font-weight: 700;
+  white-space: nowrap;
+  pointer-events: none;
+  text-shadow: 0 0.2vh 0.4vh rgba(0, 0, 0, 0.8);
+  box-shadow: 0 0.4vh 1vh rgba(0, 0, 0, 0.5);
+}
+
+/* Area Makanan yang Berhasil Ditata di Nampan */
+.pm-tray-food-slot {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  animation: pmFoodDropIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes pmFoodDropIn {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translateY(-3vh) scale(0.6);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) translateY(0) scale(1);
+  }
+}
+
+/* Penataan 3 makanan di atas nampan agar rapi dan tidak tumpang tindih */
+.pm-tray-food-slot-0 {
+  top: 48%;
+  left: 28%;
+  width: 11vw;
+  height: 11vw;
+}
+
+.pm-tray-food-slot-1 {
+  top: 40%;
+  left: 52%;
+  width: 11.5vw;
+  height: 11.5vw;
+}
+
+.pm-tray-food-slot-2 {
+  top: 55%;
+  left: 74%;
+  width: 10.5vw;
+  height: 10.5vw;
+}
+
+.pm-tray-food-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0.8vh 1.6vh rgba(0, 0, 0, 0.7));
+}
+
+/* =============================================
+   TOMBOL PESANAN (PESANAN.WEBP) DI POJOK KANAN BAWAH
+   ============================================= */
+.pm-pesanan-btn-wrapper {
+  position: absolute;
+  left: 91.2%;
+  top: 86.8%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 25;
+  cursor: pointer;
+  background: none;
+  border: none;
+  outline: none;
+  padding: 0;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s ease;
+}
+
+.pm-pesanan-btn-wrapper:hover {
+  transform: translate(-50%, -50%) scale(1.08);
+  filter: brightness(1.15);
+}
+
+.pm-pesanan-btn-wrapper:active {
+  transform: translate(-50%, -50%) scale(0.95);
+}
+
+.pm-pesanan-btn-img {
+  width: 8.8vw;
+  height: 7.4vw;
+  object-fit: contain;
+  filter: drop-shadow(0 0.8vh 1.6vh rgba(0, 0, 0, 0.75));
+}
+
+/* =============================================
+   MODAL POP UP KERTAS PESENAN (PESANANPENDAKI.WEBP)
+   ============================================= */
+.pm-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(0.4vh);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2vh 2vw;
+  animation: pmFadeIn 0.25s ease-out forwards;
+}
+
+@keyframes pmFadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.pm-order-modal-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: pmModalScale 0.3s cubic-bezier(0.34, 1.3, 0.64, 1) forwards;
+}
+
+@keyframes pmModalScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.85) translateY(2vh);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Parchment Scroll Wrapper */
+.pm-parchment-wrapper {
+  position: relative;
+  width: 58vw;
+  max-width: 86.4vh;
+  aspect-ratio: 2169 / 1982;
+  height: auto;
+  max-height: 79vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 1.5vh 3vh rgba(0, 0, 0, 0.85));
+}
+
+.pm-parchment-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+/* Teks Pesanan di atas parchment */
+.pm-parchment-content {
+  position: absolute;
+  top: 28%;
+  left: 13%;
+  right: 9%;
+  bottom: 11%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: safe center;
+  text-align: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0.5vh 1.2vw;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(124, 72, 30, 0.45) transparent;
+}
+
+.pm-parchment-content::-webkit-scrollbar {
+  width: 0.4vw;
+}
+
+.pm-parchment-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.pm-parchment-content::-webkit-scrollbar-thumb {
+  background: rgba(124, 72, 30, 0.45);
+  border-radius: 0.5vw;
+}
+
+.pm-order-heading {
+  color: #4a270f;
+  font-size: 1.25vw;
+  font-weight: 800;
+  letter-spacing: 0.05vw;
+  margin-bottom: 0.3vh;
+  text-shadow: 0 0.1vh 0.2vh rgba(255, 255, 255, 0.4);
+}
+
+.pm-order-id-sub {
+  color: #7a4620;
+  font-size: 0.95vw;
+  font-weight: 700;
+  margin-bottom: 1.8vh;
+}
+
+/* Teks Aksara Jawa Pesanan */
+.pm-order-text-aksara {
+  font-family: var(--font-javanese), 'Noto Sans Javanese', sans-serif;
+  font-size: 1.38vw;
+  line-height: 1.85;
+  color: #241207;
+  font-weight: 600;
+  text-align: center;
+  word-break: break-word;
+  text-shadow: 0 0.05vh 0.1vh rgba(255, 255, 255, 0.3);
+  margin: auto 0;
+}
+
+/* Tombol Kembali ke Menu (Bahasa Jawa Ngoko) */
+.pm-btn-close-order {
+  margin-top: 1.4vh;
+  background: #3b2210;
+  background-image: linear-gradient(180deg, #4d2b14 0%, #291508 100%);
+  border: 0.25vw solid #ffd88a;
+  border-radius: 1.8vh;
+  color: #ffd88a;
+  font-family: inherit;
+  font-size: 1.2vw;
+  font-weight: 700;
+  padding: 1vh 2.4vw;
+  cursor: pointer;
+  box-shadow:
+    inset 0 0.2vh 0.4vh rgba(255, 230, 160, 0.3),
+    0 0.8vh 2vh rgba(0, 0, 0, 0.7);
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.18s ease;
+}
+
+.pm-btn-close-order:hover {
+  transform: scale(1.06);
+  filter: brightness(1.15);
+}
+
+.pm-btn-close-order:active {
+  transform: scale(0.96);
+}
+
+/* =============================================
+   MODAL VICTORY / TUNTAS PESANAN (KARTU LEVEL 4 - MIRIP LEVEL 2)
+   ============================================= */
+.pm-victory-modal-card {
+  position: relative;
+  width: 40vw;
+  max-height: 75vh;
+  background: #3e2211;
+  background-image: linear-gradient(180deg, #532e17 0%, #3a1f0f 70%, #261307 100%);
+  border: 0.5vh solid #946036;
+  border-radius: 3vh;
+  padding: 2.2vh 2.5vw 2.5vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: none;
+  animation: pmShineGlow 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes pmShineGlow {
+  0% {
+    border-color: #946036;
+  }
+
+  50% {
+    border-color: #f39c12;
+  }
+
+  100% {
+    border-color: #ffd700;
+  }
+}
+
+.pm-victory-title {
+  font-family: var(--font-rubik-one), sans-serif;
+  font-size: 2.8vh;
+  color: #ffd875;
+  text-shadow: 0 0.3vh 0.6vh rgba(0, 0, 0, 0.8), 0 0 1.2vh rgba(243, 156, 18, 0.6);
+  margin-top: 0;
+  margin-bottom: 2.5vh;
+  letter-spacing: 0.08vw;
+}
+
+.pm-victory-card-wrapper {
+  position: relative;
+  width: 15vw;
+  height: 31vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.2vh;
+  filter: drop-shadow(0 0.8vh 1.6vh rgba(0, 0, 0, 0.65));
+}
+
+.pm-victory-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 1.2vh;
+  animation: pmCardFloat 3s ease-in-out infinite alternate;
+}
+
+@keyframes pmCardFloat {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+
+  100% {
+    transform: translateY(-0.6vh) scale(1.02);
+  }
+}
+
+.pm-victory-desc {
+  font-family: var(--font-jakarta-sans), sans-serif;
+  font-size: 1.8vh;
+  font-weight: 700;
+  color: #fff1c4;
+  line-height: 1.35;
+  margin-top: 1.2vh;
+  margin-bottom: 2.8vh;
+  max-width: 38vw;
+  text-align: center;
+}
+
+.pm-btn-victory-continue {
+  background: #27ae60;
+  background-image: linear-gradient(180deg, #2ecc71 0%, #27ae60 60%, #1e824c 100%);
+  border: 0.35vh solid #52be80;
+  border-radius: 1.5vh;
+  padding: 1.1vh 3vw;
+  font-family: var(--font-rubik-one), sans-serif;
+  font-size: 2vh;
+  color: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 0.6vh 1.5vh rgba(0, 0, 0, 0.45);
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.pm-btn-victory-continue:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+.pm-btn-victory-continue:active {
+  transform: scale(0.96);
+}
+
+/* =============================================
+   RESPONSIF MEDIA QUERIES (MOBILE LANDSCAPE & MONITOR)
+   ============================================= */
+@media screen and (max-width: 1024px) and (orientation: landscape),
+screen and (max-height: 520px) and (orientation: landscape),
+screen and (max-width: 900px) and (pointer: coarse) {
+  .pm-root {
+    background-position: center 90%;
+  }
+
+  .pm-header-title {
+    font-size: 1.4vw;
+  }
+
+  .pm-btn-back {
+    font-size: 1.3vw;
+  }
+
+  .pm-progress-label {
+    font-size: 1.3vw;
+  }
+
+  .pm-food-tooltip-aksara {
+    font-size: 1.8vw;
+  }
+
+  .pm-nampan-hint {
+    top: 18%;
+    font-size: 1.1vw;
+  }
+
+  .pm-parchment-wrapper {
+    width: 68vw;
+    max-width: 86.4vh;
+    max-height: 80vh;
+  }
+
+  .pm-order-text-aksara {
+    font-size: 1.6vw;
+    line-height: 1.75;
+  }
+
+  .pm-btn-close-order {
+    font-size: 1.3vw;
+    padding: 0.8vh 2vw;
+  }
+
+  .pm-victory-modal-card {
+    width: 55vw;
+    max-height: 85vh;
+    padding: 2vh 3vw;
+  }
+
+  .pm-victory-title {
+    font-size: 2.4vh;
+  }
+
+  .pm-victory-card-wrapper {
+    width: 20vw;
+    height: 30vh;
+  }
+
+  .pm-victory-desc {
+    font-size: 1.6vh;
+  }
+
+  .pm-btn-victory-continue {
+    font-size: 1.7vh;
+  }
+}

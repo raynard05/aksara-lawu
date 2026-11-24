@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import FogWind from "../components/FogWind/FogWind";
 import DialogPopup from "../components/DialogPopup/DialogPopup";
-import { DEFAULT_UNLOCKED_LEVELS, UNLOCKED_LEVELS_KEY } from "../lib/inventoryStorage";
+import { DEFAULT_UNLOCKED_LEVELS, UNLOCKED_LEVELS_KEY, markLevelCompleted } from "../lib/inventoryStorage";
 import "./cemorosewu.css";
 
 export default function CemoroSewuPage() {
@@ -30,6 +30,7 @@ export default function CemoroSewuPage() {
       }
       sessionStorage.setItem("aksara_lawu_cemorosewu_completed", "true");
       localStorage.setItem("aksara_lawu_cemorosewu_completed", "true");
+      markLevelCompleted(0);
 
       // Pastikan posisi default di /maps adalah Titik 2 (Level 1)
       sessionStorage.setItem("aksara_lawu_current_waypoint", "2");
