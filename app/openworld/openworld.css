@@ -188,27 +188,32 @@
 .ow-character-nametag {
   display: inline-flex;
   align-items: center;
-  gap: 0.3vw;
-  background: rgba(30, 18, 10, 0.85);
-  border: 0.15vh solid #d4a574;
-  border-radius: 0.8vh;
-  padding: 0.2vh 0.8vh;
+  justify-content: center;
+  width: max-content;
+  gap: 0.45vw;
+  background: rgba(30, 18, 10, 0.92);
+  border: 0.15vw solid #d4a574;
+  border-radius: 999vw;
+  padding: 0.35vh 0.9vw 0.35vh 0.55vw;
   margin-bottom: 0.4vh;
-  box-shadow: 0 0.2vh 0.6vh rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+  box-shadow: 0 0.4vh 0.8vh rgba(0, 0, 0, 0.6);
   white-space: nowrap;
 }
 
 .ow-nametag-icon {
-  width: 1.2vh;
-  height: 1.2vh;
+  width: 1.3vw;
+  height: 1.3vw;
+  flex-shrink: 0;
   border-radius: 50%;
   object-fit: cover;
-  border: 0.1vh solid #ffe8b3;
+  border: 0.1vw solid #ffe8b3;
 }
 
 .ow-nametag-text {
-  font-family: var(--font-rubik-one), sans-serif;
-  font-size: 0.95vh;
+  font-family: var(--font-rubik-one), 'Rubik One', sans-serif;
+  font-size: 0.72vw;
+  line-height: 1;
   color: #fff9ea;
   text-shadow: 0 0.1vh 0.2vh rgba(0, 0, 0, 0.8);
   letter-spacing: 0.03vw;

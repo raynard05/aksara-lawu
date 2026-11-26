@@ -172,6 +172,7 @@ export default function Level3GamePage() {
             initialDelayMs={1500}
             instantText={false}
             focusBackdrop={true}
+            containerClassName="dialog-popup-level3-mobile-lift"
             lastButtonText="Ambil Makanan ➔"
             onComplete={handleGoToPesanMakanan}
           />

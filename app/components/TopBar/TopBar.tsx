@@ -20,6 +20,7 @@ const EXCLUDED_ROUTES = [
   "/menu_game",
   "/maps",
   "/pesanmakanan",
+  "/openworld3_tugu",
 ];
 
 export default function TopBar() {

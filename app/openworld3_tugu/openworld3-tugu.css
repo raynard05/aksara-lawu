@@ -1,0 +1,219 @@
+/* ==========================================================================
+   OPENWORLD 3 TUGU — openworld3-tugu.css
+   Mengikuti AIrule.txt:
+   - File CSS & TSX dipisah (rule 1 & 11)
+   - Satuan vh & vw untuk responsif (rule 4 & 6)
+   - Layout landscape-first & zoom-lock (rule 5 & 16)
+   - Prefix unik: ow3t- (rule 12)
+   - Font Rubik One (rule 9)
+   - Background 100% 100% locked (rule 14 & 17)
+   ========================================================================== */
+
+.ow3t-root {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  background-color: #1a0f07;
+  font-family: var(--font-rubik-one), 'Rubik One', sans-serif;
+}
+
+.ow3t-viewport {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Layer Background dengan Transisi Crossfade Halus (Locked 100% 100%) */
+.ow3t-bg-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  transition: opacity 0.55s ease-in-out;
+  pointer-events: none;
+}
+
+.ow3t-bg-kosong {
+  background-image: url('/openworld3/tugukosong_rev.webp');
+}
+
+.ow3t-bg-done {
+  background-image: url('/openworld3/tugudone.webp');
+}
+
+/* Tombol Balik di Kiri Atas */
+.ow3t-back-btn {
+  position: absolute;
+  top: 2.5vh;
+  left: 2.5vw;
+  z-index: 60;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5vw;
+  padding: 0.8vh 1.4vw;
+  background: rgba(42, 22, 10, 0.9);
+  border: 0.18vw solid #d4a574;
+  border-radius: 1vh;
+  color: #fff9e6;
+  font-family: var(--font-rubik-one), 'Rubik One', sans-serif;
+  font-size: 0.85vw;
+  cursor: pointer;
+  box-shadow: 0 0.5vh 1.2vh rgba(0, 0, 0, 0.55);
+  transition: transform 0.15s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.ow3t-back-btn:hover {
+  transform: scale(1.04);
+  border-color: #fde047;
+  background: rgba(62, 34, 15, 0.96);
+}
+
+.ow3t-back-btn:active {
+  transform: scale(0.96);
+}
+
+.ow3t-back-icon {
+  width: 1.05vw;
+  height: 1.05vw;
+}
+
+/* =============================================
+   TOMBOL TAHAN & TOMBOL RAMPUNG DI BANNER BAWAH
+   Terkunci presisi di slot perkamen bawah sejajar heksagon
+   ============================================= */
+.ow3t-bottom-btn-wrapper {
+  position: absolute;
+  left: 50%;
+  bottom: 7.5vh;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 25;
+}
+
+.ow3t-hold-btn {
+  position: relative;
+  width: 22vw;
+  height: 7.2vh;
+  background: #3e200c;
+  background-image: linear-gradient(180deg, #532c12 0%, #2b1407 100%);
+  border: 0.25vw solid #ffd88a;
+  border-radius: 2vh;
+  overflow: hidden;
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    inset 0 0.2vh 0.4vh rgba(255, 230, 160, 0.25),
+    0 0.8vh 2vh rgba(0, 0, 0, 0.7);
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.2s ease;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.ow3t-hold-btn:active,
+.ow3t-hold-btn.ow3t-holding {
+  transform: scale(0.97);
+  border-color: #39e365;
+}
+
+.ow3t-hold-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, #e67e22 0%, #2ecc71 100%);
+  box-shadow: 0 0 1.2vw rgba(46, 204, 113, 0.75);
+  border-radius: inherit;
+  pointer-events: none;
+  transition: width 0.05s linear;
+}
+
+.ow3t-hold-text {
+  position: relative;
+  z-index: 2;
+  color: #ffd88a;
+  font-family: inherit;
+  font-size: 1.25vw;
+  font-weight: 800;
+  letter-spacing: 0.06vw;
+  text-shadow: 0 0.2vh 0.5vh rgba(0, 0, 0, 0.9);
+  pointer-events: none;
+}
+
+/* Tombol Selesai (Rampung) setelah dialog Pak Agus di tugudone */
+.ow3t-done-btn {
+  width: 22vw;
+  height: 7.2vh;
+  background: linear-gradient(180deg, #22c55e 0%, #15803d 100%);
+  border: 0.25vw solid #dcfce7;
+  border-radius: 2vh;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 1.25vw;
+  font-weight: 800;
+  letter-spacing: 0.06vw;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-shadow: 0 0.2vh 0.4vh rgba(0, 0, 0, 0.6);
+  box-shadow:
+    0 0.8vh 2vh rgba(0, 0, 0, 0.7),
+    0 0 1.6vw rgba(34, 197, 94, 0.55);
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.ow3t-done-btn:hover {
+  transform: scale(1.04);
+  filter: brightness(1.08);
+}
+
+.ow3t-done-btn:active {
+  transform: scale(0.96);
+}
+
+/* =============================================
+   RESPONSIF MEDIA QUERIES (MOBILE LANDSCAPE KHUSUS LAYAR SENTUH)
+   Guard pointer: coarse agar zoom laptop/desktop tidak berubah
+   ============================================= */
+@media screen and (max-width: 900px) and (orientation: landscape) and (pointer: coarse),
+screen and (max-height: 500px) and (orientation: landscape) and (pointer: coarse) {
+  .ow3t-back-btn {
+    top: 3vh;
+    padding: 0.9vh 1.8vw;
+    font-size: 1.2vw;
+  }
+
+  .ow3t-back-icon {
+    width: 1.4vw;
+    height: 1.4vw;
+  }
+
+  .ow3t-hold-btn,
+  .ow3t-done-btn {
+    width: 28vw;
+    height: 8.5vh;
+  }
+
+  .ow3t-hold-text,
+  .ow3t-done-btn {
+    font-size: 1.5vw;
+  }
+}
+

@@ -460,6 +460,7 @@ export default function PesanMakananPage() {
             initialDelayMs={0}
             instantText={false}
             focusBackdrop={true}
+            containerClassName="dialog-popup-level3-mobile-lift"
             lastButtonText="Nerusake ➔"
             onComplete={handleCompleteSuccessDialog}
           />

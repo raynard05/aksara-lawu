@@ -49,25 +49,29 @@
 /* Nametag Kayu NPC */
 .ow2-npc-nametag {
   position: absolute;
-  top: -2.4vh;
+  top: -2.6vh;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(30, 18, 10, 0.9);
+  width: max-content;
+  background: rgba(30, 18, 10, 0.92);
   border: 0.12vw solid #d4a574;
-  border-radius: 0.5vw;
-  padding: 0.15vh 0.6vw;
-  display: flex;
+  border-radius: 999vw;
+  padding: 0.25vh 0.7vw 0.25vh 0.45vw;
+  display: inline-flex;
   align-items: center;
-  gap: 0.3vw;
+  justify-content: center;
+  gap: 0.35vw;
   white-space: nowrap;
+  box-sizing: border-box;
   box-shadow: 0 0.3vh 0.6vh rgba(0, 0, 0, 0.6);
   pointer-events: none;
   z-index: 10;
 }
 
 .ow2-npc-nametag-icon {
-  width: 0.9vw;
-  height: 0.9vw;
+  width: 1vw;
+  height: 1vw;
+  flex-shrink: 0;
   border-radius: 50%;
   object-fit: cover;
   border: 0.08vw solid #fce8a6;
@@ -76,6 +80,7 @@
 .ow2-npc-nametag-text {
   font-family: var(--font-rubik-one), 'Rubik One', sans-serif;
   font-size: 0.6vw;
+  line-height: 1;
   color: #fff9e6;
   text-shadow: 0 0.1vh 0.2vh #000;
   letter-spacing: 0.03vw;

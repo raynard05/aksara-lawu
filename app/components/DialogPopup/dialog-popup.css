@@ -321,6 +321,28 @@
   }
 }
 
+/* Karakter full-body yang di-crop separuh badan (pinggang ke atas) agar seragam dengan Penjaga Pos */
+.dialog-popup-char-anchor.is-half-body {
+  overflow: hidden;
+}
+
+.dialog-popup-char-anchor.is-half-body .dialog-popup-char-in-frame {
+  object-fit: cover;
+  object-position: top center;
+  transform-origin: top center;
+  animation: charBreatheHalfBody 3s ease-in-out infinite alternate;
+}
+
+@keyframes charBreatheHalfBody {
+  0% {
+    transform: scale(1.42);
+  }
+
+  100% {
+    transform: translateY(-0.3vh) scale(1.45);
+  }
+}
+
 /* Kolom Teks dialog di dalam frame */
 .dialog-popup-body {
   flex: 1;
@@ -637,6 +659,11 @@
   width: fit-content;
 }
 
+.dialog-reward-box.dialog-reward-box-top {
+  margin-top: 0;
+  margin-bottom: 1.6vh;
+}
+
 .dialog-reward-badge-img {
   width: 7vh;
   height: 7vh;
@@ -887,6 +914,11 @@
     min-height: auto;
     margin-top: 20vh;
     /* Diturunkan 10% lagi (total 20vh) agar tidak menempel / kena TopBar */
+  }
+
+  .dialog-popup-container.dialog-popup-level3-mobile-lift {
+    margin-top: 16.5vh;
+    /* Khusus semua pop up dialog Level 3 di mobile landscape: dinaikkan 3.5% (20vh -> 16.5vh) */
   }
 
   .dialog-popup-frame {

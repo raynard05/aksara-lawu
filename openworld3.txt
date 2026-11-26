@@ -1,0 +1,116 @@
+---------------------------------------------------------------------------------
+poin 1  
+
+buatkan halaman openworld3 dengan bg asset D:\aksara_lawu\public\openworld3\openworld.webp
+secara sistem juga bisa di refactor dari openworld2 dan tinggal dihapus seperti karakter npc dan konsep story nya dan sesuaikan rintangannya dengan bg openworld3
+ 
+------------------------------------------------------------------------------------------
+
+poin 2  
+
+- PAHAMI ALUR CERITA
+
+render tuguasset.webp di area kosong bg , nah dan beri range area untuk mengakses misi nya karna tempat ini bagian misi dalam game render pula penjaga pos yang ada di open world 2  di open world 3 ini 
+untuk peletakannya penjaga pos yaitu dekat tugu nya
+
+ketika berinteraksi atau cecatur dengan penjaga pos berikan dialog karakter tetapi tranlasikan ke bahasa jawa ngoko : 
+
+"halo pendaki, berjumpa lagi kita "
+"kamu sekarang berada di tugu lawu , aku tau kamu ingin melanjutkan perjalanan ke warung ngaso"
+"tetapi kamu harus melengkapi bagian dari tugu ini "
+"aku hanya memiliki 1 keping untuk melengkapinya" 
+"dan aku akan memberimu cuma cuma, nih ambil" (sistm memunculkan gambar keping1.webp dalam dialog karakter nya dan memunculkamn tombol ambil sebelum melanjutkan dialog berikutnya . setelah klik tombol ambil itu akan tersimpan dalam sistem)
+"cuman keping kedua nya disimpan oleh kakek yang berada diatas"
+"dia memiliki tantangan untuk setiap pendaki "
+"pergilah kesana ,dan kalahkan dia untuk mendapatkan keping kedua"
+
+
+-------------------------------------------------------------------------------------
+
+poin 3 
+
+render animasi kakek D:\aksara_lawu\public\openworld3\kakek dia hanya berdiam ditempat animasinya dan taruh ditempat magic yang ada di bg , 
+saat cecaturan berikan dialog dalam bahasa jawa ngoko : 
+
+"uhuk , uhuk, uhuk"
+"siapa itu, oh pendaki lain "
+"kamu pasti kemari untuk mengambil keping kedua "
+"hmmmm, mari bermain gelas kelereng denganku "
+"jika kamu menang , aku akan memberikannya untukmu"
+"ayoo, kalahkan aku" (dari sistem memunculkan tombol "ayo bermain" dalam bahasa jawa ngoko setelah itu render halaman dengan bg meja.webp )
+
+untuk game di halaman yang ber bg meja.webp akan di lampirkan di poin 4 
+---------------------------------------------------------------------------------------
+poin 4
+semua asset ada di D:\aksara_lawu\public\openworld3
+
+di halaman openworld3_game , game konsep nya adalah kelereng ditutup dengan gelas kemudian user disuruh mengingat   posisi kelereng yang ditunjuk 
+
+task : 
+
+- render kelereng merah kuning hijau dahulu diatas ng meja nya berikan gap
+- render juga  1 2 3 webp dari folder lain D:\aksara_lawu\public\pos1 , letakkan di bagian bawah 
+
+berikan dialog karakter kakek dalam bahasa jawa ngoko: 
+
+"bersiaplah untuk menghadapi tantanganku....."
+"uhuk, uhuk"
+
+untuk sistem nya ronde 1 : 
+menunjuk kelereng hijau 
+
+untuk sistem nya ronde 2 : 
+menunjuk kelereng merah
+
+untuk sistem nya ronde 3 : 
+menunjuk kelereng kuning 
+
+jika salah ulangi di ronde itu juga tidak apa apa sampai berhasil tiap ronde nya 
+
+--------------------------------------------------------------------------------------------
+
+poin 5 
+
+ketika user kembali ke openworld3 setelah mendapatkan keping kedua 
+berikan diolog dari pak agus penjaga dalam bahasa jawa ngoko 
+"selamat kamu memenangkan tantangannya"
+"segera ke tugu untuk melengkapi puzzle" 
+
+nah user kan mengakses tugu itu langsung tampilkan halaman tugukosong_rev nah disitu bagian bawah bg beri  tombol tahan dengan teks "lengkapi tugu"  tetapi dengan bahasa jawa ngoko 
+ketika tombol tahan sudah terpenuhi  bg berganti ke tugudone (ini konsepnya sama dengan level 3 yg pengambilan peti) 
+nah di tugu done berikan delay 1,2 detik untuk memunculkan dialog karakter penjaga pak agus 
+dialog dalam bahasa jawa ngoko : 
+
+"selamat ya pendaki"
+"kini tugu nya sudah terlengkapi"
+"akses ke warung ngaso terbuka"
+
+nah setelah dialohg itu ada tombol selesai di bagian bawah halaman tugu done untuk kembali ke openworld3 
+nah setelah kembali tuguasset.webp yang di bg diganti dengan tuguasset2.webp  
+----------------------------------------------------------------------------------------------------------
+poin 6
+baca openworld 1 dan open world 2 untuk memahami permintaan 
+
+jadikan rintangan warung ngaso   {
+    id: "warung-ngaso",
+    name: "Warung Ngaso",
+    x: 55,
+    y: 0,
+    w: 45,
+    h: 38,
+  },
+  diawal itu terkunci seperti openworld2 dan 1 kayak dengan bg hitam dan sisinya ada garis putus putus merah dan teks kemudian ada gembok kuning   
+
+render 5 bintang di sepanjang rute perjalanan
+kemudian tampilkan status progress di bagian bawah kiri seperti openworld2 dan 1 
+
+cuman di sesi ini 
+syarat nya 
+bintang 5/5 ,
+keping 2/2 
+tugu 1/1 
+
+nah ini syarat untuk membuka rintangan yang terkunci dan memunculkan titik kuning untuk mengakses halamann intro level 3 
+----------------------------------------------------------------------------------------------------------
+
+

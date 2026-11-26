@@ -316,6 +316,7 @@ export default function Level3CelebrationPage() {
             initialDelayMs={0}
             instantText={false}
             focusBackdrop={true}
+            containerClassName="dialog-popup-level3-mobile-lift"
             lastButtonText="Siap ➔"
             onComplete={() => setIsDialogOpen(false)}
           />

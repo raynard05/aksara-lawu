@@ -10,11 +10,13 @@ export interface DialogItem {
   text: string;
   character?: string;
   characterSide?: "left" | "right";
+  characterHalfBody?: boolean;
   bgTexture?: string;
   speakerName?: string;
   rewardItem?: {
     image: string;
     name: string;
+    position?: "top" | "bottom";
   };
   foodItem?: {
     image: string;
@@ -42,6 +44,7 @@ interface DialogPopupProps {
   lastButtonText?: string;
   instantText?: boolean;
   focusBackdrop?: boolean;
+  containerClassName?: string;
 }
 
 export default function DialogPopup({
@@ -53,6 +56,7 @@ export default function DialogPopup({
   lastButtonText,
   instantText = false,
   focusBackdrop = false,
+  containerClassName = "",
 }: DialogPopupProps) {
   // Ambil dialogs dari props atau otomatis ambil berdasarkan pageKey dari dialog.json
   const activeDialogs: DialogItem[] =
@@ -269,7 +273,7 @@ export default function DialogPopup({
       aria-modal="true"
       aria-label="Dialog Pop Up Game"
     >
-      <div className="dialog-popup-container">
+      <div className={`dialog-popup-container ${containerClassName}`.trim()}>
         {/* Frame Box Pop Up Dialog: Warna Solid Coklat Kayu & Border Tebal Konstan */}
         <section className="dialog-popup-frame">
           {/* Header Pop Up */}
@@ -344,6 +348,24 @@ export default function DialogPopup({
 
             {/* Isi Text Paragraf dengan Animasi Kata per Kata */}
             <div className="dialog-popup-body">
+              {/* Render Reward Item di atas teks dialog jika position === "top" */}
+              {!currentItem.foodItem &&
+                currentItem.rewardItem &&
+                currentItem.rewardItem.position === "top" &&
+                (!isTyping || instantText) && (
+                  <div className="dialog-reward-box dialog-reward-box-top">
+                    <img
+                      src={currentItem.rewardItem.image}
+                      alt={currentItem.rewardItem.name}
+                      className="dialog-reward-badge-img"
+                      draggable={false}
+                    />
+                    <span className="dialog-reward-badge-title">
+                      {currentItem.rewardItem.name}
+                    </span>
+                  </div>
+                )}
+
               <p className="dialog-popup-paragraph" aria-live="polite">
                 {words.map((word, idx) => {
                   const isVisible = idx < visibleWordsCount;
@@ -445,7 +467,10 @@ export default function DialogPopup({
               )}
 
               {/* Render Badge Reward jika dialog menghadiahkan item (misal: badge1.webp / tali.webp) */}
-              {!currentItem.foodItem && currentItem.rewardItem && (!isTyping || instantText) && (
+              {!currentItem.foodItem &&
+                currentItem.rewardItem &&
+                currentItem.rewardItem.position !== "top" &&
+                (!isTyping || instantText) && (
                 <div className="dialog-reward-box">
                   <img
                     src={currentItem.rewardItem.image}
@@ -465,7 +490,7 @@ export default function DialogPopup({
           <div
             className={`dialog-popup-char-anchor ${charSide === "right" ? "anchor-right" : "anchor-left"} ${
               currentItem.systemCommand ? "has-system-command" : ""
-            }`}
+            } ${currentItem.characterHalfBody ? "is-half-body" : ""}`}
           >
             <img
               src={charSrc}

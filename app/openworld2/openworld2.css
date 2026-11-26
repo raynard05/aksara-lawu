@@ -78,25 +78,29 @@
 /* Nametag Pemain */
 .ow2-character-nametag {
   position: absolute;
-  top: -3.4vh;
+  top: -3.6vh;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(30, 18, 10, 0.9);
+  width: max-content;
+  background: rgba(30, 18, 10, 0.92);
   border: 0.15vw solid #d4a574;
-  border-radius: 0.6vw;
-  padding: 0.2vh 0.8vw;
-  display: flex;
+  border-radius: 999vw;
+  padding: 0.35vh 0.9vw 0.35vh 0.55vw;
+  display: inline-flex;
   align-items: center;
-  gap: 0.4vw;
+  justify-content: center;
+  gap: 0.45vw;
   white-space: nowrap;
+  box-sizing: border-box;
   box-shadow: 0 0.4vh 0.8vh rgba(0, 0, 0, 0.6);
   pointer-events: none;
   z-index: 10;
 }
 
 .ow2-nametag-icon {
-  width: 1.2vw;
-  height: 1.2vw;
+  width: 1.3vw;
+  height: 1.3vw;
+  flex-shrink: 0;
   border-radius: 50%;
   object-fit: cover;
   border: 0.1vw solid #fce8a6;
@@ -104,10 +108,11 @@
 
 .ow2-nametag-text {
   font-family: var(--font-rubik-one), 'Rubik One', sans-serif;
-  font-size: 0.75vw;
+  font-size: 0.72vw;
+  line-height: 1;
   color: #fff9e6;
   text-shadow: 0 0.1vh 0.2vh #000;
-  letter-spacing: 0.04vw;
+  letter-spacing: 0.03vw;
 }
 
 /* Sprite Container Karakter Pemain */

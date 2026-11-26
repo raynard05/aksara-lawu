@@ -61,7 +61,7 @@ export const DEFAULT_WAYPOINTS: Waypoint[] = [
     levelNumber: 3,
     x: 45.7,
     y: 48.6,
-    route: "/intro_level3",
+    route: "/openworld3",
     bannerImg: "/maps/level3.webp",
     isLocked: true, // Lock dengan gembok.webp
   },
