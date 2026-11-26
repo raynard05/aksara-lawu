@@ -18,7 +18,7 @@ import { Eye, EyeOff, RotateCcw, MessageCircle, Landmark, Ban, DoorOpen } from "
 import "./openworld3.css";
 
 // Flag untuk reset sesi otomatis saat refresh halaman (false = not refreshable / semua progres tersimpan permanen)
-export const IS_REFRESHABLE_OW3: boolean = false;
+export const IS_REFRESHABLE_OW3: boolean = true;
 
 // Titik Koordinat Tugu Lawu (Pelataran Tengah) & Range Area Misi
 export const OW3_TUGU_POS = {

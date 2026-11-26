@@ -446,9 +446,17 @@
     height: 10.2vh;
   }
 
+  .ow3g-start-btn-wrap {
+    top: 66vh;
+  }
+
   .ow3g-start-btn {
     font-size: 1.3vw;
     padding: 1.2vh 2.8vw;
+  }
+
+  .ow3g-modal-overlay {
+    padding-top: 14vh;
   }
 
   .ow3g-modal-card {
